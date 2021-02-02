@@ -37,7 +37,10 @@ class Body extends StatelessWidget {
             color: kPrimaryColor,
             text: "Sign up as Student",
             textColor: Colors.black,
-            press: () {},
+            press: () {
+              //Routes to Signup student screen
+              Navigator.pushNamed(context, '/signup-student');
+            },
           ),
           RoundedButton(
             color: kSecondaryColor,
@@ -45,11 +48,13 @@ class Body extends StatelessWidget {
             textColor: Colors.white,
             press: () {},
           ),
-          AlreadyHaveAnAccount(size: size, login: true, onTap: () {},)
+          AlreadyHaveAnAccount(
+            size: size,
+            login: true,
+            onTap: () {},
+          )
         ],
       ),
     );
   }
 }
-
-
