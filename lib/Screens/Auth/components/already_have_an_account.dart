@@ -1,14 +1,17 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class AlreadyHaveAnAccount extends StatelessWidget {
   final bool login;
   final Function onTap;
+  final MainAxisAlignment postion;
 
   const AlreadyHaveAnAccount({
     Key key,
     @required this.size,
     this.login = true,
     this.onTap,
+    this.postion = MainAxisAlignment.start,
   }) : super(key: key);
 
   final Size size;
@@ -18,7 +21,7 @@ class AlreadyHaveAnAccount extends StatelessWidget {
     return Container(
       width: size.width * 0.9,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: postion,
         children: <Widget>[
           Text(
             login ? "Already have an Account? " : "Don't Have an Account yet? ",
@@ -29,9 +32,10 @@ class AlreadyHaveAnAccount extends StatelessWidget {
             child: Text(
               login ? "Sign In" : "Sign up",
               style: TextStyle(
-                  color: Colors.blueAccent,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600),
+                color: Colors.blueAccent,
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           )
         ],

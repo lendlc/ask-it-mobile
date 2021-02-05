@@ -19,9 +19,10 @@ class Body extends StatelessWidget {
           Text(
             "Welcome to Ask IT",
             style: TextStyle(
-                fontFamily: 'Open Sans',
-                fontSize: 36,
-                fontWeight: FontWeight.w700),
+              fontFamily: 'Open Sans',
+              fontSize: 36,
+              fontWeight: FontWeight.w700,
+            ),
           ),
           SizedBox(
             height: size.height * 0.04,
@@ -51,7 +52,10 @@ class Body extends StatelessWidget {
           AlreadyHaveAnAccount(
             size: size,
             login: true,
-            onTap: () {},
+            onTap: () {
+              //move to login page
+              Navigator.pushNamed(context, '/login');
+            },
           )
         ],
       ),
