@@ -1,6 +1,7 @@
 import 'package:ask_it/Screens/Auth/Login.dart';
 import 'package:ask_it/Screens/Auth/RegisterStudent.dart';
 import 'package:ask_it/Screens/Auth/Welcome.dart';
+import 'package:ask_it/Screens/Home/Home.dart';
 import 'package:ask_it/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -26,7 +27,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => WelcomeScreen(),
         '/signup-student': (context) => RegisterStudentScreen(),
-        '/login': (context) => LoginScreen()
+        '/login': (context) => LoginScreen(),
+        '/home': (context) => HomeScreen()
       },
       //home: WelcomeScreen()
     );

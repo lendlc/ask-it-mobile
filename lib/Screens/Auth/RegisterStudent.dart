@@ -295,7 +295,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                             print(_password);
 
                             //Move to Home Page
-                            Navigator.pushNamed(context, '/home');
+                            Navigator.pushNamed(context, '/login');
                           },
                           text: 'Create my Account',
                           textColor: Colors.black,

@@ -1,4 +1,3 @@
-import 'package:ask_it/components/rounded_button.dart';
 import 'package:ask_it/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -89,7 +88,9 @@ class _buildLoginBtn extends StatelessWidget {
             vertical: 10,
             horizontal: 40,
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, '/home');
+          },
           color: kPrimaryColor,
           child: Text(
             "Login",
