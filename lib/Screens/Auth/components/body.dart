@@ -21,7 +21,7 @@ class Body extends StatelessWidget {
             style: TextStyle(
               fontFamily: 'Open Sans',
               fontSize: 36,
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.bold,
             ),
           ),
           SizedBox(
@@ -35,19 +35,21 @@ class Body extends StatelessWidget {
             height: size.height * 0.03,
           ),
           RoundedButton(
-            color: kPrimaryColor,
+            color: primaryColor,
             text: "Sign up as Student",
             textColor: Colors.black,
             press: () {
               //Routes to Signup student screen
-              Navigator.pushNamed(context, '/signup-student');
+              Navigator.pushNamed(context, '/register-student');
             },
           ),
           RoundedButton(
-            color: kSecondaryColor,
+            color: secondaryColor,
             text: "Sign up as Tutor",
             textColor: Colors.white,
-            press: () {},
+            press: () {
+              Navigator.pushNamed(context, '/register-tutor');
+            },
           ),
           AlreadyHaveAnAccount(
             size: size,

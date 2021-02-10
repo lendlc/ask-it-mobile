@@ -89,14 +89,16 @@ class _buildLoginBtn extends StatelessWidget {
             horizontal: 40,
           ),
           onPressed: () {
-            Navigator.pushNamed(context, '/home');
+            //Navigator.pushNamed(context, '/home');
+            //Navigator.pushReplacementNamed(context, '/home');
+            Navigator.pushNamedAndRemoveUntil(context, '/home', (_) => false);
           },
-          color: kPrimaryColor,
+          color: primaryColor,
           child: Text(
             "Login",
             style: TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.bold,
               color: Colors.black,
             ),
           ),
@@ -123,14 +125,11 @@ class _buildForgotPasswordBtn extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           //Go to Forgot Password Screen
+          Navigator.pushNamed(context, '/forgot-password');
         },
         child: Text(
           'Forgot Password?',
-          style: TextStyle(
-            color: Colors.blueAccent,
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-          ),
+          style: smallTextW600BlueAccent
         ),
       ),
     );
@@ -156,7 +155,7 @@ class _buildEmailTF extends StatelessWidget {
             decoration: InputDecoration(
               hintText: 'Email',
               filled: true,
-              fillColor: kOffWhiteColor,
+              fillColor: lightColor,
               isDense: true,
               //Border when user Uses the Text Field
               focusedBorder: OutlineInputBorder(
@@ -169,7 +168,7 @@ class _buildEmailTF extends StatelessWidget {
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.0),
                 borderSide: BorderSide(
-                  color: kOffWhiteColor,
+                  color: lightColor,
                   //width: 2.0,
                 ),
               ),
@@ -217,7 +216,7 @@ class _buildPasswordTF extends StatelessWidget {
             decoration: InputDecoration(
               hintText: 'Password',
               filled: true,
-              fillColor: kOffWhiteColor,
+              fillColor: lightColor,
               isDense: true,
               //Border when user Uses the Text Field
               focusedBorder: OutlineInputBorder(
@@ -230,7 +229,7 @@ class _buildPasswordTF extends StatelessWidget {
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.0),
                 borderSide: BorderSide(
-                  color: kOffWhiteColor,
+                  color: lightColor,
                   //width: 2.0,
                 ),
               ),

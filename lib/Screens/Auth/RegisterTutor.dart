@@ -2,12 +2,12 @@ import 'package:ask_it/components/rounded_button.dart';
 import 'package:ask_it/constants.dart';
 import 'package:flutter/material.dart';
 
-class RegisterStudentScreen extends StatefulWidget {
+class RegisterTutorScreen extends StatefulWidget {
   @override
-  _RegisterStudentScreenState createState() => _RegisterStudentScreenState();
+  _RegisterTutorScreenState createState() => _RegisterTutorScreenState();
 }
 
-class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
+class _RegisterTutorScreenState extends State<RegisterTutorScreen> {
   String _firstName, _lastName, _email, _password;
 
   //Reference to the Form
@@ -265,10 +265,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
               children: <Widget>[
                 Text(
                   'Create Profile',
-                  style: TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 32, fontWeight: FontWeight.w700),
                 ),
                 SizedBox(
                   height: size.height * 0.03,
@@ -284,24 +281,30 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                         _buildEmail(),
                         _buildPassword(),
                         SizedBox(height: size.height * 0.03),
-                        RoundedButton(
-                          color: primaryColor,
-                          press: () {
-                            if (!_formKey.currentState.validate()) {
-                              return;
-                            }
-                            _formKey.currentState.save();
+                        Container(
+                          alignment: Alignment.centerRight,
+                          child: Container(
+                            width: size.width * 0.4,
+                            child: RoundedButton(
+                              text: 'Next',
+                              textColor: Colors.white,
+                              color: secondaryColor,
+                              press: () {
+                                if (!_formKey.currentState.validate()) {
+                                  return;
+                                }
+                                _formKey.currentState.save();
 
-                            print(_firstName);
-                            print(_lastName);
-                            print(_email);
-                            print(_password);
+                                print(_firstName);
+                                print(_lastName);
+                                print(_email);
+                                print(_password);
 
-                            //Move to Home Page
-                            Navigator.pushNamed(context, '/login');
-                          },
-                          text: 'Create my Account',
-                          textColor: Colors.black,
+                                //Move to Home Page
+                                Navigator.pushNamed(context, '/login');
+                              },
+                            ),
+                          ),
                         )
                       ],
                     ),

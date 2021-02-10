@@ -5,10 +5,16 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        //automaticallyImplyLeading: false,
+        //Navigator.pushReplacementNamed((context), '/home'),
+        backgroundColor: Colors.white,
+        elevation: 0,
+      ),
       body: Container(
         padding: EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          //mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             _buildHeader(),
             SizedBox(
@@ -19,26 +25,37 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.chat_bubble),
-            label: 'Chat',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
-            label: 'Profile',
-          ),
-        ],
-        currentIndex: 0,
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.black38,
-        onTap: (int) {},
-      ),
+          backgroundColor: Colors.white,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.chat_bubble),
+              label: 'Chat',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person_outline),
+              label: 'Profile',
+            ),
+          ],
+          currentIndex: 0,
+          selectedItemColor: secondaryColor,
+          unselectedItemColor: Colors.black38,
+          onTap: (int index) {
+            switch (index) {
+              case 0:
+                Navigator.pushNamed(context, '/home');
+                break;
+              case 1:
+                Navigator.pushNamed(context, '/second');
+                break;
+              case 2:
+                Navigator.pushNamed(context, '/profile');
+                break;
+            }
+          }),
     );
   }
 }
@@ -58,11 +75,11 @@ class _buildTopicCardList extends StatelessWidget {
       children: <Widget>[
         GestureDetector(
           onTap: () {
-            print('I was Clicked');
+            Navigator.pushNamed(context, '/topics/1');
           },
           child: Container(
             decoration: BoxDecoration(
-              color: kPrimaryColor,
+              color: primaryColor,
               borderRadius: BorderRadius.all(
                 Radius.circular(
                   10.0,
@@ -76,14 +93,13 @@ class _buildTopicCardList extends StatelessWidget {
                     padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
                     child: Center(
                       child: Image.asset(
-                          'assets/images/intro_to_java.png',
-                          ),
+                        'assets/images/intro_to_java.png',
+                      ),
                     ),
                   ),
                 ),
                 Container(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: Text(
                     'Introduction to Java Programming',
                     style: TextStyle(
@@ -97,7 +113,7 @@ class _buildTopicCardList extends StatelessWidget {
         ),
         Container(
           decoration: BoxDecoration(
-            color: kPrimaryColor,
+            color: primaryColor,
             borderRadius: BorderRadius.all(
               Radius.circular(
                 10.0,
@@ -115,8 +131,7 @@ class _buildTopicCardList extends StatelessWidget {
                 ),
               ),
               Container(
-                padding:
-                    EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Text(
                   'Advanced Java Programming',
                   style: TextStyle(
@@ -129,7 +144,7 @@ class _buildTopicCardList extends StatelessWidget {
         ),
         Container(
           decoration: BoxDecoration(
-            color: kPrimaryColor,
+            color: primaryColor,
             borderRadius: BorderRadius.all(
               Radius.circular(
                 10.0,
@@ -147,8 +162,7 @@ class _buildTopicCardList extends StatelessWidget {
                 ),
               ),
               Container(
-                padding:
-                    EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Text(
                   'Object Oriented Programming',
                   style: TextStyle(
@@ -161,7 +175,7 @@ class _buildTopicCardList extends StatelessWidget {
         ),
         Container(
           decoration: BoxDecoration(
-            color: kPrimaryColor,
+            color: primaryColor,
             borderRadius: BorderRadius.all(
               Radius.circular(
                 10.0,
@@ -179,8 +193,7 @@ class _buildTopicCardList extends StatelessWidget {
                 ),
               ),
               Container(
-                padding:
-                    EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Text(
                   'Data Structures and Algorithms',
                   style: TextStyle(
@@ -239,7 +252,7 @@ class _buildHeader extends StatelessWidget {
             height: double.infinity,
             width: 70,
             decoration: BoxDecoration(
-              color: kPrimaryColor,
+              color: primaryColor,
               borderRadius: BorderRadius.all(
                 Radius.circular(
                   10.0,
