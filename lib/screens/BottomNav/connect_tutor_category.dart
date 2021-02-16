@@ -13,9 +13,10 @@ class TutorCategoryScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
+              alignment: Alignment.centerLeft,
               padding: EdgeInsets.all(16),
               child: Text(
-                'What do you want to learn?',
+                'Available Subjects',
                 style: largeTextBold,
               ),
             ),
@@ -29,19 +30,19 @@ class TutorCategoryScreen extends StatelessWidget {
               children: [
                 _buildCategoryTile(
                   title: 'Intro to Java Programming',
-                  icon: Icons.ac_unit,
+                  imagePath: 'assets/images/subjects/sub-1.png',
                 ),
                 _buildCategoryTile(
                   title: 'Advanced Java Programming',
-                  icon: Icons.ac_unit,
+                  imagePath: 'assets/images/subjects/sub-2.png',
                 ),
                 _buildCategoryTile(
                   title: 'Object Oriented Programming',
-                  icon: Icons.ac_unit,
+                  imagePath: 'assets/images/subjects/sub-3.png',
                 ),
                 _buildCategoryTile(
                   title: 'Data Structures and Algorithm',
-                  icon: Icons.ac_unit,
+                  imagePath: 'assets/images/subjects/sub-4.png',
                 ),
               ],
             ),
@@ -53,21 +54,23 @@ class TutorCategoryScreen extends StatelessWidget {
 }
 
 class _buildCategoryTile extends StatelessWidget {
-  final String title;
-  final IconData icon;
+  final String title, imagePath;
 
   const _buildCategoryTile({
     Key key,
     this.title,
-    this.icon,
+    this.imagePath,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Navigator.pushNamed(context, '/topics/1/lesson/1',
-        //     arguments: {'title': title });
+        Navigator.pushNamed(
+          context,
+          '/tutor-list',
+          arguments: {'title': title},
+        );
       },
       child: Container(
         decoration: BoxDecoration(
@@ -86,14 +89,11 @@ class _buildCategoryTile extends StatelessWidget {
         ),
         padding: EdgeInsets.all(16),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          //mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Icon(
-              icon,
-              size: 60,
-            ),
-            SizedBox(
-              height: 8,
+            Container(
+              height: 90,
+              child: Image.asset(imagePath),
             ),
             Text(
               title,

@@ -1,4 +1,5 @@
 import 'package:ask_it/constants.dart';
+import 'package:ask_it/screens/BottomNav/tutor_list_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'screens/BottomNav/chat_screen.dart';
@@ -13,7 +14,6 @@ import 'screens/auth/register_tutor_screen.dart';
 import 'screens/auth/reset_password_screen.dart';
 import 'screens/auth/welcome_screen.dart';
 import 'screens/error_screen.dart';
-
 
 void main() {
   runApp(MyApp());
@@ -43,11 +43,12 @@ class MyApp extends StatelessWidget {
         '/forgot-password': (context) => ForgotPasswordScreen(),
         '/reset-password': (context) => ResetPasswordScreen(),
         //auth routes end
-        '/home': (context) => TabsScreen(),
+        TabsScreen.routeName: (context) => TabsScreen(),
         TopicListScreen.routeName: (context) => TopicListScreen(),
         LessonScreen.routeName: (context) => LessonScreen(),
         ChatScreen.routeName: (context) => ChatScreen(),
         TutorCategoryScreen.routeName: (context) => TutorCategoryScreen(),
+        TutorListScreen.routeName: (context) => TutorListScreen()
       },
       onUnknownRoute: (settings) {
         return MaterialPageRoute(builder: (_) => ErrorScreen());

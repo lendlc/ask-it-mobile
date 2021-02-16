@@ -1,5 +1,4 @@
 import 'package:ask_it/constants.dart';
-import 'package:ask_it/constants.dart';
 import 'package:flutter/material.dart';
 
 class ChatScreen extends StatelessWidget {
@@ -10,7 +9,7 @@ class ChatScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Lendl Cuyugan',
+          'Rhon Emmanuel Casem',
           style: mediumTextBold,
         ),
       ),
