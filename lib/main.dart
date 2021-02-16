@@ -1,16 +1,19 @@
-import 'package:ask_it/Screens/Auth/ForgotPassword.dart';
-import 'package:ask_it/Screens/Auth/Login.dart';
-import 'package:ask_it/Screens/Auth/RegisterTutor.dart';
-import 'package:ask_it/Screens/BottomNav/Profile.dart';
-import 'package:ask_it/Screens/Auth/RegisterStudent.dart';
-import 'package:ask_it/Screens/Auth/ResetPassword.dart';
-import 'package:ask_it/Screens/Auth/Welcome.dart';
-import 'package:ask_it/Screens/BottomNav/Topics/Lesson.dart';
 import 'package:ask_it/constants.dart';
 import 'package:flutter/material.dart';
 
-import 'Screens/BottomNav/Home.dart';
-import 'Screens/BottomNav/Topics/TopicList.dart';
+import 'screens/BottomNav/chat_screen.dart';
+import 'screens/BottomNav/connect_tutor_category.dart';
+import 'screens/BottomNav/lesson_list_screen.dart';
+import 'screens/BottomNav/lesson_screen.dart';
+import 'screens/BottomNav/tabs_screen.dart';
+import 'screens/auth/forgot_password_screen.dart';
+import 'screens/auth/login_screen.dart';
+import 'screens/auth/register_student_screen.dart';
+import 'screens/auth/register_tutor_screen.dart';
+import 'screens/auth/reset_password_screen.dart';
+import 'screens/auth/welcome_screen.dart';
+import 'screens/error_screen.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -28,21 +31,26 @@ class MyApp extends StatelessWidget {
         primaryColor: primaryColor,
         scaffoldBackgroundColor: Colors.white,
         appBarTheme: AppBarStyle,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       //This could easily change when logged in and stuff
       initialRoute: '/',
       routes: {
         '/': (context) => WelcomeScreen(),
+        //auth routes
         '/register-student': (context) => RegisterStudentScreen(),
         '/register-tutor': (context) => RegisterTutorScreen(),
         '/login': (context) => LoginScreen(),
         '/forgot-password': (context) => ForgotPasswordScreen(),
         '/reset-password': (context) => ResetPasswordScreen(),
-        '/home': (context) => HomeScreen(),
-        '/profile': (context) => ProfileScreen(),
-        '/topics/1': (context) => TopicListScreen(),
-        '/topics/1/lesson/1': (context) => LessonScreen(),
+        //auth routes end
+        '/home': (context) => TabsScreen(),
+        TopicListScreen.routeName: (context) => TopicListScreen(),
+        LessonScreen.routeName: (context) => LessonScreen(),
+        ChatScreen.routeName: (context) => ChatScreen(),
+        TutorCategoryScreen.routeName: (context) => TutorCategoryScreen(),
+      },
+      onUnknownRoute: (settings) {
+        return MaterialPageRoute(builder: (_) => ErrorScreen());
       },
       //home: WelcomeScreen()
     );

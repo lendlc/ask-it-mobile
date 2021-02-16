@@ -3,12 +3,19 @@ import 'package:ask_it/constants.dart';
 import 'package:flutter/material.dart';
 
 class LessonScreen extends StatelessWidget {
+  static String routeName = '/learn-java/lesson';
+
   @override
   Widget build(BuildContext context) {
+    final routeArgs =
+        ModalRoute.of(context).settings.arguments as Map<String, String>;
+
+    final title = routeArgs['title'];
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Java Fundamentals',
+          title,
           style: mediumTextBold,
         ),
       ),

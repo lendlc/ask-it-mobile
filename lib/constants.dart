@@ -12,7 +12,7 @@ const smallText = 14.0;
 
 //Font Size and Weight Combination
 const largeTextBold = TextStyle(
-  fontSize: mediumText,
+  fontSize: largeText,
   fontWeight: FontWeight.bold,
 );
 
@@ -41,6 +41,7 @@ const smallTextW600BlueAccent = TextStyle(
 const AppBarStyle = AppBarTheme(
   color: Colors.white,
   centerTitle: true,
+  elevation: 0.9,
 );
 
 //Rounded Containers with Shadow
@@ -51,9 +52,9 @@ BoxDecoration boxDecorationStyle = BoxDecoration(
   ),
   boxShadow: [
     BoxShadow(
-      color: Colors.grey.withOpacity(0.5),
-      spreadRadius: 1,
-      blurRadius: 5,
+      color: Colors.grey.withOpacity(0.4),
+      spreadRadius: 0.5,
+      blurRadius: 10,
       offset: Offset(0, 3),
     )
   ],
