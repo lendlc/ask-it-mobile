@@ -2,13 +2,13 @@ import 'package:ask_it/components/rounded_button.dart';
 import 'package:ask_it/constants.dart';
 import 'package:flutter/material.dart';
 
-class RegisterStudentScreen extends StatefulWidget {
+class RegisterTutorScreen extends StatefulWidget {
   @override
-  _RegisterStudentScreenState createState() => _RegisterStudentScreenState();
+  _RegisterTutorScreenState createState() => _RegisterTutorScreenState();
 }
 
-class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
-  String _firstName, _lastName, _email, _password, _studentNumber;
+class _RegisterTutorScreenState extends State<RegisterTutorScreen> {
+  String _firstName, _lastName, _email, _password;
 
   //Reference to the Form
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -30,7 +30,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
             decoration: InputDecoration(
               hintText: 'First Name',
               filled: true,
-              fillColor: kOffWhiteColor,
+              fillColor: lightColor,
               //Border when user Uses the Text Field
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.0),
@@ -42,7 +42,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.0),
                 borderSide: BorderSide(
-                  color: kOffWhiteColor,
+                  color: lightColor,
                   //width: 2.0,
                 ),
               ),
@@ -88,7 +88,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
             decoration: InputDecoration(
               hintText: 'Last Name',
               filled: true,
-              fillColor: kOffWhiteColor,
+              fillColor: lightColor,
               //Border when user Uses the Text Field
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.0),
@@ -100,7 +100,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.0),
                 borderSide: BorderSide(
-                  color: kOffWhiteColor,
+                  color: lightColor,
                   //width: 2.0,
                 ),
               ),
@@ -145,7 +145,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
             decoration: InputDecoration(
               hintText: 'Email',
               filled: true,
-              fillColor: kOffWhiteColor,
+              fillColor: lightColor,
               //Border when user Uses the Text Field
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.0),
@@ -157,7 +157,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.0),
                 borderSide: BorderSide(
-                  color: kOffWhiteColor,
+                  color: lightColor,
                   //width: 2.0,
                 ),
               ),
@@ -203,7 +203,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
             decoration: InputDecoration(
               hintText: 'Password',
               filled: true,
-              fillColor: kOffWhiteColor,
+              fillColor: lightColor,
               //Border when user Uses the Text Field
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.0),
@@ -215,7 +215,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.0),
                 borderSide: BorderSide(
-                  color: kOffWhiteColor,
+                  color: lightColor,
                   //width: 2.0,
                 ),
               ),
@@ -281,24 +281,30 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                         _buildEmail(),
                         _buildPassword(),
                         SizedBox(height: size.height * 0.03),
-                        RoundedButton(
-                          color: kPrimaryColor,
-                          press: () {
-                            if (!_formKey.currentState.validate()) {
-                              return;
-                            }
-                            _formKey.currentState.save();
+                        Container(
+                          alignment: Alignment.centerRight,
+                          child: Container(
+                            width: size.width * 0.4,
+                            child: RoundedButton(
+                              text: 'Next',
+                              textColor: Colors.white,
+                              color: secondaryColor,
+                              press: () {
+                                if (!_formKey.currentState.validate()) {
+                                  return;
+                                }
+                                _formKey.currentState.save();
 
-                            print(_firstName);
-                            print(_lastName);
-                            print(_email);
-                            print(_password);
+                                print(_firstName);
+                                print(_lastName);
+                                print(_email);
+                                print(_password);
 
-                            //Move to Home Page
-                            Navigator.pushNamed(context, '/login');
-                          },
-                          text: 'Create my Account',
-                          textColor: Colors.black,
+                                //Move to Home Page
+                                Navigator.pushNamed(context, '/login');
+                              },
+                            ),
+                          ),
                         )
                       ],
                     ),

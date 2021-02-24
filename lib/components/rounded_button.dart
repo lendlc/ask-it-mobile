@@ -25,7 +25,7 @@ class RoundedButton extends StatelessWidget {
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 0.6,
             blurRadius: 10,
-            offset: Offset(0, 4), // changes position of shadow
+            offset: Offset(0, 4), 
           ),
         ],
       ),
