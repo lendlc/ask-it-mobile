@@ -186,12 +186,13 @@ class _buildProfileInfoCard extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: RaisedButton(
+                elevation: 0.9,
                 padding: EdgeInsets.symmetric(
                   vertical: 10,
                   horizontal: 20,
                 ),
                 onPressed: () {
-                  //Navigator.pushNamed(context, '/profile/edit');
+                  Navigator.pushNamed(context, '/profile/edit');
                 },
                 color: lightColor,
                 child: Text(
@@ -199,6 +200,7 @@ class _buildProfileInfoCard extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
+                    color: Colors.black54
                   ),
                 ),
               ),

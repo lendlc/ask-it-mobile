@@ -47,6 +47,9 @@ class _buildTopicCardList extends StatelessWidget {
           title: 'Watch Tutorial Videos',
           description: 'Learn from our tutors',
           icon: Icons.ondemand_video_outlined,
+          onTap: () {
+            Navigator.pushNamed(context, '/tutor-list/videos');
+          },
         ),
         _buildModuleCard(
           title: 'Connect with a Tutor',

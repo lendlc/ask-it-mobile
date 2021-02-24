@@ -10,6 +10,8 @@ const mediumText = 18.0;
 const defaultText = 16.0;
 const smallText = 14.0;
 
+//Dimentions could be here too
+
 //Font Size and Weight Combination
 const largeTextBold = TextStyle(
   fontSize: largeText,
@@ -42,6 +44,32 @@ const AppBarStyle = AppBarTheme(
   color: Colors.white,
   centerTitle: true,
   elevation: 0.9,
+);
+
+OutlineInputBorder inputBorder = OutlineInputBorder(
+  borderRadius: BorderRadius.circular(10.0),
+  borderSide: BorderSide(
+    color: lightColor,
+  ),
+);
+
+OutlineInputBorder errorInputBorder = OutlineInputBorder(
+  borderRadius: BorderRadius.circular(10.0),
+  borderSide: BorderSide(
+    color: Colors.red,
+    width: 1.5,
+  ),
+);
+
+//Input Decoration
+InputDecoration inputDecorationStyle = InputDecoration(
+  filled: true,
+  fillColor: lightColor,
+  isDense: true,
+  focusedBorder: inputBorder,
+  enabledBorder: inputBorder,
+  errorBorder: errorInputBorder,
+  focusedErrorBorder: errorInputBorder,
 );
 
 //Rounded Containers with Shadow

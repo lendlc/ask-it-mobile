@@ -90,7 +90,7 @@ class _buildSubtopicTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/topics/1/lesson/1',
+        Navigator.pushNamed(context, '/learn-java/lesson',
             arguments: {'title': title});
       },
       child: Container(

@@ -1,6 +1,9 @@
 import 'package:ask_it/components/rounded_button.dart';
 import 'package:ask_it/constants.dart';
+import 'package:ask_it/providers/auth.dart';
 import 'package:flutter/material.dart';
+
+import 'package:provider/provider.dart';
 
 class RegisterStudentScreen extends StatefulWidget {
   @override
@@ -9,6 +12,9 @@ class RegisterStudentScreen extends StatefulWidget {
 
 class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
   String _firstName, _lastName, _email, _password;
+  final String role = 'tutee';
+  String emailIsTakenError;
+  bool emailIsTaken = false;
 
   //Reference to the Form
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -27,42 +33,22 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
             height: 5,
           ),
           TextFormField(
-            decoration: InputDecoration(
-              hintText: 'First Name',
-              filled: true,
-              fillColor: lightColor,
-              //Border when user Uses the Text Field
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide(
-                  color: Colors.black26,
-                ),
-              ),
-              //Default Border Color
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide(
-                  color: lightColor,
-                  //width: 2.0,
-                ),
-              ),
-              //Border When there is an Error
-              errorBorder: OutlineInputBorder(
-                //borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide(
-                  color: Colors.red,
-                  width: 2.0,
-                ),
-              ),
-            ),
+            decoration: inputDecorationStyle,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (String val) {
               if (val.isEmpty) {
                 return 'First Name is required';
               }
+
+              if (isNumeric(val) == true) {
+                return 'Invalid value';
+              }
+
+              return null;
             },
-            onSaved: (String val) {
+            onChanged: (String val) {
               //Assigns state to variable.
-              _firstName = val;
+              _firstName = val.trim();
             },
           ),
         ],
@@ -84,43 +70,20 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
             height: 5,
           ),
           TextFormField(
+            decoration: inputDecorationStyle,
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            decoration: InputDecoration(
-              hintText: 'Last Name',
-              filled: true,
-              fillColor: lightColor,
-              //Border when user Uses the Text Field
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide(
-                  color: Colors.black26,
-                ),
-              ),
-              //Default Border Color
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide(
-                  color: lightColor,
-                  //width: 2.0,
-                ),
-              ),
-              //Border When there is an Error
-              errorBorder: OutlineInputBorder(
-                //borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide(
-                  color: Colors.red,
-                  width: 2.0,
-                ),
-              ),
-            ),
             validator: (String val) {
               if (val.isEmpty) {
                 return 'Last Name is required';
               }
+              if (isNumeric(val) == true) {
+                return 'Invalid value';
+              }
+              return null;
             },
-            onSaved: (String val) {
+            onChanged: (String val) {
               //Assigns state to variable.
-              _lastName = val;
+              _lastName = val.trim();
             },
           ),
         ],
@@ -142,42 +105,26 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
             height: 5,
           ),
           TextFormField(
-            decoration: InputDecoration(
-              hintText: 'Email',
-              filled: true,
-              fillColor: lightColor,
-              //Border when user Uses the Text Field
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide(
-                  color: Colors.black26,
-                ),
-              ),
-              //Default Border Color
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide(
-                  color: lightColor,
-                  //width: 2.0,
-                ),
-              ),
-              //Border When there is an Error
-              errorBorder: OutlineInputBorder(
-                //borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide(
-                  color: Colors.red,
-                  width: 2.0,
-                ),
-              ),
-            ),
+            decoration: inputDecorationStyle,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (String val) {
               if (val.isEmpty) {
                 return 'Email is required';
               }
+              if (!val.contains('@students.national-u.edu.ph')) {
+                return 'Please provide a valid NU email';
+              }
+              if (emailIsTaken == true) {
+                return emailIsTakenError;
+              }
+              return null;
             },
-            onSaved: (String val) {
+            onChanged: (String val) {
               //Assigns state to variable.
-              _email = val;
+              _email = val.trim();
+              setState(() {
+                emailIsTaken = false;
+              });
             },
           ),
         ],
@@ -200,43 +147,20 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
           ),
           TextFormField(
             obscureText: true,
-            decoration: InputDecoration(
-              hintText: 'Password',
-              filled: true,
-              fillColor: lightColor,
-              //Border when user Uses the Text Field
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide(
-                  color: Colors.black26,
-                ),
-              ),
-              //Default Border Color
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide(
-                  color: lightColor,
-                  //width: 2.0,
-                ),
-              ),
-              //Border When there is an Error
-              errorBorder: OutlineInputBorder(
-                //borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide(
-                  color: Colors.red,
-                  width: 2.0,
-                ),
-              ),
-            ),
+            decoration: inputDecorationStyle,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (String val) {
               if (val.isEmpty) {
-                return 'First Name is required';
-              } else
-                return '';
+                return 'Password is required';
+              }
+              if (val.length < 8) {
+                return 'Password should atleast be 8 characters';
+              }
+              return null;
             },
-            onSaved: (String val) {
+            onChanged: (String val) {
               //Assigns state to variable.
-              _password = val;
+              _password = val.trim();
             },
           ),
         ],
@@ -259,7 +183,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
         child: SingleChildScrollView(
           child: Container(
             //height: size.height,
-            width: double.infinity,
+            padding: EdgeInsets.all(16),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -273,38 +197,42 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                 SizedBox(
                   height: size.height * 0.03,
                 ),
-                Container(
-                  width: size.width * 0.9,
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      children: <Widget>[
-                        _buildFirstName(),
-                        _buildLastName(),
-                        _buildEmail(),
-                        _buildPassword(),
-                        SizedBox(height: size.height * 0.03),
-                        RoundedButton(
-                          color: primaryColor,
-                          press: () {
-                            if (!_formKey.currentState.validate()) {
-                              return;
-                            }
-                            _formKey.currentState.save();
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: <Widget>[
+                      _buildFirstName(),
+                      _buildLastName(),
+                      _buildEmail(),
+                      _buildPassword(),
+                      SizedBox(height: size.height * 0.03),
+                      RoundedButton(
+                        color: primaryColor,
+                        press: () async {
+                          //close keyboard upon clicking button
+                          FocusScope.of(context).unfocus();
 
-                            print(_firstName);
-                            print(_lastName);
-                            print(_email);
-                            print(_password);
+                          if (!_formKey.currentState.validate()) {
+                            return;
+                          }
+                          _formKey.currentState.save();
 
-                            //Move to Home Page
-                            Navigator.pushNamed(context, '/login');
-                          },
-                          text: 'Create my Account',
-                          textColor: Colors.black,
-                        )
-                      ],
-                    ),
+                          Provider.of<Auth>(context, listen: false)
+                              .registerTutee(
+                            _firstName,
+                            _lastName,
+                            _email,
+                            _password,
+                          );
+
+                          _formKey.currentState.reset();
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, '/login', (_) => false);
+                        },
+                        text: 'Create my Account',
+                        textColor: Colors.black,
+                      )
+                    ],
                   ),
                 )
               ],
@@ -314,4 +242,11 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
       ),
     );
   }
+}
+
+bool isNumeric(String s) {
+  if (s == null) {
+    return false;
+  }
+  return double.tryParse(s) != null;
 }

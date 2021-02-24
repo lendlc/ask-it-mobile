@@ -1,9 +1,98 @@
+import 'package:ask_it/components/rounded_button.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants.dart';
+import 'widgets/tutor_card.dart';
 
 class TutorListScreen extends StatelessWidget {
   static String routeName = '/tutor-list';
+
+  showAlertDialog(BuildContext context) {
+    AlertDialog alert = AlertDialog(
+      titlePadding: EdgeInsets.all(16),
+      contentPadding: EdgeInsets.zero,
+      title: Text(
+        'Select date and Time',
+        style: mediumTextBold,
+      ),
+      content: Container(
+        height: 250,
+        child: Form(
+          child: Column(
+            children: <Widget>[
+              RadioListTile<int>(
+                title: Text(
+                  "Mon Feb 15 (7:00-9:00AM)",
+                ),
+                value: 1,
+                toggleable: true,
+                groupValue: 1,
+                onChanged: (value) {
+                  return 0;
+                },
+              ),
+              RadioListTile(
+                title: Text(
+                  "Tue Feb 15 (7:00-9:00AM)",
+                ),
+                value: 1,
+                groupValue: 0,
+                onChanged: (value) {
+                  return 0;
+                },
+              ),
+              RadioListTile(
+                title: Text(
+                  "Wed Feb 15 (11:00-12:00AM)",
+                ),
+                value: 1,
+                groupValue: 0,
+                onChanged: (value) {
+                  return null;
+                },
+              ),
+              RadioListTile(
+                title: Text(
+                  "Fri Feb 15 (7:00-12:00AM)",
+                ),
+                groupValue: 0,
+
+                //toggleable: false,
+                value: 1,
+                onChanged: (value) {
+                  return null;
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+      actions: [
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: RoundedButton(
+            text: 'Continue',
+            color: secondaryColor,
+            textColor: Colors.white,
+            press: () {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                '/home',
+                (_) => false,
+              );
+            },
+          ),
+        )
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +108,13 @@ class TutorListScreen extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 16),
           itemCount: 3,
           itemBuilder: (context, index) {
-            return _buildTutorCard();
+            return BuildTutorCard(
+              name: 'Rhon Emmanuel Casem',
+              email: 'casem@students.national-u.edu.ph',
+              onTap: () {
+                showAlertDialog(context);
+              },
+            );
           },
         ),
       ),
@@ -27,80 +122,3 @@ class TutorListScreen extends StatelessWidget {
   }
 }
 
-class _buildTutorCard extends StatelessWidget {
-  const _buildTutorCard({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, '/chat');
-      },
-      child: Container(
-        height: 90,
-        //width: double.infinity,
-        padding: EdgeInsets.all(8),
-        margin: EdgeInsets.only(top: 16),
-        decoration: boxDecorationStyle,
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              child: Container(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      'Rhon Emmanuel Casem',
-                      style: TextStyle(
-                        fontSize: mediumText,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 3,
-                    ),
-                    Text(
-                      'casemr@students.national-u.edu.ph',
-                      style: TextStyle(
-                        fontSize: smallText,
-                        color: Colors.black45,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(
-              width: 8,
-            ),
-            Container(
-              //occupy parent height (80)
-              height: double.infinity,
-              width: 70,
-              decoration: BoxDecoration(
-                color: secondaryColor,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(
-                    10.0,
-                  ),
-                ),
-              ),
-
-              child: Container(
-                //color: primaryColor,
-                child: Icon(
-                  Icons.star_rounded,
-                  size: 70,
-                  color: primaryColor,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}

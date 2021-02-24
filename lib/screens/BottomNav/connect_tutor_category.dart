@@ -10,8 +10,11 @@ class TutorCategoryScreen extends StatelessWidget {
       appBar: AppBar(),
       body: Container(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          //mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            SizedBox(
+              height: 50,
+            ),
             Container(
               alignment: Alignment.centerLeft,
               padding: EdgeInsets.all(16),
