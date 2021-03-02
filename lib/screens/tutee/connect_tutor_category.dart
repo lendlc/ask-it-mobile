@@ -1,6 +1,8 @@
 import 'package:ask_it/constants.dart';
 import 'package:flutter/material.dart';
 
+import '../../components/course_card.dart';
+
 class TutorCategoryScreen extends StatelessWidget {
   static String routeName = '/tutor-category';
 
@@ -19,7 +21,7 @@ class TutorCategoryScreen extends StatelessWidget {
               alignment: Alignment.centerLeft,
               padding: EdgeInsets.all(16),
               child: Text(
-                'Available Subjects',
+                'What do you want to learn?',
                 style: largeTextBold,
               ),
             ),
@@ -31,77 +33,48 @@ class TutorCategoryScreen extends StatelessWidget {
               shrinkWrap: true,
               physics: ScrollPhysics(),
               children: [
-                _buildCategoryTile(
+                CourseTile(
                   title: 'Intro to Java Programming',
                   imagePath: 'assets/images/subjects/sub-1.png',
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      '/tutor-list',
+                    );
+                  },
                 ),
-                _buildCategoryTile(
+                CourseTile(
                   title: 'Advanced Java Programming',
                   imagePath: 'assets/images/subjects/sub-2.png',
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      '/tutor-list',
+                    );
+                  },
                 ),
-                _buildCategoryTile(
+                CourseTile(
                   title: 'Object Oriented Programming',
                   imagePath: 'assets/images/subjects/sub-3.png',
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      '/tutor-list',
+                    );
+                  },
                 ),
-                _buildCategoryTile(
-                  title: 'Data Structures and Algorithm',
+                CourseTile(
+                  title: 'Data Structures and Algorithms',
                   imagePath: 'assets/images/subjects/sub-4.png',
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      '/tutor-list',
+                    );
+                  },
                 ),
               ],
             ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _buildCategoryTile extends StatelessWidget {
-  final String title, imagePath;
-
-  const _buildCategoryTile({
-    Key key,
-    this.title,
-    this.imagePath,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(
-          context,
-          '/tutor-list',
-          arguments: {'title': title},
-        );
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          color: primaryColor,
-          borderRadius: BorderRadius.all(
-            Radius.circular(10),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.4),
-              spreadRadius: 0.5,
-              blurRadius: 10,
-              offset: Offset(0, 3),
-            )
-          ],
-        ),
-        padding: EdgeInsets.all(16),
-        child: Column(
-          //mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              height: 90,
-              child: Image.asset(imagePath),
-            ),
-            Text(
-              title,
-              style: mediumTextBold,
-            )
           ],
         ),
       ),

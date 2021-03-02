@@ -1,8 +1,12 @@
+import 'package:ask_it/providers/auth.dart';
+import 'package:ask_it/screens/tutor/tutor_home_screen.dart';
+import 'package:ask_it/screens/tutor/tutor_profile_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import 'chat_list_screen.dart';
-import 'home_screen.dart';
-import 'profile_screen.dart';
+import '../tutee/chat_list_screen.dart';
+import '../tutee/home_screen.dart';
+import '../tutee/profile_screen.dart';
 
 class TabsScreen extends StatefulWidget {
   static String routeName = '/home';
@@ -12,7 +16,13 @@ class TabsScreen extends StatefulWidget {
 }
 
 class _TabsScreenState extends State<TabsScreen> {
-  final List<Widget> _pages = [
+  final List<Widget> _tutorPages = [
+    TutorHomeScreen(),
+    ChatListScreen(),
+    TutorProfileScreen()
+  ];
+
+  final List<Widget> _studentPages = [
     HomeScreen(),
     ChatListScreen(),
     ProfileScreen(),
@@ -28,8 +38,12 @@ class _TabsScreenState extends State<TabsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isTutor = Provider.of<Auth>(context, listen: true).isTutor;
+    //final bool isTutor = true;
     return Scaffold(
-      body: _pages[_selectedPageIndex],
+      body: !isTutor
+          ? _studentPages[_selectedPageIndex]
+          : _tutorPages[_selectedPageIndex],
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
         showSelectedLabels: false,

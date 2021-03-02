@@ -1,5 +1,7 @@
+import 'package:ask_it/providers/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ask_it/constants.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override
@@ -18,7 +20,9 @@ class ProfileScreen extends StatelessWidget {
               color: Colors.redAccent,
             ),
             onPressed: () {
-              Navigator.pushNamed(context, '/login');
+              Provider.of<Auth>(context, listen: false).logout();
+
+              Navigator.pushReplacementNamed(context, '/login');
             },
           )
         ],
@@ -198,10 +202,9 @@ class _buildProfileInfoCard extends StatelessWidget {
                 child: Text(
                   "Edit Profile",
                   style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black54
-                  ),
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black54),
                 ),
               ),
             ),

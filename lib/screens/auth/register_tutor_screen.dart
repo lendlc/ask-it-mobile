@@ -1,6 +1,8 @@
 import 'package:ask_it/components/rounded_button.dart';
 import 'package:ask_it/constants.dart';
+import 'package:ask_it/providers/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class RegisterTutorScreen extends StatefulWidget {
   @override
@@ -15,7 +17,7 @@ class _RegisterTutorScreenState extends State<RegisterTutorScreen> {
 
   Widget _buildFirstName() {
     return Container(
-      margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+      margin: EdgeInsets.only(top: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -27,42 +29,18 @@ class _RegisterTutorScreenState extends State<RegisterTutorScreen> {
             height: 5,
           ),
           TextFormField(
-            decoration: InputDecoration(
-              hintText: 'First Name',
-              filled: true,
-              fillColor: lightColor,
-              //Border when user Uses the Text Field
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide(
-                  color: Colors.black26,
-                ),
-              ),
-              //Default Border Color
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide(
-                  color: lightColor,
-                  //width: 2.0,
-                ),
-              ),
-              //Border When there is an Error
-              errorBorder: OutlineInputBorder(
-                //borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide(
-                  color: Colors.red,
-                  width: 2.0,
-                ),
-              ),
-            ),
+            decoration: inputDecorationStyle,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (String val) {
               if (val.isEmpty) {
                 return 'First Name is required';
               }
+
+              return null;
             },
-            onSaved: (String val) {
+            onChanged: (String val) {
               //Assigns state to variable.
-              _firstName = val;
+              _firstName = val.trim();
             },
           ),
         ],
@@ -84,43 +62,18 @@ class _RegisterTutorScreenState extends State<RegisterTutorScreen> {
             height: 5,
           ),
           TextFormField(
+            decoration: inputDecorationStyle,
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            decoration: InputDecoration(
-              hintText: 'Last Name',
-              filled: true,
-              fillColor: lightColor,
-              //Border when user Uses the Text Field
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide(
-                  color: Colors.black26,
-                ),
-              ),
-              //Default Border Color
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide(
-                  color: lightColor,
-                  //width: 2.0,
-                ),
-              ),
-              //Border When there is an Error
-              errorBorder: OutlineInputBorder(
-                //borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide(
-                  color: Colors.red,
-                  width: 2.0,
-                ),
-              ),
-            ),
             validator: (String val) {
               if (val.isEmpty) {
                 return 'Last Name is required';
               }
+
+              return null;
             },
-            onSaved: (String val) {
+            onChanged: (String val) {
               //Assigns state to variable.
-              _lastName = val;
+              _lastName = val.trim();
             },
           ),
         ],
@@ -142,42 +95,21 @@ class _RegisterTutorScreenState extends State<RegisterTutorScreen> {
             height: 5,
           ),
           TextFormField(
-            decoration: InputDecoration(
-              hintText: 'Email',
-              filled: true,
-              fillColor: lightColor,
-              //Border when user Uses the Text Field
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide(
-                  color: Colors.black26,
-                ),
-              ),
-              //Default Border Color
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide(
-                  color: lightColor,
-                  //width: 2.0,
-                ),
-              ),
-              //Border When there is an Error
-              errorBorder: OutlineInputBorder(
-                //borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide(
-                  color: Colors.red,
-                  width: 2.0,
-                ),
-              ),
-            ),
+            decoration: inputDecorationStyle,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (String val) {
               if (val.isEmpty) {
                 return 'Email is required';
               }
+              if (!val.contains('@students.national-u.edu.ph')) {
+                return 'Please provide a valid NU email';
+              }
+
+              return null;
             },
-            onSaved: (String val) {
+            onChanged: (String val) {
               //Assigns state to variable.
-              _email = val;
+              _email = val.trim();
             },
           ),
         ],
@@ -200,43 +132,20 @@ class _RegisterTutorScreenState extends State<RegisterTutorScreen> {
           ),
           TextFormField(
             obscureText: true,
-            decoration: InputDecoration(
-              hintText: 'Password',
-              filled: true,
-              fillColor: lightColor,
-              //Border when user Uses the Text Field
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide(
-                  color: Colors.black26,
-                ),
-              ),
-              //Default Border Color
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide(
-                  color: lightColor,
-                  //width: 2.0,
-                ),
-              ),
-              //Border When there is an Error
-              errorBorder: OutlineInputBorder(
-                //borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide(
-                  color: Colors.red,
-                  width: 2.0,
-                ),
-              ),
-            ),
+            decoration: inputDecorationStyle,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (String val) {
               if (val.isEmpty) {
-                return 'First Name is required';
-              } else
-                return '';
+                return 'Password is required';
+              }
+              if (val.length < 8) {
+                return 'Password should atleast be 8 characters';
+              }
+              return null;
             },
-            onSaved: (String val) {
+            onChanged: (String val) {
               //Assigns state to variable.
-              _password = val;
+              _password = val.trim();
             },
           ),
         ],
@@ -258,56 +167,62 @@ class _RegisterTutorScreenState extends State<RegisterTutorScreen> {
       body: Center(
         child: SingleChildScrollView(
           child: Container(
-            //height: size.height,
+            padding: EdgeInsets.all(16),
             width: double.infinity,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
                   'Create Profile',
-                  style: TextStyle(fontSize: 32, fontWeight: FontWeight.w700),
+                  style: largeTextBold,
                 ),
                 SizedBox(
                   height: size.height * 0.03,
                 ),
-                Container(
-                  width: size.width * 0.9,
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      children: <Widget>[
-                        _buildFirstName(),
-                        _buildLastName(),
-                        _buildEmail(),
-                        _buildPassword(),
-                        SizedBox(height: size.height * 0.03),
-                        Container(
-                          alignment: Alignment.centerRight,
-                          child: Container(
-                            width: size.width * 0.4,
-                            child: RoundedButton(
-                              text: 'Next',
-                              textColor: Colors.white,
-                              color: secondaryColor,
-                              press: () {
-                                if (!_formKey.currentState.validate()) {
-                                  return;
-                                }
-                                _formKey.currentState.save();
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: <Widget>[
+                      _buildFirstName(),
+                      _buildLastName(),
+                      _buildEmail(),
+                      _buildPassword(),
+                      SizedBox(height: size.height * 0.03),
+                      Container(
+                        alignment: Alignment.centerRight,
+                        child: Container(
+                          width: size.width * 0.4,
+                          child: RoundedButton(
+                            text: 'Next',
+                            textColor: Colors.white,
+                            color: secondaryColor,
+                            press: () {
+                              FocusScope.of(context).unfocus();
 
-                                print(_firstName);
-                                print(_lastName);
-                                print(_email);
-                                print(_password);
+                              if (!_formKey.currentState.validate()) {
+                                return;
+                              }
+                              _formKey.currentState.save();
 
-                                //Move to Home Page
-                                Navigator.pushNamed(context, '/login');
-                              },
-                            ),
+                              Provider.of<Auth>(context, listen: false)
+                                  .register(
+                                _firstName,
+                                _lastName,
+                                'tutor',
+                                _email,
+                                _password,
+                              );
+
+                              //_formKey.currentState.reset();
+
+                              //Move to Home Page
+                              Navigator.pushNamed(
+                                  context, '/register/tutor/subject');
+                            },
                           ),
-                        )
-                      ],
-                    ),
+                        ),
+                      )
+                    ],
                   ),
                 )
               ],

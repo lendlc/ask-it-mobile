@@ -1,7 +1,7 @@
 import 'package:ask_it/constants.dart';
 import 'package:flutter/material.dart';
 
-import 'widgets/tutor_card.dart';
+import '../../components/tutor_card.dart';
 
 class VideoTutorListScreen extends StatelessWidget {
   //make to 'tutors'

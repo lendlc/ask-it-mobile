@@ -27,9 +27,6 @@ class VideoListScreen extends StatelessWidget {
 }
 
 class TutorialCard extends StatelessWidget {
-  const TutorialCard({
-    Key key,
-  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

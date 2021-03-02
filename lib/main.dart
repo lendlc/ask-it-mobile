@@ -1,20 +1,18 @@
-import 'package:ask_it/constants.dart';
-import 'package:ask_it/providers/auth.dart';
-import 'package:ask_it/screens/BottomNav/change_avatar_screen.dart';
-import 'package:ask_it/screens/BottomNav/change_password_screen.dart';
-import 'package:ask_it/screens/BottomNav/edit_profile_screen.dart';
-import 'package:ask_it/screens/BottomNav/tutor_list_screen.dart';
-import 'package:ask_it/screens/BottomNav/video_list_screen.dart';
-import 'package:ask_it/screens/BottomNav/video_play_screen.dart';
-import 'package:ask_it/screens/BottomNav/video_tutor_list_screen.dart';
+import 'package:ask_it/screens/tutee/game_result_screen.dart';
+import 'package:ask_it/screens/tutee/mini_game_1_screen.dart';
+import 'package:ask_it/screens/tutor/tutor_add_schedule_screen.dart';
+import 'package:ask_it/screens/tutor/tutor_edit_schedule_screen.dart';
+import 'package:ask_it/screens/tutor/tutor_edit_video_screen.dart';
+import 'package:ask_it/screens/tutor/tutor_home_screen.dart';
+import 'package:ask_it/screens/tutor/tutor_upload_video_screen.dart';
+import 'package:ask_it/screens/tutor/tutor_videos_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ask_it/providers/auth.dart';
+import 'package:ask_it/constants.dart';
 
-import 'screens/BottomNav/chat_screen.dart';
-import 'screens/BottomNav/connect_tutor_category.dart';
-import 'screens/BottomNav/lesson_list_screen.dart';
-import 'screens/BottomNav/lesson_screen.dart';
-import 'screens/BottomNav/tabs_screen.dart';
+import 'screens/auth/*register_tutor_schedule_screen.dart';
+import 'screens/auth/register_tutor_subject_screen.dart';
 import 'screens/auth/forgot_password_screen.dart';
 import 'screens/auth/login_screen.dart';
 import 'screens/auth/register_student_screen.dart';
@@ -22,6 +20,18 @@ import 'screens/auth/register_tutor_screen.dart';
 import 'screens/auth/reset_password_screen.dart';
 import 'screens/auth/welcome_screen.dart';
 import 'screens/error_screen.dart';
+import 'screens/shared/change_avatar_screen.dart';
+import 'screens/shared/change_password_screen.dart';
+import 'screens/tutee/chat_screen.dart';
+import 'screens/tutee/connect_tutor_category.dart';
+import 'screens/shared/edit_profile_screen.dart';
+import 'screens/tutee/lesson_list_screen.dart';
+import 'screens/tutee/lesson_screen.dart';
+import 'screens/shared/tabs_screen.dart';
+import 'screens/tutee/tutor_list_screen.dart';
+import 'screens/tutee/video_list_screen.dart';
+import 'screens/tutee/video_play_screen.dart';
+import 'screens/tutee/video_tutor_list_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -53,6 +63,10 @@ class MyApp extends StatelessWidget {
           //auth routes
           '/register-student': (context) => RegisterStudentScreen(),
           '/register-tutor': (context) => RegisterTutorScreen(),
+          RegisterTutorSubjectScreen.routeName: (context) =>
+              RegisterTutorSubjectScreen(),
+          RegisterTutorScheduleScreen.routeName: (context) =>
+              RegisterTutorScheduleScreen(),
           '/login': (context) => LoginScreen(),
           '/forgot-password': (context) => ForgotPasswordScreen(),
           '/reset-password': (context) => ResetPasswordScreen(),
@@ -69,11 +83,23 @@ class MyApp extends StatelessWidget {
           EditProfileScreen.routeName: (context) => EditProfileScreen(),
           ChangePasswordScreen.routeName: (context) => ChangePasswordScreen(),
           ChangeAvatarScreen.routeName: (context) => ChangeAvatarScreen(),
+          MiniGame1Screen.routeName: (context) => MiniGame1Screen(),
+          GameResultScreen.routeName: (context) => GameResultScreen(),
+
+          //tutor routes
+          TutorVideoListScreen.routeName: (context) => TutorVideoListScreen(),
+          TutorUploadVideoScreen.routeName: (context) =>
+              TutorUploadVideoScreen(),
+          TutorEditVideoScreen.routeName: (context) => TutorEditVideoScreen(),
+
+          TutorEditScheduleScreen.routeName: (context) =>
+              TutorEditScheduleScreen(),
+          TutorAddScheduleScreen.routeName: (context) =>
+              TutorAddScheduleScreen()
         },
         onUnknownRoute: (settings) {
           return MaterialPageRoute(builder: (_) => ErrorScreen());
         },
-        //home: WelcomeScreen()
       ),
     );
   }

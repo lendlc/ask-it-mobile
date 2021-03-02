@@ -7,10 +7,16 @@ class Auth with ChangeNotifier {
   String _token;
   DateTime _expiryDate;
   String _uid;
+  bool isTutor = false;
 
-  Future<void> registerTutee(
-      String firstName, String lastName, String email, String password) async {
-    const url = 'http://10.0.2.2:3000/api/auth/register/tutee';
+  Future<void> register(
+    String firstName,
+    String lastName,
+    String role,
+    String email,
+    String password,
+  ) async {
+    const url = 'https://api.ask-it-mobile.com/api/auth/register';
 
     var response = await http.post(
       url,
@@ -20,7 +26,7 @@ class Auth with ChangeNotifier {
       body: jsonEncode({
         "firstName": firstName,
         "lastName": lastName,
-        "role": 'tutee',
+        "role": role,
         "email": email,
         "password": password,
       }),
@@ -30,7 +36,8 @@ class Auth with ChangeNotifier {
   }
 
   Future<int> login(String email, String password) async {
-    const url = 'http://10.0.2.2:3000/api/auth/login';
+    //const url = 'https://api.ask-it-mobile.com/api/auth/login';
+    const url = 'https://api.ask-it-mobile.com/api/auth/login';
 
     var response = await http.post(
       url,
@@ -43,8 +50,23 @@ class Auth with ChangeNotifier {
       }),
     );
 
-    //print(jsonDecode(response.body));
+    Map<String, dynamic> data = jsonDecode(response.body);
+
+    //Checks if success is false
+    if (!data['success']) {
+      return 400;
+    }
+
+    if (data['user']['role'] != 'tutee') {
+      isTutor = true;
+      notifyListeners();
+    }
 
     return response.statusCode;
+  }
+
+  void logout() {
+    isTutor = false;
+    notifyListeners();
   }
 }

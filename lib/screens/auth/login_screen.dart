@@ -49,7 +49,6 @@ class _LoginScreenState extends State<LoginScreen> {
               );
 
               if (code == 200) {
-                //proceed to home page
                 Navigator.pushNamedAndRemoveUntil(
                   context,
                   '/home',

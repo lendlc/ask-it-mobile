@@ -10,8 +10,6 @@ const mediumText = 18.0;
 const defaultText = 16.0;
 const smallText = 14.0;
 
-//Dimentions could be here too
-
 //Font Size and Weight Combination
 const largeTextBold = TextStyle(
   fontSize: largeText,

@@ -2,7 +2,7 @@ import 'package:ask_it/components/rounded_button.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants.dart';
-import 'widgets/tutor_card.dart';
+import '../../components/tutor_card.dart';
 
 class TutorListScreen extends StatelessWidget {
   static String routeName = '/tutor-list';

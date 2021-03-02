@@ -21,7 +21,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
 
   Widget _buildFirstName() {
     return Container(
-      margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+      margin: EdgeInsets.only(top: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -207,6 +207,8 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                       _buildPassword(),
                       SizedBox(height: size.height * 0.03),
                       RoundedButton(
+                        text: 'Create my Account',
+                        textColor: Colors.black,
                         color: primaryColor,
                         press: () async {
                           //close keyboard upon clicking button
@@ -217,10 +219,10 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                           }
                           _formKey.currentState.save();
 
-                          Provider.of<Auth>(context, listen: false)
-                              .registerTutee(
+                          Provider.of<Auth>(context, listen: false).register(
                             _firstName,
                             _lastName,
+                            'tutee',
                             _email,
                             _password,
                           );
@@ -229,8 +231,6 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                           Navigator.pushNamedAndRemoveUntil(
                               context, '/login', (_) => false);
                         },
-                        text: 'Create my Account',
-                        textColor: Colors.black,
                       )
                     ],
                   ),

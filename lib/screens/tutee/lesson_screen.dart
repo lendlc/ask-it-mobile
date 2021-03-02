@@ -45,9 +45,11 @@ class LessonScreen extends StatelessWidget {
             ),
             Expanded(child: SizedBox()),
             RoundedButton(
-              text: 'Take Excercise',
+              text: 'Take Exercise',
               color: primaryColor,
-              press: () {},
+              press: () {
+                Navigator.pushNamed(context, '/mini-game1');
+              },
             )
           ],
         ),
