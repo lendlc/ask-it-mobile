@@ -7,6 +7,7 @@ import 'package:ask_it/screens/tutor/tutor_upload_video_screen.dart';
 import 'package:ask_it/screens/tutor/tutor_videos_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:ask_it/constants.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'screens/auth/*register_tutor_schedule_screen.dart';
 import 'screens/auth/register_tutor_subject_screen.dart';
@@ -31,7 +32,7 @@ import 'screens/tutee/video_play_screen.dart';
 import 'screens/tutee/video_tutor_list_screen.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
