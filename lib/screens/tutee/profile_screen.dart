@@ -189,16 +189,18 @@ class _buildProfileInfoCard extends StatelessWidget {
             alignment: Alignment.centerRight,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child: RaisedButton(
-                elevation: 0.9,
-                padding: EdgeInsets.symmetric(
-                  vertical: 10,
-                  horizontal: 20,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: lightColor,
+                  elevation: 0.9,
+                  padding: EdgeInsets.symmetric(
+                    vertical: 10,
+                    horizontal: 20,
+                  ),
                 ),
                 onPressed: () {
                   Navigator.pushNamed(context, '/profile/edit');
                 },
-                color: lightColor,
                 child: Text(
                   "Edit Profile",
                   style: TextStyle(

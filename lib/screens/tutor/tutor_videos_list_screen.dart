@@ -12,7 +12,7 @@ class TutorVideoListScreen extends StatelessWidget {
           style: mediumTextBold,
         ),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             onPressed: () {
               Navigator.pushNamed(context, '/tutor/profile/videos/upload');
             },

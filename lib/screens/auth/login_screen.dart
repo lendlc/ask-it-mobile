@@ -22,16 +22,18 @@ class _LoginScreenState extends State<LoginScreen> {
         alignment: Alignment.centerRight,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
-          child: RaisedButton(
-            elevation: 0.9,
-            color: primaryColor,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              elevation: 0.9,
+              backgroundColor: primaryColor,
+              padding: EdgeInsets.symmetric(
+                vertical: 10,
+                horizontal: 40,
+              ),
+            ),
             child: Text(
               "Login",
               style: mediumTextBold,
-            ),
-            padding: EdgeInsets.symmetric(
-              vertical: 10,
-              horizontal: 40,
             ),
             onPressed: () async {
               //close keyboard upon clicking button
@@ -54,10 +56,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   '/home',
                   (_) => false,
                 );
+                return;
               }
               //_formKey.currentState.reset();
               final snackBar = SnackBar(content: Text('Invalid Credentials'));
-              Scaffold.of(context).showSnackBar(snackBar);
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
             },
           ),
         ),
