@@ -14,38 +14,41 @@ class TutorEditScheduleScreen extends StatefulWidget {
 class _TutorEditScheduleScreenState extends State<TutorEditScheduleScreen> {
   DateTime selectedDate = DateTime.now();
   TimeOfDay startTime = TimeOfDay.now();
-  TimeOfDay endTime;
+  TimeOfDay? endTime;
 
   @override
   Widget build(BuildContext context) {
     void _showDatePicker() async {
-      final DateTime picked = await showDatePicker(
+      final picked = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
         firstDate: DateTime.now().subtract(Duration(days: 0)),
         lastDate: DateTime(2022),
       );
-      setState(() {
-        selectedDate = picked;
-      });
+      if (picked != null) {
+        setState(() {
+          selectedDate = picked;
+        });
+      }
     }
 
     void _showStartTimePicker() async {
-      final TimeOfDay start = await showTimePicker(
+      final start = await showTimePicker(
         context: context,
         initialTime: TimeOfDay(
           hour: 12,
           minute: 00,
         ),
       );
-
-      setState(() {
-        startTime = start;
-      });
+      if (start != null) {
+        setState(() {
+          startTime = start;
+        });
+      }
     }
 
     void _showEndTimePicker() async {
-      final TimeOfDay end = await showTimePicker(
+      final end = await showTimePicker(
         context: context,
         initialTime: TimeOfDay(
           hour: startTime.hour,
@@ -180,7 +183,7 @@ class _TutorEditScheduleScreenState extends State<TutorEditScheduleScreen> {
           controller: TextEditingController(
             text: endTime == null
                 ? 'End Time'
-                : endTime.format(context).toString(),
+                : endTime!.format(context).toString(),
           ),
           decoration: InputDecoration(
             prefixIcon: Icon(

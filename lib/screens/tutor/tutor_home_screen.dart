@@ -84,10 +84,10 @@ class AppointmentCard extends StatelessWidget {
   final String name, time, suject;
 
   const AppointmentCard({
-    Key key,
-    @required this.name,
-    @required this.time,
-    @required this.suject,
+    Key? key,
+    required this.name,
+    required this.time,
+    required this.suject,
   }) : super(key: key);
 
   @override
@@ -102,11 +102,10 @@ class AppointmentCard extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: Container(
-              height: 75,
-              width: 75,
-              color: primaryColor,
-              child: Image.asset('assets/images/avatars/man_1.png')
-            ),
+                height: 75,
+                width: 75,
+                color: primaryColor,
+                child: Image.asset('assets/images/avatars/man_1.png')),
           ),
           SizedBox(
             width: 16,

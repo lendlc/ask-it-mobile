@@ -71,7 +71,7 @@ class TopicListScreen extends StatelessWidget {
           return TopicCard(
             title: topics[index]['title'],
             image: topics[index]['image'],
-            chapter: index+1,
+            chapter: index + 1,
           );
         },
       ),
@@ -84,10 +84,10 @@ class TopicCard extends StatelessWidget {
   final int chapter;
 
   const TopicCard({
-    Key key,
-    this.title,
-    this.chapter,
-    this.image,
+    Key? key,
+    required this.title,
+    required this.chapter,
+    required this.image,
   }) : super(key: key);
 
   @override

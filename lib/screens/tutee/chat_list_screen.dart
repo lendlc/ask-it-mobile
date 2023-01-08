@@ -26,7 +26,7 @@ class ChatListScreen extends StatelessWidget {
 
 class _buildMessageItem extends StatelessWidget {
   const _buildMessageItem({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

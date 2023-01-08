@@ -3,12 +3,9 @@ import 'package:ask_it/screens/tutee/mini_game_1_screen.dart';
 import 'package:ask_it/screens/tutor/tutor_add_schedule_screen.dart';
 import 'package:ask_it/screens/tutor/tutor_edit_schedule_screen.dart';
 import 'package:ask_it/screens/tutor/tutor_edit_video_screen.dart';
-import 'package:ask_it/screens/tutor/tutor_home_screen.dart';
 import 'package:ask_it/screens/tutor/tutor_upload_video_screen.dart';
 import 'package:ask_it/screens/tutor/tutor_videos_list_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:ask_it/providers/auth.dart';
 import 'package:ask_it/constants.dart';
 
 import 'screens/auth/*register_tutor_schedule_screen.dart';
@@ -41,66 +38,57 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider.value(
-          value: Auth(),
-        )
-      ],
-      child: MaterialApp(
-        title: 'Welcome to Ask IT',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          fontFamily: 'Open Sans',
-          primaryColor: primaryColor,
-          scaffoldBackgroundColor: Colors.white,
-          appBarTheme: AppBarStyle,
-        ),
-        //This could easily change when logged in and stuff
-        initialRoute: '/',
-        routes: {
-          '/': (context) => WelcomeScreen(),
-          //auth routes
-          '/register-student': (context) => RegisterStudentScreen(),
-          '/register-tutor': (context) => RegisterTutorScreen(),
-          RegisterTutorSubjectScreen.routeName: (context) =>
-              RegisterTutorSubjectScreen(),
-          RegisterTutorScheduleScreen.routeName: (context) =>
-              RegisterTutorScheduleScreen(),
-          '/login': (context) => LoginScreen(),
-          '/forgot-password': (context) => ForgotPasswordScreen(),
-          '/reset-password': (context) => ResetPasswordScreen(),
-          //auth routes end
-          TabsScreen.routeName: (context) => TabsScreen(),
-          TopicListScreen.routeName: (context) => TopicListScreen(),
-          LessonScreen.routeName: (context) => LessonScreen(),
-          ChatScreen.routeName: (context) => ChatScreen(),
-          TutorCategoryScreen.routeName: (context) => TutorCategoryScreen(),
-          TutorListScreen.routeName: (context) => TutorListScreen(),
-          VideoTutorListScreen.routeName: (context) => VideoTutorListScreen(),
-          VideoListScreen.routeName: (context) => VideoListScreen(),
-          PlayVideoScreen.routeName: (context) => PlayVideoScreen(),
-          EditProfileScreen.routeName: (context) => EditProfileScreen(),
-          ChangePasswordScreen.routeName: (context) => ChangePasswordScreen(),
-          ChangeAvatarScreen.routeName: (context) => ChangeAvatarScreen(),
-          MiniGame1Screen.routeName: (context) => MiniGame1Screen(),
-          GameResultScreen.routeName: (context) => GameResultScreen(),
-
-          //tutor routes
-          TutorVideoListScreen.routeName: (context) => TutorVideoListScreen(),
-          TutorUploadVideoScreen.routeName: (context) =>
-              TutorUploadVideoScreen(),
-          TutorEditVideoScreen.routeName: (context) => TutorEditVideoScreen(),
-
-          TutorEditScheduleScreen.routeName: (context) =>
-              TutorEditScheduleScreen(),
-          TutorAddScheduleScreen.routeName: (context) =>
-              TutorAddScheduleScreen()
-        },
-        onUnknownRoute: (settings) {
-          return MaterialPageRoute(builder: (_) => ErrorScreen());
-        },
+    return MaterialApp(
+      title: 'Welcome to Ask IT',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        fontFamily: 'Open Sans',
+        primaryColor: primaryColor,
+        scaffoldBackgroundColor: Colors.white,
+        appBarTheme: AppBarStyle,
       ),
+      //This could easily change when logged in and stuff
+      initialRoute: '/',
+      routes: {
+        '/': (context) => WelcomeScreen(),
+        //auth routes
+        '/register-student': (context) => RegisterStudentScreen(),
+        '/register-tutor': (context) => RegisterTutorScreen(),
+        RegisterTutorSubjectScreen.routeName: (context) =>
+            RegisterTutorSubjectScreen(),
+        RegisterTutorScheduleScreen.routeName: (context) =>
+            RegisterTutorScheduleScreen(),
+        '/login': (context) => LoginScreen(),
+        '/forgot-password': (context) => ForgotPasswordScreen(),
+        '/reset-password': (context) => ResetPasswordScreen(),
+        //auth routes end
+        TabsScreen.routeName: (context) => TabsScreen(),
+        TopicListScreen.routeName: (context) => TopicListScreen(),
+        LessonScreen.routeName: (context) => LessonScreen(),
+        ChatScreen.routeName: (context) => ChatScreen(),
+        TutorCategoryScreen.routeName: (context) => TutorCategoryScreen(),
+        TutorListScreen.routeName: (context) => TutorListScreen(),
+        VideoTutorListScreen.routeName: (context) => VideoTutorListScreen(),
+        VideoListScreen.routeName: (context) => VideoListScreen(),
+        PlayVideoScreen.routeName: (context) => PlayVideoScreen(),
+        EditProfileScreen.routeName: (context) => EditProfileScreen(),
+        ChangePasswordScreen.routeName: (context) => ChangePasswordScreen(),
+        ChangeAvatarScreen.routeName: (context) => ChangeAvatarScreen(),
+        MiniGame1Screen.routeName: (context) => MiniGame1Screen(),
+        GameResultScreen.routeName: (context) => GameResultScreen(),
+
+        //tutor routes
+        TutorVideoListScreen.routeName: (context) => TutorVideoListScreen(),
+        TutorUploadVideoScreen.routeName: (context) => TutorUploadVideoScreen(),
+        TutorEditVideoScreen.routeName: (context) => TutorEditVideoScreen(),
+
+        TutorEditScheduleScreen.routeName: (context) =>
+            TutorEditScheduleScreen(),
+        TutorAddScheduleScreen.routeName: (context) => TutorAddScheduleScreen()
+      },
+      onUnknownRoute: (settings) {
+        return MaterialPageRoute(builder: (_) => ErrorScreen());
+      },
     );
   }
 }

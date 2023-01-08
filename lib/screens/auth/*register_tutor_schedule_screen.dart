@@ -14,14 +14,14 @@ class RegisterTutorScheduleScreen extends StatefulWidget {
 
 class _RegisterTutorScheduleScreenState
     extends State<RegisterTutorScheduleScreen> {
-  DateTime selectedDate;
-  TimeOfDay startTime;
-  TimeOfDay endTime;
+  DateTime? selectedDate;
+  TimeOfDay? startTime;
+  TimeOfDay? endTime;
 
   @override
   Widget build(BuildContext context) {
     void _showDatePicker() async {
-      final DateTime picked = await showDatePicker(
+      final picked = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
         firstDate: DateTime.now().subtract(Duration(days: 0)),
@@ -33,7 +33,7 @@ class _RegisterTutorScheduleScreenState
     }
 
     void _showStartTimePicker() async {
-      final TimeOfDay start = await showTimePicker(
+      final start = await showTimePicker(
         context: context,
         initialTime: TimeOfDay(
           hour: 12,
@@ -47,16 +47,16 @@ class _RegisterTutorScheduleScreenState
     }
 
     void _showEndTimePicker() async {
-      final TimeOfDay end = await showTimePicker(
+      final end = await showTimePicker(
         context: context,
         initialTime: TimeOfDay(
-          hour: startTime.hour,
-          minute: startTime.minute,
+          hour: startTime!.hour,
+          minute: startTime!.minute,
         ),
       );
 
       if (end != null) {
-        if (end.hour.compareTo(startTime.hour) < 0) {
+        if (end.hour.compareTo(startTime!.hour) < 0) {
           return setState(() {
             endTime = null;
           });
@@ -142,7 +142,7 @@ class _RegisterTutorScheduleScreenState
           controller: TextEditingController(
             text: startTime == null
                 ? 'Start Time'
-                : startTime.format(context).toString(),
+                : startTime!.format(context).toString(),
           ),
           decoration: InputDecoration(
             prefixIcon: Icon(
@@ -184,7 +184,7 @@ class _RegisterTutorScheduleScreenState
           controller: TextEditingController(
             text: endTime == null
                 ? 'End Time'
-                : endTime.format(context).toString(),
+                : endTime!.format(context).toString(),
           ),
           decoration: InputDecoration(
             prefixIcon: Icon(
@@ -224,7 +224,7 @@ class _RegisterTutorScheduleScreenState
           controller: TextEditingController(
             text: selectedDate == null
                 ? 'Select Date'
-                : DateFormat('EEE, MMM d, ' 'yyyy').format(selectedDate),
+                : DateFormat('EEE, MMM d, ' 'yyyy').format(selectedDate!),
           ),
           decoration: InputDecoration(
             prefixIcon: Icon(

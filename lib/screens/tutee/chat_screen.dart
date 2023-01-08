@@ -73,7 +73,7 @@ class ChatScreen extends StatelessWidget {
 
 class _buildSentMessage extends StatelessWidget {
   const _buildSentMessage({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -104,7 +104,7 @@ class _buildSentMessage extends StatelessWidget {
 
 class _buildRecievedMessage extends StatelessWidget {
   const _buildRecievedMessage({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

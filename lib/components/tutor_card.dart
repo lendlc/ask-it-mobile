@@ -3,9 +3,13 @@ import '../constants.dart';
 
 class BuildTutorCard extends StatelessWidget {
   final String name, email;
-  final Function onTap;
+  final void Function()? onTap;
 
-  BuildTutorCard({this.name, this.email, this.onTap});
+  BuildTutorCard({
+    required this.name,
+    required this.email,
+    this.onTap,
+  });
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

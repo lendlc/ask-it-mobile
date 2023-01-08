@@ -7,52 +7,53 @@ import 'package:intl/intl.dart';
 class TutorAddScheduleScreen extends StatefulWidget {
   static final String routeName = '/tutor/schedule';
   @override
-  _TutorAddScheduleScreen createState() =>
-      _TutorAddScheduleScreen();
+  _TutorAddScheduleScreen createState() => _TutorAddScheduleScreen();
 }
 
 class _TutorAddScheduleScreen extends State<TutorAddScheduleScreen> {
   DateTime selectedDate = DateTime.now();
   TimeOfDay startTime = TimeOfDay.now();
-  TimeOfDay endTime;
+  TimeOfDay? endTime;
 
   @override
   Widget build(BuildContext context) {
     void _showDatePicker() async {
-      final DateTime picked = await showDatePicker(
+      final picked = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
         firstDate: DateTime.now().subtract(Duration(days: 0)),
         lastDate: DateTime(2022),
       );
-      setState(() {
-        selectedDate = picked;
-      });
+      if (picked != null) {
+        setState(() {
+          selectedDate = picked;
+        });
+      }
     }
 
     void _showStartTimePicker() async {
-      final TimeOfDay start = await showTimePicker(
+      final start = await showTimePicker(
         context: context,
         initialTime: TimeOfDay(
           hour: 12,
           minute: 00,
         ),
       );
-
-      setState(() {
-        startTime = start;
-      });
+      if (start != null) {
+        setState(() {
+          startTime = start;
+        });
+      }
     }
 
     void _showEndTimePicker() async {
-      final TimeOfDay end = await showTimePicker(
+      final end = await showTimePicker(
         context: context,
         initialTime: TimeOfDay(
           hour: startTime.hour,
           minute: startTime.minute,
         ),
       );
-
       if (end != null) {
         if (end.hour.compareTo(startTime.hour) < 0) {
           return setState(() {
@@ -180,7 +181,7 @@ class _TutorAddScheduleScreen extends State<TutorAddScheduleScreen> {
           controller: TextEditingController(
             text: endTime == null
                 ? 'End Time'
-                : endTime.format(context).toString(),
+                : endTime!.format(context).toString(),
           ),
           decoration: InputDecoration(
             prefixIcon: Icon(

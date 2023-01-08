@@ -5,7 +5,7 @@ import '../constants.dart';
 class HomeScreenHeader extends StatelessWidget {
   final String message;
 
-  HomeScreenHeader({@required this.message});
+  HomeScreenHeader({required this.message});
   @override
   Widget build(BuildContext context) {
     return Container(

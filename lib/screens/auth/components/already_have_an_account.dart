@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 
 class AlreadyHaveAnAccount extends StatelessWidget {
   final bool login;
-  final Function onTap;
+  final void Function()? onTap;
   final MainAxisAlignment postion;
 
   const AlreadyHaveAnAccount({
-    Key key,
-    @required this.size,
+    Key? key,
+    required this.size,
     this.login = true,
     this.onTap,
     this.postion = MainAxisAlignment.start,
@@ -30,10 +30,8 @@ class AlreadyHaveAnAccount extends StatelessWidget {
           ),
           GestureDetector(
             onTap: onTap,
-            child: Text(
-              login ? "Sign In" : "Sign up",
-              style: smallTextW600BlueAccent
-            ),
+            child: Text(login ? "Sign In" : "Sign up",
+                style: smallTextW600BlueAccent),
           )
         ],
       ),

@@ -1,7 +1,6 @@
 import 'package:ask_it/constants.dart';
 import 'package:ask_it/providers/auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class TutorProfileScreen extends StatelessWidget {
   @override
@@ -20,7 +19,7 @@ class TutorProfileScreen extends StatelessWidget {
               color: Colors.redAccent,
             ),
             onPressed: () {
-              Provider.of<Auth>(context, listen: false).logout();
+              // Provider.of<Auth>(context, listen: false).logout();
               Navigator.pushReplacementNamed(context, '/login');
             },
           )
@@ -219,9 +218,9 @@ class HeaderButton extends StatelessWidget {
   final String title, path;
 
   const HeaderButton({
-    Key key,
-    this.title,
-    this.path,
+    Key? key,
+    required this.title,
+    required this.path,
   }) : super(key: key);
 
   @override

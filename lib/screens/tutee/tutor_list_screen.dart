@@ -27,9 +27,7 @@ class TutorListScreen extends StatelessWidget {
                 value: 1,
                 toggleable: true,
                 groupValue: 1,
-                onChanged: (value) {
-                  return 0;
-                },
+                onChanged: (value) {},
               ),
               RadioListTile(
                 title: Text(
@@ -37,9 +35,7 @@ class TutorListScreen extends StatelessWidget {
                 ),
                 value: 1,
                 groupValue: 0,
-                onChanged: (value) {
-                  return 0;
-                },
+                onChanged: (value) {},
               ),
               RadioListTile(
                 title: Text(
@@ -47,21 +43,16 @@ class TutorListScreen extends StatelessWidget {
                 ),
                 value: 1,
                 groupValue: 0,
-                onChanged: (value) {
-                  return null;
-                },
+                onChanged: (value) {},
               ),
               RadioListTile(
                 title: Text(
                   "Fri Feb 15 (7:00-12:00AM)",
                 ),
                 groupValue: 0,
-
                 //toggleable: false,
                 value: 1,
-                onChanged: (value) {
-                  return null;
-                },
+                onChanged: (value) {},
               ),
             ],
           ),
@@ -121,4 +112,3 @@ class TutorListScreen extends StatelessWidget {
     );
   }
 }
-

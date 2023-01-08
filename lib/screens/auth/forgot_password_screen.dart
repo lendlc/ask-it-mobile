@@ -77,13 +77,13 @@ Widget _buildEmailTF() {
         ),
         TextFormField(
           decoration: inputDecorationStyle,
-          validator: (String val) {
-            if (val.isEmpty) {
+          validator: (String? val) {
+            if (val == null || val.isEmpty) {
               return 'Email is required';
             }
             return null;
           },
-          onChanged: (String val) {
+          onChanged: (String? val) {
             //Assigns state to variable.
           },
         ),

@@ -2,7 +2,6 @@ import 'package:ask_it/providers/auth.dart';
 import 'package:ask_it/screens/tutor/tutor_home_screen.dart';
 import 'package:ask_it/screens/tutor/tutor_profile_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../tutee/chat_list_screen.dart';
 import '../tutee/home_screen.dart';
@@ -38,8 +37,8 @@ class _TabsScreenState extends State<TabsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isTutor = Provider.of<Auth>(context, listen: true).isTutor;
-    //final bool isTutor = true;
+    // final isTutor = Provider.of<Auth>(context, listen: true).isTutor;
+    final bool isTutor = true;
     return Scaffold(
       body: !isTutor
           ? _studentPages[_selectedPageIndex]

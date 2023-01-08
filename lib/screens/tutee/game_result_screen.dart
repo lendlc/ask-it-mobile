@@ -34,6 +34,7 @@ class GameResultScreen extends StatelessWidget {
             RoundedButton(
               text: 'Next Chapter',
               color: primaryColor,
+              textColor: Colors.white,
               press: () {
                 //pops all screen until list of topics screen
                 Navigator.popUntil(context, ModalRoute.withName('/learn-java'));
@@ -44,7 +45,7 @@ class GameResultScreen extends StatelessWidget {
               textColor: Colors.white,
               color: secondaryColor,
               press: () {
-                return showDialog<void>(
+                showDialog<void>(
                   context: context,
                   barrierDismissible: false, // user must tap button!
                   builder: (BuildContext context) {
@@ -62,7 +63,7 @@ class GameResultScreen extends StatelessWidget {
 
 class LearnMoreAlertDialog extends StatelessWidget {
   const LearnMoreAlertDialog({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -141,7 +142,7 @@ class LearnMoreAlertDialog extends StatelessWidget {
 
 class StarsContainer extends StatelessWidget {
   const StarsContainer({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

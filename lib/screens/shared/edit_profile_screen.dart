@@ -40,8 +40,7 @@ class EditProfileScreen extends StatelessWidget {
                       color: lightColor,
                       iconSize: 42,
                       onPressed: () {
-                        Navigator.pushNamed(
-                            context, '/profile/update/avatar');
+                        Navigator.pushNamed(context, '/profile/update/avatar');
                       },
                     ),
                   ),
@@ -75,9 +74,9 @@ class _buildEmailTF extends StatelessWidget {
   final String title, value;
 
   const _buildEmailTF({
-    Key key,
-    this.title,
-    this.value,
+    Key? key,
+    required this.title,
+    required this.value,
   }) : super(key: key);
 
   @override

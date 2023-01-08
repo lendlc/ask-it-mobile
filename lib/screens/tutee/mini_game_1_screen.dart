@@ -12,7 +12,7 @@ class MiniGame1Screen extends StatefulWidget {
 
 class _MiniGame1ScreenState extends State<MiniGame1Screen> {
   final Map<String, bool> score = {};
-  Timer _timer;
+  late final Timer _timer;
   int timerCount = 20;
 
   final Map choices = {
@@ -110,9 +110,9 @@ class _MiniGame1ScreenState extends State<MiniGame1Screen> {
                   children: choices.keys
                       .map((item) => _buildDragTarget(item))
                       .toList()
-                        ..shuffle(
-                          Random(2),
-                        ),
+                    ..shuffle(
+                      Random(2),
+                    ),
                 )
               ],
             )
@@ -126,7 +126,7 @@ class _MiniGame1ScreenState extends State<MiniGame1Screen> {
     return DragTarget<String>(
       builder: (
         BuildContext context,
-        List<String> incoming,
+        List<String?> incoming,
         List rejected,
       ) {
         if (score[item] == true) {
@@ -180,7 +180,7 @@ class _MiniGame1ScreenState extends State<MiniGame1Screen> {
 class Item extends StatelessWidget {
   final String value;
 
-  Item({this.value});
+  Item({required this.value});
 
   @override
   Widget build(BuildContext context) {

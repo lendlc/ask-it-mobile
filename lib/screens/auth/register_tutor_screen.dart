@@ -1,8 +1,6 @@
 import 'package:ask_it/components/rounded_button.dart';
 import 'package:ask_it/constants.dart';
-import 'package:ask_it/providers/auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class RegisterTutorScreen extends StatefulWidget {
   @override
@@ -10,7 +8,7 @@ class RegisterTutorScreen extends StatefulWidget {
 }
 
 class _RegisterTutorScreenState extends State<RegisterTutorScreen> {
-  String _firstName, _lastName, _email, _password;
+  String? _firstName, _lastName, _email, _password;
 
   //Reference to the Form
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -31,16 +29,16 @@ class _RegisterTutorScreenState extends State<RegisterTutorScreen> {
           TextFormField(
             decoration: inputDecorationStyle,
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: (String val) {
-              if (val.isEmpty) {
+            validator: (String? val) {
+              if (val == null || val.isEmpty) {
                 return 'First Name is required';
               }
 
               return null;
             },
-            onChanged: (String val) {
+            onChanged: (String? val) {
               //Assigns state to variable.
-              _firstName = val.trim();
+              _firstName = val?.trim();
             },
           ),
         ],
@@ -64,16 +62,16 @@ class _RegisterTutorScreenState extends State<RegisterTutorScreen> {
           TextFormField(
             decoration: inputDecorationStyle,
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: (String val) {
-              if (val.isEmpty) {
+            validator: (String? val) {
+              if (val == null || val.isEmpty) {
                 return 'Last Name is required';
               }
 
               return null;
             },
-            onChanged: (String val) {
+            onChanged: (String? val) {
               //Assigns state to variable.
-              _lastName = val.trim();
+              _lastName = val?.trim();
             },
           ),
         ],
@@ -97,8 +95,8 @@ class _RegisterTutorScreenState extends State<RegisterTutorScreen> {
           TextFormField(
             decoration: inputDecorationStyle,
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: (String val) {
-              if (val.isEmpty) {
+            validator: (String? val) {
+              if (val == null || val.isEmpty) {
                 return 'Email is required';
               }
               if (!val.contains('@students.national-u.edu.ph')) {
@@ -107,9 +105,9 @@ class _RegisterTutorScreenState extends State<RegisterTutorScreen> {
 
               return null;
             },
-            onChanged: (String val) {
+            onChanged: (String? val) {
               //Assigns state to variable.
-              _email = val.trim();
+              _email = val?.trim();
             },
           ),
         ],
@@ -134,8 +132,8 @@ class _RegisterTutorScreenState extends State<RegisterTutorScreen> {
             obscureText: true,
             decoration: inputDecorationStyle,
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: (String val) {
-              if (val.isEmpty) {
+            validator: (String? val) {
+              if (val == null || val.isEmpty) {
                 return 'Password is required';
               }
               if (val.length < 8) {
@@ -143,9 +141,9 @@ class _RegisterTutorScreenState extends State<RegisterTutorScreen> {
               }
               return null;
             },
-            onChanged: (String val) {
+            onChanged: (String? val) {
               //Assigns state to variable.
-              _password = val.trim();
+              _password = val?.trim();
             },
           ),
         ],
@@ -199,19 +197,23 @@ class _RegisterTutorScreenState extends State<RegisterTutorScreen> {
                             press: () {
                               FocusScope.of(context).unfocus();
 
-                              if (!_formKey.currentState.validate()) {
+                              if (_formKey.currentState == null) {
                                 return;
                               }
-                              _formKey.currentState.save();
 
-                              Provider.of<Auth>(context, listen: false)
-                                  .register(
-                                _firstName,
-                                _lastName,
-                                'tutor',
-                                _email,
-                                _password,
-                              );
+                              if (!_formKey.currentState!.validate()) {
+                                return;
+                              }
+                              _formKey.currentState!.save();
+
+                              // Provider.of<Auth>(context, listen: false)
+                              //     .register(
+                              //   _firstName,
+                              //   _lastName,
+                              //   'tutor',
+                              //   _email,
+                              //   _password,
+                              // );
 
                               //_formKey.currentState.reset();
 

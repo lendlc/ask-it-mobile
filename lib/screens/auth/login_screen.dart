@@ -1,7 +1,5 @@
 import 'package:ask_it/constants.dart';
-import 'package:ask_it/providers/auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'components/already_have_an_account.dart';
 
@@ -11,7 +9,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  String _email, _password;
+  String? _email;
+  String? _password;
 
   //Reference to the Form
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -39,18 +38,22 @@ class _LoginScreenState extends State<LoginScreen> {
               //close keyboard upon clicking button
               FocusScope.of(context).unfocus();
 
-              if (!_formKey.currentState.validate()) {
+              if (_formKey.currentState == null) {
                 return;
               }
-              _formKey.currentState.save();
 
-              final int code =
-                  await Provider.of<Auth>(context, listen: false).login(
-                _email,
-                _password,
-              );
+              if (!_formKey.currentState!.validate()) {
+                return;
+              }
+              _formKey.currentState!.save();
 
-              if (code == 200) {
+              // final int code =
+              //     await Provider.of<Auth>(context, listen: false).login(
+              //   _email,
+              //   _password,
+              // );
+
+              if (true) {
                 Navigator.pushNamedAndRemoveUntil(
                   context,
                   '/home',
@@ -97,8 +100,8 @@ class _LoginScreenState extends State<LoginScreen> {
           TextFormField(
             decoration: inputDecorationStyle,
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: (String val) {
-              if (val.isEmpty) {
+            validator: (String? val) {
+              if (val == null || val.isEmpty) {
                 return 'Email is required';
               }
               if (!val.contains('@students.national-u.edu.ph')) {
@@ -106,8 +109,8 @@ class _LoginScreenState extends State<LoginScreen> {
               }
               return null;
             },
-            onChanged: (String val) {
-              _email = val.trim();
+            onChanged: (String? val) {
+              _email = val?.trim();
             },
           ),
         ],
@@ -132,14 +135,14 @@ class _LoginScreenState extends State<LoginScreen> {
             obscureText: true,
             decoration: inputDecorationStyle,
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: (String val) {
-              if (val.isEmpty) {
+            validator: (String? val) {
+              if (val == null || val.isEmpty) {
                 return 'Password is required';
               } else
                 return null;
             },
-            onChanged: (String val) {
-              _password = val.trim();
+            onChanged: (String? val) {
+              _password = val?.trim();
             },
           ),
         ],

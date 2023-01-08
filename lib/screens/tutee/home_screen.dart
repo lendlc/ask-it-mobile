@@ -74,13 +74,13 @@ class ModuleCardList extends StatelessWidget {
 class ModuleCard extends StatelessWidget {
   final String title, description;
   final IconData icon;
-  final Function onTap;
+  final void Function()? onTap;
 
   const ModuleCard({
-    Key key,
-    this.title,
-    this.description,
-    this.icon,
+    Key? key,
+    required this.title,
+    required this.description,
+    required this.icon,
     this.onTap,
   }) : super(key: key);
 

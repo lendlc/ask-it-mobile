@@ -1,7 +1,6 @@
 import 'package:ask_it/providers/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ask_it/constants.dart';
-import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override
@@ -20,7 +19,7 @@ class ProfileScreen extends StatelessWidget {
               color: Colors.redAccent,
             ),
             onPressed: () {
-              Provider.of<Auth>(context, listen: false).logout();
+              // Provider.of<Auth>(context, listen: false).logout();
 
               Navigator.pushReplacementNamed(context, '/login');
             },
@@ -66,7 +65,7 @@ class ProfileScreen extends StatelessWidget {
 
 class _buildScheduleListItem extends StatelessWidget {
   const _buildScheduleListItem({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -146,7 +145,7 @@ class _buildScheduleListItem extends StatelessWidget {
 
 class _buildProfileInfoCard extends StatelessWidget {
   const _buildProfileInfoCard({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

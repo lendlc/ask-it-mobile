@@ -8,14 +8,14 @@ class LessonScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final routeArgs =
-        ModalRoute.of(context).settings.arguments as Map<String, String>;
+        ModalRoute.of(context)?.settings.arguments as Map<String, String>;
 
     final title = routeArgs['title'];
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          title,
+          title ?? 'Lesson Title',
           style: mediumTextBold,
         ),
       ),
@@ -47,6 +47,7 @@ class LessonScreen extends StatelessWidget {
             RoundedButton(
               text: 'Take Exercise',
               color: primaryColor,
+              textColor: Colors.white,
               press: () {
                 Navigator.pushNamed(context, '/mini-game1');
               },
@@ -60,7 +61,7 @@ class LessonScreen extends StatelessWidget {
 
 class _buildImageExampleContainer extends StatelessWidget {
   const _buildImageExampleContainer({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

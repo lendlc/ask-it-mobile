@@ -1,9 +1,6 @@
 import 'package:ask_it/components/rounded_button.dart';
 import 'package:ask_it/constants.dart';
-import 'package:ask_it/providers/auth.dart';
 import 'package:flutter/material.dart';
-
-import 'package:provider/provider.dart';
 
 class RegisterStudentScreen extends StatefulWidget {
   @override
@@ -11,9 +8,9 @@ class RegisterStudentScreen extends StatefulWidget {
 }
 
 class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
-  String _firstName, _lastName, _email, _password;
+  String? _firstName, _lastName, _email, _password;
   final String role = 'tutee';
-  String emailIsTakenError;
+  String? emailIsTakenError;
   bool emailIsTaken = false;
 
   //Reference to the Form
@@ -35,8 +32,8 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
           TextFormField(
             decoration: inputDecorationStyle,
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: (String val) {
-              if (val.isEmpty) {
+            validator: (String? val) {
+              if (val == null || val.isEmpty) {
                 return 'First Name is required';
               }
 
@@ -46,9 +43,9 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
 
               return null;
             },
-            onChanged: (String val) {
+            onChanged: (String? val) {
               //Assigns state to variable.
-              _firstName = val.trim();
+              _firstName = val?.trim();
             },
           ),
         ],
@@ -72,8 +69,8 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
           TextFormField(
             decoration: inputDecorationStyle,
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: (String val) {
-              if (val.isEmpty) {
+            validator: (String? val) {
+              if (val == null || val.isEmpty) {
                 return 'Last Name is required';
               }
               if (isNumeric(val) == true) {
@@ -81,9 +78,9 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
               }
               return null;
             },
-            onChanged: (String val) {
+            onChanged: (String? val) {
               //Assigns state to variable.
-              _lastName = val.trim();
+              _lastName = val?.trim();
             },
           ),
         ],
@@ -107,8 +104,8 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
           TextFormField(
             decoration: inputDecorationStyle,
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: (String val) {
-              if (val.isEmpty) {
+            validator: (String? val) {
+              if (val == null || val.isEmpty) {
                 return 'Email is required';
               }
               if (!val.contains('@students.national-u.edu.ph')) {
@@ -119,9 +116,9 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
               }
               return null;
             },
-            onChanged: (String val) {
+            onChanged: (String? val) {
               //Assigns state to variable.
-              _email = val.trim();
+              _email = val?.trim();
               setState(() {
                 emailIsTaken = false;
               });
@@ -149,8 +146,8 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
             obscureText: true,
             decoration: inputDecorationStyle,
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: (String val) {
-              if (val.isEmpty) {
+            validator: (String? val) {
+              if (val == null || val.isEmpty) {
                 return 'Password is required';
               }
               if (val.length < 8) {
@@ -158,9 +155,9 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
               }
               return null;
             },
-            onChanged: (String val) {
+            onChanged: (String? val) {
               //Assigns state to variable.
-              _password = val.trim();
+              _password = val?.trim();
             },
           ),
         ],
@@ -214,20 +211,25 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                           //close keyboard upon clicking button
                           FocusScope.of(context).unfocus();
 
-                          if (!_formKey.currentState.validate()) {
+                          if (_formKey.currentState == null) {
                             return;
                           }
-                          _formKey.currentState.save();
 
-                          Provider.of<Auth>(context, listen: false).register(
-                            _firstName,
-                            _lastName,
-                            'tutee',
-                            _email,
-                            _password,
-                          );
+                          if (!_formKey.currentState!.validate()) {
+                            return;
+                          }
 
-                          _formKey.currentState.reset();
+                          _formKey.currentState!.save();
+
+                          // Provider.of<Auth>(context, listen: false).register(
+                          //   _firstName,
+                          //   _lastName,
+                          //   'tutee',
+                          //   _email,
+                          //   _password,
+                          // );
+
+                          _formKey.currentState!.reset();
                           Navigator.pushNamedAndRemoveUntil(
                               context, '/login', (_) => false);
                         },

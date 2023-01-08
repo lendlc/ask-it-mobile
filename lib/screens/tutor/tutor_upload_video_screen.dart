@@ -10,7 +10,7 @@ class TutorUploadVideoScreen extends StatefulWidget {
 }
 
 class _TutorUploadVideoScreenState extends State<TutorUploadVideoScreen> {
-  String title, description;
+  String? title, description;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -81,7 +81,7 @@ class _TutorUploadVideoScreenState extends State<TutorUploadVideoScreen> {
           autovalidateMode: AutovalidateMode.onUserInteraction,
           decoration: inputDecorationStyle,
           validator: (value) {
-            if (value.isEmpty) {
+            if (value == null || value.isEmpty) {
               return 'Title is required';
             }
             return null;
@@ -127,10 +127,14 @@ class _TutorUploadVideoScreenState extends State<TutorUploadVideoScreen> {
                     //close keyboard upon clicking button
                     FocusScope.of(context).unfocus();
 
-                    if (!_formKey.currentState.validate()) {
+                    if (_formKey.currentState == null) {
                       return;
                     }
-                    _formKey.currentState.save();
+
+                    if (!_formKey.currentState!.validate()) {
+                      return;
+                    }
+                    _formKey.currentState!.save();
                     //validate fields
 
                     //if pass, send request

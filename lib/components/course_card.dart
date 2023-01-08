@@ -3,12 +3,12 @@ import '../constants.dart';
 
 class CourseTile extends StatelessWidget {
   final String title, imagePath;
-  final Function onTap;
+  final void Function()? onTap;
 
   CourseTile({
-    Key key,
-    this.title,
-    this.imagePath,
+    Key? key,
+    required this.title,
+    required this.imagePath,
     this.onTap,
   }) : super(key: key);
 

@@ -10,7 +10,7 @@ class ChangePasswordScreen extends StatefulWidget {
 }
 
 class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
-  String _oldPassword, _newPassword, _newPasswordCheck;
+  String? _oldPassword, _newPassword, _newPasswordCheck;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   Widget oldPasswordTF() {
@@ -30,14 +30,14 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             obscureText: true,
             decoration: inputDecorationStyle,
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: (String val) {
-              if (val.isEmpty) {
+            validator: (String? val) {
+              if (val == null || val.isEmpty) {
                 return 'Password is required';
               }
               return null;
             },
-            onChanged: (String val) {
-              _oldPassword = val.trim();
+            onChanged: (String? val) {
+              _oldPassword = val?.trim();
             },
           ),
         ],
@@ -62,8 +62,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             obscureText: true,
             decoration: inputDecorationStyle,
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: (String val) {
-              if (val.isEmpty) {
+            validator: (String? val) {
+              if (val == null || val.isEmpty) {
                 return 'Password is required';
               }
               if (val.length < 8) {
@@ -71,8 +71,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               }
               return null;
             },
-            onChanged: (String val) {
-              _newPassword = val.trim();
+            onChanged: (String? val) {
+              _newPassword = val?.trim();
             },
           ),
         ],
@@ -97,8 +97,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             obscureText: true,
             decoration: inputDecorationStyle,
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: (String val) {
-              if (val.isEmpty) {
+            validator: (String? val) {
+              if (val == null || val.isEmpty) {
                 return 'Password is required';
               }
 
@@ -107,8 +107,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               }
               return null;
             },
-            onChanged: (String val) {
-              _oldPassword = val.trim();
+            onChanged: (String? val) {
+              _oldPassword = val?.trim();
             },
           ),
         ],
@@ -146,12 +146,16 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     //close keyboard upon clicking button
                     FocusScope.of(context).unfocus();
 
-                    //check if all validation passes
-                    if (!_formKey.currentState.validate()) {
+                    if (_formKey.currentState == null) {
                       return;
                     }
 
-                    _formKey.currentState.save();
+                    //check if all validation passes
+                    if (!_formKey.currentState!.validate()) {
+                      return;
+                    }
+
+                    _formKey.currentState!.save();
 
                     //Post Data to API
 

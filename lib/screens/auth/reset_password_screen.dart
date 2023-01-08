@@ -64,7 +64,7 @@ class ResetPasswordScreen extends StatelessWidget {
 
 class _buildConfirmPasswordTF extends StatelessWidget {
   const _buildConfirmPasswordTF({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -112,12 +112,12 @@ class _buildConfirmPasswordTF extends StatelessWidget {
                 ),
               ),
             ),
-            validator: (String val) {
-              if (val.isEmpty) {
+            validator: (String? val) {
+              if (val == null || val.isEmpty) {
                 return 'Email is required';
               }
             },
-            onSaved: (String val) {
+            onSaved: (String? val) {
               //Assigns state to variable.
             },
           ),
@@ -129,7 +129,7 @@ class _buildConfirmPasswordTF extends StatelessWidget {
 
 class _buildNewPasswordTF extends StatelessWidget {
   const _buildNewPasswordTF({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -177,12 +177,12 @@ class _buildNewPasswordTF extends StatelessWidget {
                 ),
               ),
             ),
-            validator: (String val) {
-              if (val.isEmpty) {
+            validator: (String? val) {
+              if (val == null || val.isEmpty) {
                 return 'Email is required';
               }
             },
-            onSaved: (String val) {
+            onSaved: (String? val) {
               //Assigns state to variable.
             },
           ),
@@ -237,12 +237,12 @@ class _buildTokenTF extends StatelessWidget {
                 ),
               ),
             ),
-            validator: (String val) {
-              if (val.isEmpty) {
+            validator: (String? val) {
+              if (val == null || val.isEmpty) {
                 return 'Email is required';
               }
             },
-            onSaved: (String val) {
+            onSaved: (String? val) {
               //Assigns state to variable.
             },
           ),
