@@ -29,15 +29,49 @@ class _SystemHash {
   }
 }
 
-String _$registerHash() => r'fae4424d2aae3f2d60c600a5cd4b12e63e25f7f2';
+String _$loggedInUserIdHash() => r'0a1274e667f7389217cde90eea72b73815a27b59';
+
+/// See also [loggedInUserId].
+final loggedInUserIdProvider = AutoDisposeProvider<String?>(
+  loggedInUserId,
+  name: r'loggedInUserIdProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$loggedInUserIdHash,
+);
+typedef LoggedInUserIdRef = AutoDisposeProviderRef<String?>;
+String _$loggedInUserTokenHash() => r'e187f83ffcbbb671e7dfb0d02edfc929871276f1';
+
+/// See also [loggedInUserToken].
+final loggedInUserTokenProvider = AutoDisposeProvider<String?>(
+  loggedInUserToken,
+  name: r'loggedInUserTokenProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$loggedInUserTokenHash,
+);
+typedef LoggedInUserTokenRef = AutoDisposeProviderRef<String?>;
+String _$registerHash() => r'eac7b37f7e240bd2e18085826b31c51bd7a705cf';
 
 /// See also [register].
 final registerProvider =
-    AutoDisposeProvider<CallableAction<Either<String, bool>, RegisterDto>>(
+    AutoDisposeProvider<CallableAction<Either<BasicError, bool>, RegisterDto>>(
   register,
   name: r'registerProvider',
   debugGetCreateSourceHash:
       const bool.fromEnvironment('dart.vm.product') ? null : _$registerHash,
 );
-typedef RegisterRef
-    = AutoDisposeProviderRef<CallableAction<Either<String, bool>, RegisterDto>>;
+typedef RegisterRef = AutoDisposeProviderRef<
+    CallableAction<Either<BasicError, bool>, RegisterDto>>;
+String _$loginHash() => r'a994bedae14b5630526609b66f667ecf1c382071';
+
+/// See also [login].
+final loginProvider =
+    AutoDisposeProvider<CallableAction<Either<BasicError, bool>, LoginDto>>(
+  login,
+  name: r'loginProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$loginHash,
+);
+typedef LoginRef = AutoDisposeProviderRef<
+    CallableAction<Either<BasicError, bool>, LoginDto>>;

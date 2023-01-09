@@ -22,7 +22,7 @@ RegisterDto _$RegisterDtoFromJson(Map<String, dynamic> json) {
 mixin _$RegisterDto {
   @JsonKey(name: 'first_name')
   String get firstName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'middle_name')
+  @JsonKey(name: 'middle_name', includeIfNull: false)
   String? get middleName => throw _privateConstructorUsedError;
   @JsonKey(name: 'last_name')
   String get lastName => throw _privateConstructorUsedError;
@@ -44,7 +44,7 @@ abstract class $RegisterDtoCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'first_name') String firstName,
-      @JsonKey(name: 'middle_name') String? middleName,
+      @JsonKey(name: 'middle_name', includeIfNull: false) String? middleName,
       @JsonKey(name: 'last_name') String lastName,
       String email,
       String role,
@@ -110,7 +110,7 @@ abstract class _$$_RegisterDtoCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: 'first_name') String firstName,
-      @JsonKey(name: 'middle_name') String? middleName,
+      @JsonKey(name: 'middle_name', includeIfNull: false) String? middleName,
       @JsonKey(name: 'last_name') String lastName,
       String email,
       String role,
@@ -168,9 +168,12 @@ class __$$_RegisterDtoCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_RegisterDto extends _RegisterDto {
   const _$_RegisterDto(
-      {@JsonKey(name: 'first_name') required this.firstName,
-      @JsonKey(name: 'middle_name') required this.middleName,
-      @JsonKey(name: 'last_name') required this.lastName,
+      {@JsonKey(name: 'first_name')
+          required this.firstName,
+      @JsonKey(name: 'middle_name', includeIfNull: false)
+          required this.middleName,
+      @JsonKey(name: 'last_name')
+          required this.lastName,
       required this.email,
       required this.role,
       required this.password})
@@ -183,7 +186,7 @@ class _$_RegisterDto extends _RegisterDto {
   @JsonKey(name: 'first_name')
   final String firstName;
   @override
-  @JsonKey(name: 'middle_name')
+  @JsonKey(name: 'middle_name', includeIfNull: false)
   final String? middleName;
   @override
   @JsonKey(name: 'last_name')
@@ -238,9 +241,12 @@ class _$_RegisterDto extends _RegisterDto {
 
 abstract class _RegisterDto extends RegisterDto {
   const factory _RegisterDto(
-      {@JsonKey(name: 'first_name') required final String firstName,
-      @JsonKey(name: 'middle_name') required final String? middleName,
-      @JsonKey(name: 'last_name') required final String lastName,
+      {@JsonKey(name: 'first_name')
+          required final String firstName,
+      @JsonKey(name: 'middle_name', includeIfNull: false)
+          required final String? middleName,
+      @JsonKey(name: 'last_name')
+          required final String lastName,
       required final String email,
       required final String role,
       required final String password}) = _$_RegisterDto;
@@ -253,7 +259,7 @@ abstract class _RegisterDto extends RegisterDto {
   @JsonKey(name: 'first_name')
   String get firstName;
   @override
-  @JsonKey(name: 'middle_name')
+  @JsonKey(name: 'middle_name', includeIfNull: false)
   String? get middleName;
   @override
   @JsonKey(name: 'last_name')
@@ -267,5 +273,160 @@ abstract class _RegisterDto extends RegisterDto {
   @override
   @JsonKey(ignore: true)
   _$$_RegisterDtoCopyWith<_$_RegisterDto> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+LoginDto _$LoginDtoFromJson(Map<String, dynamic> json) {
+  return _LoginDto.fromJson(json);
+}
+
+/// @nodoc
+mixin _$LoginDto {
+  String get username => throw _privateConstructorUsedError;
+  String get password => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $LoginDtoCopyWith<LoginDto> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $LoginDtoCopyWith<$Res> {
+  factory $LoginDtoCopyWith(LoginDto value, $Res Function(LoginDto) then) =
+      _$LoginDtoCopyWithImpl<$Res, LoginDto>;
+  @useResult
+  $Res call({String username, String password});
+}
+
+/// @nodoc
+class _$LoginDtoCopyWithImpl<$Res, $Val extends LoginDto>
+    implements $LoginDtoCopyWith<$Res> {
+  _$LoginDtoCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? username = null,
+    Object? password = null,
+  }) {
+    return _then(_value.copyWith(
+      username: null == username
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
+              as String,
+      password: null == password
+          ? _value.password
+          : password // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_LoginDtoCopyWith<$Res> implements $LoginDtoCopyWith<$Res> {
+  factory _$$_LoginDtoCopyWith(
+          _$_LoginDto value, $Res Function(_$_LoginDto) then) =
+      __$$_LoginDtoCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String username, String password});
+}
+
+/// @nodoc
+class __$$_LoginDtoCopyWithImpl<$Res>
+    extends _$LoginDtoCopyWithImpl<$Res, _$_LoginDto>
+    implements _$$_LoginDtoCopyWith<$Res> {
+  __$$_LoginDtoCopyWithImpl(
+      _$_LoginDto _value, $Res Function(_$_LoginDto) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? username = null,
+    Object? password = null,
+  }) {
+    return _then(_$_LoginDto(
+      username: null == username
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
+              as String,
+      password: null == password
+          ? _value.password
+          : password // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_LoginDto extends _LoginDto {
+  const _$_LoginDto({required this.username, required this.password})
+      : super._();
+
+  factory _$_LoginDto.fromJson(Map<String, dynamic> json) =>
+      _$$_LoginDtoFromJson(json);
+
+  @override
+  final String username;
+  @override
+  final String password;
+
+  @override
+  String toString() {
+    return 'LoginDto(username: $username, password: $password)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_LoginDto &&
+            (identical(other.username, username) ||
+                other.username == username) &&
+            (identical(other.password, password) ||
+                other.password == password));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, username, password);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_LoginDtoCopyWith<_$_LoginDto> get copyWith =>
+      __$$_LoginDtoCopyWithImpl<_$_LoginDto>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_LoginDtoToJson(
+      this,
+    );
+  }
+}
+
+abstract class _LoginDto extends LoginDto {
+  const factory _LoginDto(
+      {required final String username,
+      required final String password}) = _$_LoginDto;
+  const _LoginDto._() : super._();
+
+  factory _LoginDto.fromJson(Map<String, dynamic> json) = _$_LoginDto.fromJson;
+
+  @override
+  String get username;
+  @override
+  String get password;
+  @override
+  @JsonKey(ignore: true)
+  _$$_LoginDtoCopyWith<_$_LoginDto> get copyWith =>
       throw _privateConstructorUsedError;
 }

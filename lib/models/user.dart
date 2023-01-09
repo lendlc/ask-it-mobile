@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 class User {
   final String uid, firstName, lastName, email, role, password;
 

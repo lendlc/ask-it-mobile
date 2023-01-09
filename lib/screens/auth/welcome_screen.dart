@@ -1,11 +1,23 @@
 import 'package:ask_it/components/rounded_button.dart';
+import 'package:ask_it/core/auth/auth_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../constants.dart';
 import 'components/already_have_an_account.dart';
 
-class WelcomeScreen extends StatelessWidget {
+class WelcomeScreen extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen(loggedInUserIdProvider, (previous, next) {
+      if (next != null && next.isNotEmpty) {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          '/home',
+          (route) => false,
+        );
+      }
+    });
+
     //width and height of screen
     Size size = MediaQuery.of(context).size;
     return Scaffold(

@@ -4,6 +4,10 @@ import 'package:ask_it/core/auth/auth_controller.dart';
 import 'package:ask_it/core/auth/auth_dto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fpdart/fpdart.dart' show Either;
+import 'package:ndialog/ndialog.dart';
+
+import '../../core/basic_error.dart';
 
 class RegisterStudentScreen extends StatefulWidget {
   @override
@@ -13,8 +17,6 @@ class RegisterStudentScreen extends StatefulWidget {
 class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
   String? _firstName, _lastName, _email, _password;
   final String role = 'tutee';
-  String? emailIsTakenError;
-  bool emailIsTaken = false;
 
   //Reference to the Form
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -24,19 +26,13 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: AppBar(
-        title: null,
-        backgroundColor: Colors.white,
-        elevation: 0,
-      ),
-      //Disables Overflow Warning when keyboard pops Out
-      body: Consumer(builder: (context, ref, _) {
-        final registerAction = ref.watch(registerProvider);
-        final busy = ref.watch(
-          registerProvider.select((value) => value.isBusy),
-        );
-
-        return Center(
+        appBar: AppBar(
+          title: null,
+          backgroundColor: Colors.white,
+          elevation: 0,
+        ),
+        //Disables Overflow Warning when keyboard pops Out
+        body: Center(
           child: SingleChildScrollView(
             child: Container(
               //height: size.height,
@@ -71,7 +67,6 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                                 height: 5,
                               ),
                               TextFormField(
-                                enabled: !busy,
                                 decoration: inputDecorationStyle,
                                 autovalidateMode: AutovalidateMode.onUserInteraction,
                                 validator: (String? val) {
@@ -106,7 +101,6 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                                 height: 5,
                               ),
                               TextFormField(
-                                enabled: !busy,
                                 decoration: inputDecorationStyle,
                                 autovalidateMode: AutovalidateMode.onUserInteraction,
                                 validator: (String? val) {
@@ -139,28 +133,20 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                                 height: 5,
                               ),
                               TextFormField(
-                                enabled: !busy,
                                 decoration: inputDecorationStyle,
                                 autovalidateMode: AutovalidateMode.onUserInteraction,
                                 validator: (String? val) {
                                   if (val == null || val.isEmpty) {
                                     return 'Email is required';
                                   }
-                                  // if (!val.contains(
-                                  //     '@students.national-u.edu.ph')) {
-                                  //   return 'Please provide a valid NU email';
-                                  // }
-                                  if (emailIsTaken == true) {
-                                    return emailIsTakenError;
+                                  if (!val.contains('@students.national-u.edu.ph')) {
+                                    return 'Please provide a valid NU email';
                                   }
                                   return null;
                                 },
                                 onChanged: (String? val) {
                                   //Assigns state to variable.
                                   _email = val?.trim();
-                                  setState(() {
-                                    emailIsTaken = false;
-                                  });
                                 },
                               ),
                             ],
@@ -179,7 +165,6 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                                 height: 5,
                               ),
                               TextFormField(
-                                enabled: !busy,
                                 obscureText: true,
                                 decoration: inputDecorationStyle,
                                 autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -206,48 +191,64 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                             text: 'Create my Account',
                             textColor: Colors.black,
                             color: primaryColor,
-                            press: !busy
-                                ? () async {
-                                    //close keyboard upon clicking button
-                                    FocusScope.of(context).unfocus();
+                            press: () async {
+                              //close keyboard upon clicking button
+                              FocusScope.of(context).unfocus();
 
-                                    if (_formKey.currentState == null) {
-                                      return;
-                                    }
+                              if (_formKey.currentState == null) {
+                                return;
+                              }
 
-                                    if (!_formKey.currentState!.validate()) {
-                                      return;
-                                    }
+                              if (!_formKey.currentState!.validate()) {
+                                return;
+                              }
 
-                                    registerAction.arg = RegisterDto(
-                                      firstName: _firstName!,
-                                      middleName: null,
-                                      lastName: _lastName!,
-                                      email: _email!,
-                                      role: role,
-                                      password: _password!,
+                              ProgressDialog.future<Either<BasicError, bool>>(
+                                context,
+                                future: ref.read(registerProvider).call(
+                                      RegisterDto(
+                                        firstName: _firstName!,
+                                        middleName: null,
+                                        lastName: _lastName!,
+                                        email: _email!,
+                                        role: role,
+                                        password: _password!,
+                                      ),
+                                    ),
+                                title: Text('Logging in...'),
+                                message: Text('Please wait...'),
+                                dismissable: false,
+                              ).then((value) {
+                                if (value == null) return;
+
+                                value.fold(
+                                  (l) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(l.message),
+                                        backgroundColor: Colors.red,
+                                      ),
                                     );
-                                    final result = await ref.read(registerProvider).call();
+                                  },
+                                  (r) {
+                                    if (r) {
+                                      _formKey.currentState!.save();
+                                      _formKey.currentState!.reset();
 
-                                    result.fold(
-                                      (l) {
-                                        return ScaffoldMessenger.of(context).showSnackBar(
-                                          SnackBar(
-                                            content: Text(l),
-                                            backgroundColor: Colors.red,
-                                          ),
-                                        );
-                                      },
-                                      (r) {
-                                        _formKey.currentState!.save();
-                                        _formKey.currentState!.reset();
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Text('Successfully registered. Please log in.'),
+                                          backgroundColor: secondaryColor,
+                                        ),
+                                      );
 
-                                        Navigator.pushNamedAndRemoveUntil(
-                                            context, '/login', (_) => false);
-                                      },
-                                    );
-                                  }
-                                : null,
+                                      Navigator.pushNamedAndRemoveUntil(
+                                          context, '/login', (_) => false);
+                                    }
+                                  },
+                                );
+                              });
+                            },
                           );
                         })
                       ],
@@ -257,9 +258,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
               ),
             ),
           ),
-        );
-      }),
-    );
+        ));
   }
 }
 

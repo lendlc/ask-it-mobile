@@ -9,7 +9,7 @@ part 'auth_dto.g.dart';
 class RegisterDto with _$RegisterDto {
   const factory RegisterDto({
     @JsonKey(name: 'first_name') required String firstName,
-    @JsonKey(name: 'middle_name') required String? middleName,
+    @JsonKey(name: 'middle_name', includeIfNull: false) required String? middleName,
     @JsonKey(name: 'last_name') required String lastName,
     required String email,
     required String role,
@@ -18,6 +18,17 @@ class RegisterDto with _$RegisterDto {
 
   const RegisterDto._();
 
-  factory RegisterDto.fromJson(Map<String, dynamic> json) =>
-      _$RegisterDtoFromJson(json);
+  factory RegisterDto.fromJson(Map<String, dynamic> json) => _$RegisterDtoFromJson(json);
+}
+
+@freezed
+class LoginDto with _$LoginDto {
+  const factory LoginDto({
+    required String username,
+    required String password,
+  }) = _LoginDto;
+
+  const LoginDto._();
+
+  factory LoginDto.fromJson(Map<String, dynamic> json) => _$LoginDtoFromJson(json);
 }

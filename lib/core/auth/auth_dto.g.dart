@@ -16,12 +16,32 @@ _$_RegisterDto _$$_RegisterDtoFromJson(Map<String, dynamic> json) =>
       password: json['password'] as String,
     );
 
-Map<String, dynamic> _$$_RegisterDtoToJson(_$_RegisterDto instance) =>
+Map<String, dynamic> _$$_RegisterDtoToJson(_$_RegisterDto instance) {
+  final val = <String, dynamic>{
+    'first_name': instance.firstName,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('middle_name', instance.middleName);
+  val['last_name'] = instance.lastName;
+  val['email'] = instance.email;
+  val['role'] = instance.role;
+  val['password'] = instance.password;
+  return val;
+}
+
+_$_LoginDto _$$_LoginDtoFromJson(Map<String, dynamic> json) => _$_LoginDto(
+      username: json['username'] as String,
+      password: json['password'] as String,
+    );
+
+Map<String, dynamic> _$$_LoginDtoToJson(_$_LoginDto instance) =>
     <String, dynamic>{
-      'first_name': instance.firstName,
-      'middle_name': instance.middleName,
-      'last_name': instance.lastName,
-      'email': instance.email,
-      'role': instance.role,
+      'username': instance.username,
       'password': instance.password,
     };

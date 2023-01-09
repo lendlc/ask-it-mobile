@@ -1,6 +1,12 @@
 import 'package:ask_it/constants.dart';
+import 'package:ask_it/core/auth/auth_controller.dart';
+import 'package:ask_it/core/auth/auth_dto.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fpdart/fpdart.dart' show Either;
+import 'package:ndialog/ndialog.dart';
 
+import '../../core/basic_error.dart';
 import 'components/already_have_an_account.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -14,62 +20,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   //Reference to the Form
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  Widget _buildLoginBtn() {
-    return Builder(
-      builder: (context) => Container(
-        alignment: Alignment.centerRight,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              elevation: 0.9,
-              backgroundColor: primaryColor,
-              padding: EdgeInsets.symmetric(
-                vertical: 10,
-                horizontal: 40,
-              ),
-            ),
-            child: Text(
-              "Login",
-              style: mediumTextBold,
-            ),
-            onPressed: () async {
-              //close keyboard upon clicking button
-              FocusScope.of(context).unfocus();
-
-              if (_formKey.currentState == null) {
-                return;
-              }
-
-              if (!_formKey.currentState!.validate()) {
-                return;
-              }
-              _formKey.currentState!.save();
-
-              // final int code =
-              //     await Provider.of<Auth>(context, listen: false).login(
-              //   _email,
-              //   _password,
-              // );
-
-              if (true) {
-                Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  '/home',
-                  (_) => false,
-                );
-                return;
-              }
-              //_formKey.currentState.reset();
-              final snackBar = SnackBar(content: Text('Invalid Credentials'));
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            },
-          ),
-        ),
-      ),
-    );
-  }
 
   Widget _buildForgotPasswordBtn() {
     return Container(
@@ -181,7 +131,75 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 3,
                 ),
                 _buildForgotPasswordBtn(),
-                _buildLoginBtn(),
+                Container(
+                  alignment: Alignment.centerRight,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Consumer(builder: (context, ref, _) {
+                      return ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          elevation: 0.9,
+                          backgroundColor: primaryColor,
+                          padding: EdgeInsets.symmetric(
+                            vertical: 10,
+                            horizontal: 40,
+                          ),
+                        ),
+                        child: Text(
+                          "Login",
+                          style: mediumTextBold,
+                        ),
+                        onPressed: () async {
+                          //close keyboard upon clicking button
+                          FocusScope.of(context).unfocus();
+
+                          if (_formKey.currentState == null) {
+                            return;
+                          }
+
+                          if (!_formKey.currentState!.validate()) {
+                            return;
+                          }
+
+                          ProgressDialog.future<Either<BasicError, bool>>(
+                            context,
+                            future: ref
+                                .read(loginProvider)
+                                .call(LoginDto(username: _email!, password: _password!)),
+                            title: Text('Logging in...'),
+                            message: Text('Please wait...'),
+                            dismissable: false,
+                          ).then((value) {
+                            if (value == null) return;
+
+                            value.fold(
+                              (l) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Invalid credentials.'),
+                                    backgroundColor: Colors.red,
+                                  ),
+                                );
+                              },
+                              (r) {
+                                if (r) {
+                                  _formKey.currentState!.save();
+                                  _formKey.currentState!.reset();
+
+                                  Navigator.pushNamedAndRemoveUntil(
+                                    context,
+                                    '/home',
+                                    (_) => false,
+                                  );
+                                }
+                              },
+                            );
+                          });
+                        },
+                      );
+                    }),
+                  ),
+                ),
                 SizedBox(height: 50),
                 AlreadyHaveAnAccount(
                   postion: MainAxisAlignment.center,

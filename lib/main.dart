@@ -8,6 +8,7 @@ import 'package:ask_it/screens/tutor/tutor_videos_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:ask_it/constants.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get_storage/get_storage.dart';
 
 import 'screens/auth/*register_tutor_schedule_screen.dart';
 import 'screens/auth/register_tutor_subject_screen.dart';
@@ -31,7 +32,8 @@ import 'screens/tutee/video_list_screen.dart';
 import 'screens/tutee/video_play_screen.dart';
 import 'screens/tutee/video_tutor_list_screen.dart';
 
-void main() {
+void main() async {
+  await GetStorage.init();
   runApp(ProviderScope(child: MyApp()));
 }
 
@@ -55,10 +57,8 @@ class MyApp extends StatelessWidget {
         //auth routes
         '/register-student': (context) => RegisterStudentScreen(),
         '/register-tutor': (context) => RegisterTutorScreen(),
-        RegisterTutorSubjectScreen.routeName: (context) =>
-            RegisterTutorSubjectScreen(),
-        RegisterTutorScheduleScreen.routeName: (context) =>
-            RegisterTutorScheduleScreen(),
+        RegisterTutorSubjectScreen.routeName: (context) => RegisterTutorSubjectScreen(),
+        RegisterTutorScheduleScreen.routeName: (context) => RegisterTutorScheduleScreen(),
         '/login': (context) => LoginScreen(),
         '/forgot-password': (context) => ForgotPasswordScreen(),
         '/reset-password': (context) => ResetPasswordScreen(),
@@ -83,8 +83,7 @@ class MyApp extends StatelessWidget {
         TutorUploadVideoScreen.routeName: (context) => TutorUploadVideoScreen(),
         TutorEditVideoScreen.routeName: (context) => TutorEditVideoScreen(),
 
-        TutorEditScheduleScreen.routeName: (context) =>
-            TutorEditScheduleScreen(),
+        TutorEditScheduleScreen.routeName: (context) => TutorEditScheduleScreen(),
         TutorAddScheduleScreen.routeName: (context) => TutorAddScheduleScreen()
       },
       onUnknownRoute: (settings) {
