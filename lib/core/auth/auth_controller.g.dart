@@ -29,17 +29,17 @@ class _SystemHash {
   }
 }
 
-String _$loggedInUserIdHash() => r'0a1274e667f7389217cde90eea72b73815a27b59';
+String _$loggedInUserIdHash() => r'a6ccd8c6c83732ba7a4ec4958a02abcb2f31f33e';
 
 /// See also [loggedInUserId].
-final loggedInUserIdProvider = AutoDisposeProvider<String?>(
+final loggedInUserIdProvider = AutoDisposeFutureProvider<num?>(
   loggedInUserId,
   name: r'loggedInUserIdProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
       : _$loggedInUserIdHash,
 );
-typedef LoggedInUserIdRef = AutoDisposeProviderRef<String?>;
+typedef LoggedInUserIdRef = AutoDisposeFutureProviderRef<num?>;
 String _$loggedInUserTokenHash() => r'e187f83ffcbbb671e7dfb0d02edfc929871276f1';
 
 /// See also [loggedInUserToken].
@@ -51,6 +51,16 @@ final loggedInUserTokenProvider = AutoDisposeProvider<String?>(
       : _$loggedInUserTokenHash,
 );
 typedef LoggedInUserTokenRef = AutoDisposeProviderRef<String?>;
+String _$userProfileHash() => r'a723fdd8284f658c2663efc935be246b682f84fb';
+
+/// See also [userProfile].
+final userProfileProvider = AutoDisposeFutureProvider<UserProfile>(
+  userProfile,
+  name: r'userProfileProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$userProfileHash,
+);
+typedef UserProfileRef = AutoDisposeFutureProviderRef<UserProfile>;
 String _$registerHash() => r'eac7b37f7e240bd2e18085826b31c51bd7a705cf';
 
 /// See also [register].

@@ -54,9 +54,10 @@ class _LoginScreenState extends State<LoginScreen> {
               if (val == null || val.isEmpty) {
                 return 'Email is required';
               }
-              if (!val.contains('@students.national-u.edu.ph')) {
-                return 'Enter a valid NU email';
-              }
+              // TODO(acgonzales): Uncomment
+              // if (!val.contains('@students.national-u.edu.ph')) {
+              //   return 'Enter a valid NU email';
+              // }
               return null;
             },
             onChanged: (String? val) {

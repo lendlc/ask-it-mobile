@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:skeletons/skeletons.dart';
 
 const primaryColor = Color(0xFFFFD460);
 const secondaryColor = Color(0xFF04307A);
@@ -84,4 +85,10 @@ BoxDecoration boxDecorationStyle = BoxDecoration(
       offset: Offset(0, 3),
     )
   ],
+);
+
+SkeletonParagraph oneLineTextSkeleton = SkeletonParagraph(
+  style: SkeletonParagraphStyle(
+    lines: 1,
+  ),
 );

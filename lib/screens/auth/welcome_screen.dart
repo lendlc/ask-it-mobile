@@ -8,14 +8,17 @@ import 'components/already_have_an_account.dart';
 class WelcomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.listen(loggedInUserIdProvider, (previous, next) {
-      if (next != null && next.isNotEmpty) {
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          '/home',
-          (route) => false,
-        );
-      }
+    ref.listen(loggedInUserIdProvider, (_, next) async {
+      next.whenData((userId) {
+        if (userId != null) {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            '/home',
+            (route) => false,
+          );
+          return;
+        }
+      });
     });
 
     //width and height of screen

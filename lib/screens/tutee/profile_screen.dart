@@ -1,6 +1,9 @@
-import 'package:ask_it/providers/auth.dart';
+import 'package:ask_it/core/auth/auth_controller.dart';
+import 'package:ask_it/screens/shared/profile_info_card.dart';
 import 'package:flutter/material.dart';
 import 'package:ask_it/constants.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:skeletons/skeletons.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override
@@ -33,7 +36,40 @@ class ProfileScreen extends StatelessWidget {
           //List Schedule List Container
           child: Column(
             children: <Widget>[
-              _buildProfileInfoCard(),
+              ProfileInfoCard(
+                actions: Container(
+                  alignment: Alignment.centerRight,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Consumer(builder: (context, ref, _) {
+                      final busy =
+                          ref.watch(userProfileProvider.select((value) => value.isLoading));
+
+                      return ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: lightColor,
+                          elevation: 0.9,
+                          padding: EdgeInsets.symmetric(
+                            vertical: 10,
+                            horizontal: 20,
+                          ),
+                        ),
+                        onPressed: !busy
+                            ? () {
+                                Navigator.pushNamed(context, '/profile/edit');
+                              }
+                            : null,
+                        child: Text(
+                          "Edit Profile",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black54),
+                        ),
+                      );
+                    }),
+                  ),
+                ),
+              ),
+              // _ProfileInfoCard(),
               SizedBox(
                 height: 20,
               ),
@@ -134,79 +170,6 @@ class _buildScheduleListItem extends StatelessWidget {
                     ),
                   )
                 ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _buildProfileInfoCard extends StatelessWidget {
-  const _buildProfileInfoCard({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      //width: double.infinity,
-      padding: EdgeInsets.all(16),
-      decoration: boxDecorationStyle,
-      child: Column(
-        children: <Widget>[
-          Container(
-            height: 150,
-            width: 150,
-            decoration: BoxDecoration(
-              color: primaryColor,
-              border: Border.all(color: primaryColor),
-              borderRadius: BorderRadius.circular(150),
-            ),
-            child: ClipOval(
-              child: Image.asset('assets/images/avatar.png'),
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            "John Lendl Cuyugan",
-            style: mediumTextBold,
-          ),
-          Text(
-            "cuyuganjt@students.national-u.edu.ph",
-            style: TextStyle(
-              fontSize: 16,
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Container(
-            alignment: Alignment.centerRight,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: lightColor,
-                  elevation: 0.9,
-                  padding: EdgeInsets.symmetric(
-                    vertical: 10,
-                    horizontal: 20,
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/profile/edit');
-                },
-                child: Text(
-                  "Edit Profile",
-                  style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black54),
-                ),
               ),
             ),
           ),

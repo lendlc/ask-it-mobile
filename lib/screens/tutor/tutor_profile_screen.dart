@@ -1,5 +1,6 @@
 import 'package:ask_it/constants.dart';
 import 'package:ask_it/providers/auth.dart';
+import 'package:ask_it/screens/shared/profile_info_card.dart';
 import 'package:flutter/material.dart';
 
 class TutorProfileScreen extends StatelessWidget {
@@ -30,7 +31,25 @@ class TutorProfileScreen extends StatelessWidget {
           padding: EdgeInsets.all(16),
           child: Column(
             children: [
-              _buildProfileHeader(),
+              ProfileInfoCard(
+                actions: Container(
+                  child: Container(
+                    child: Row(
+                      children: [
+                        HeaderButton(
+                          title: 'My Videos',
+                          path: '/tutor/profile/videos',
+                        ),
+                        Spacer(),
+                        HeaderButton(
+                          title: 'Edit Profile',
+                          path: '/profile/edit',
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
               SizedBox(
                 height: 16,
               ),

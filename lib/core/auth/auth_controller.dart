@@ -1,4 +1,5 @@
 import 'package:ask_it/core/auth/auth_dto.dart';
+import 'package:ask_it/core/auth/auth_model.dart';
 import 'package:ask_it/core/auth/auth_repository.dart';
 import 'package:ask_it/core/basic_error.dart';
 import 'package:ask_it/core/callable_action.dart';
@@ -10,15 +11,29 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'auth_controller.g.dart';
 
 @riverpod
-String? loggedInUserId(LoggedInUserIdRef ref) {
+Future<num?> loggedInUserId(LoggedInUserIdRef ref) {
   final localStorage = ref.watch(localStorageProvider);
-  return localStorage.read('id');
+  return Future.value(localStorage.read('id'));
 }
 
 @riverpod
 String? loggedInUserToken(LoggedInUserTokenRef ref) {
   final localStorage = ref.watch(localStorageProvider);
   return localStorage.read('token');
+}
+
+@riverpod
+Future<UserProfile> userProfile(UserProfileRef ref) async {
+  // try {
+  final authRepository = ref.watch(authRepositoryProvider);
+  final profile = await authRepository.getUserProfile();
+  return profile;
+  // } catch (e) {
+  //   if (e is BasicError) {
+  //     return left(e);
+  //   }
+  //   return left(BasicError(e.toString()));
+  // }
 }
 
 @riverpod

@@ -4,6 +4,7 @@ import 'package:ask_it/core/client.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'auth_dto.dart';
+import 'auth_model.dart';
 
 part 'auth_repository.g.dart';
 
@@ -18,6 +19,10 @@ class AuthRepository with ApiCallMixin {
 
   Future<LoginResponse> login(LoginDto dto) async {
     return apiCallArgs<LoginResponse, LoginDto>(_client.login, dto);
+  }
+
+  Future<UserProfile> getUserProfile() async {
+    return apiCall(_client.profile);
   }
 }
 
