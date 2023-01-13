@@ -13,17 +13,20 @@ class AuthRepository with ApiCallMixin {
 
   final RestClient _client;
 
-  Future<void> register(RegisterDto dto) async {
-    return apiCallArgs<void, RegisterDto>(_client.register, dto);
-  }
+  Future<void> register(RegisterDto dto) => apiCallArgs<void, RegisterDto>(_client.register, dto);
 
-  Future<LoginResponse> login(LoginDto dto) async {
-    return apiCallArgs<LoginResponse, LoginDto>(_client.login, dto);
-  }
+  Future<LoginResponse> login(LoginDto dto) =>
+      apiCallArgs<LoginResponse, LoginDto>(_client.login, dto);
 
-  Future<UserProfile> getUserProfile() async {
-    return apiCall(_client.profile);
-  }
+  Future<UserProfile> getUserProfile() => apiCall(_client.profile);
+
+  Future<void> logout() => apiCall(_client.logout);
+
+  Future<void> sendPasswordResetEmail(SendPasswordResetEmailDto dto) =>
+      apiCallArgs<void, SendPasswordResetEmailDto>(_client.sendPasswordResetEmail, dto);
+
+  Future<void> resetPassword(ResetPasswordDto dto) =>
+      apiCallArgs<void, ResetPasswordDto>(_client.resetPassword, dto);
 }
 
 @riverpod

@@ -45,3 +45,31 @@ Map<String, dynamic> _$$_LoginDtoToJson(_$_LoginDto instance) =>
       'username': instance.username,
       'password': instance.password,
     };
+
+_$_SendPasswordResetEmailDto _$$_SendPasswordResetEmailDtoFromJson(
+        Map<String, dynamic> json) =>
+    _$_SendPasswordResetEmailDto(
+      email: json['email'] as String,
+    );
+
+Map<String, dynamic> _$$_SendPasswordResetEmailDtoToJson(
+        _$_SendPasswordResetEmailDto instance) =>
+    <String, dynamic>{
+      'email': instance.email,
+    };
+
+_$_ResetPasswordDto _$$_ResetPasswordDtoFromJson(Map<String, dynamic> json) =>
+    _$_ResetPasswordDto(
+      email: json['email'] as String,
+      code: json['code'] as String,
+      newPassword: json['new_password'] as String,
+      newPasswordConfirmation: json['new_password_2'] as String,
+    );
+
+Map<String, dynamic> _$$_ResetPasswordDtoToJson(_$_ResetPasswordDto instance) =>
+    <String, dynamic>{
+      'email': instance.email,
+      'code': instance.code,
+      'new_password': instance.newPassword,
+      'new_password_2': instance.newPasswordConfirmation,
+    };

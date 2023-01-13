@@ -1,5 +1,6 @@
 import 'package:ask_it/constants.dart';
 import 'package:ask_it/providers/auth.dart';
+import 'package:ask_it/screens/shared/logout_button.dart';
 import 'package:ask_it/screens/shared/profile_info_card.dart';
 import 'package:flutter/material.dart';
 
@@ -13,17 +14,7 @@ class TutorProfileScreen extends StatelessWidget {
           style: mediumTextBold,
         ),
         actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.logout,
-              semanticLabel: 'Sign Out',
-              color: Colors.redAccent,
-            ),
-            onPressed: () {
-              // Provider.of<Auth>(context, listen: false).logout();
-              Navigator.pushReplacementNamed(context, '/login');
-            },
-          )
+          LogoutButton(),
         ],
       ),
       body: SingleChildScrollView(

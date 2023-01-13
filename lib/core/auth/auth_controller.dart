@@ -17,23 +17,38 @@ Future<num?> loggedInUserId(LoggedInUserIdRef ref) {
 }
 
 @riverpod
-String? loggedInUserToken(LoggedInUserTokenRef ref) {
+Future<String?> loggedInUserToken(LoggedInUserTokenRef ref) {
   final localStorage = ref.watch(localStorageProvider);
-  return localStorage.read('token');
+  return Future.value(localStorage.read('token'));
 }
 
 @riverpod
 Future<UserProfile> userProfile(UserProfileRef ref) async {
-  // try {
   final authRepository = ref.watch(authRepositoryProvider);
   final profile = await authRepository.getUserProfile();
   return profile;
-  // } catch (e) {
-  //   if (e is BasicError) {
-  //     return left(e);
-  //   }
-  //   return left(BasicError(e.toString()));
-  // }
+}
+
+@riverpod
+CallableAction<EitherResponse<bool>, void> logout(LogoutRef ref) {
+  final authRepository = ref.watch(authRepositoryProvider);
+  final localStorage = ref.watch(localStorageProvider);
+
+  return CallableAction((_) async {
+    try {
+      await authRepository.logout();
+
+      localStorage.remove('id');
+      localStorage.remove('token');
+
+      return right(true);
+    } catch (e) {
+      if (e is BasicError) {
+        return left(e);
+      }
+      return left(BasicError(e.toString()));
+    }
+  });
 }
 
 @riverpod
@@ -64,6 +79,39 @@ CallableAction<EitherResponse<bool>, LoginDto> login(LoginRef ref) {
       localStorage.write('id', response.id);
       localStorage.write('token', response.token);
 
+      return right(true);
+    } catch (e) {
+      if (e is BasicError) {
+        return left(e);
+      }
+      return left(BasicError(e.toString()));
+    }
+  });
+}
+
+@riverpod
+CallableAction<EitherResponse<bool>, SendPasswordResetEmailDto> sendPasswordResetEmail(
+    SendPasswordResetEmailRef ref) {
+  final authRepository = ref.watch(authRepositoryProvider);
+  return CallableAction((SendPasswordResetEmailDto dto) async {
+    try {
+      await authRepository.sendPasswordResetEmail(dto);
+      return right(true);
+    } catch (e) {
+      if (e is BasicError) {
+        return left(e);
+      }
+      return left(BasicError(e.toString()));
+    }
+  });
+}
+
+@riverpod
+CallableAction<EitherResponse<bool>, ResetPasswordDto> resetPassword(ResetPasswordRef ref) {
+  final authRepository = ref.watch(authRepositoryProvider);
+  return CallableAction((ResetPasswordDto dto) async {
+    try {
+      await authRepository.resetPassword(dto);
       return right(true);
     } catch (e) {
       if (e is BasicError) {

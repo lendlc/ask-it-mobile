@@ -32,3 +32,29 @@ class LoginDto with _$LoginDto {
 
   factory LoginDto.fromJson(Map<String, dynamic> json) => _$LoginDtoFromJson(json);
 }
+
+@freezed
+class SendPasswordResetEmailDto with _$SendPasswordResetEmailDto {
+  const factory SendPasswordResetEmailDto({
+    required String email,
+  }) = _SendPasswordResetEmailDto;
+
+  const SendPasswordResetEmailDto._();
+
+  factory SendPasswordResetEmailDto.fromJson(Map<String, dynamic> json) =>
+      _$SendPasswordResetEmailDtoFromJson(json);
+}
+
+@freezed
+class ResetPasswordDto with _$ResetPasswordDto {
+  const factory ResetPasswordDto({
+    required String email,
+    required String code,
+    @JsonKey(name: 'new_password') required String newPassword,
+    @JsonKey(name: 'new_password_2') required String newPasswordConfirmation,
+  }) = _ResetPasswordDto;
+
+  const ResetPasswordDto._();
+
+  factory ResetPasswordDto.fromJson(Map<String, dynamic> json) => _$ResetPasswordDtoFromJson(json);
+}

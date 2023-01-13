@@ -40,17 +40,17 @@ final loggedInUserIdProvider = AutoDisposeFutureProvider<num?>(
       : _$loggedInUserIdHash,
 );
 typedef LoggedInUserIdRef = AutoDisposeFutureProviderRef<num?>;
-String _$loggedInUserTokenHash() => r'e187f83ffcbbb671e7dfb0d02edfc929871276f1';
+String _$loggedInUserTokenHash() => r'693c3f6f7db07b477dce2d014fd27a9a63a166e9';
 
 /// See also [loggedInUserToken].
-final loggedInUserTokenProvider = AutoDisposeProvider<String?>(
+final loggedInUserTokenProvider = AutoDisposeFutureProvider<String?>(
   loggedInUserToken,
   name: r'loggedInUserTokenProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
       : _$loggedInUserTokenHash,
 );
-typedef LoggedInUserTokenRef = AutoDisposeProviderRef<String?>;
+typedef LoggedInUserTokenRef = AutoDisposeFutureProviderRef<String?>;
 String _$userProfileHash() => r'a723fdd8284f658c2663efc935be246b682f84fb';
 
 /// See also [userProfile].
@@ -61,6 +61,18 @@ final userProfileProvider = AutoDisposeFutureProvider<UserProfile>(
       const bool.fromEnvironment('dart.vm.product') ? null : _$userProfileHash,
 );
 typedef UserProfileRef = AutoDisposeFutureProviderRef<UserProfile>;
+String _$logoutHash() => r'9556bea3a8e48fa6947ad5c05d6f06fee07db734';
+
+/// See also [logout].
+final logoutProvider =
+    AutoDisposeProvider<CallableAction<Either<BasicError, bool>, void>>(
+  logout,
+  name: r'logoutProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$logoutHash,
+);
+typedef LogoutRef
+    = AutoDisposeProviderRef<CallableAction<Either<BasicError, bool>, void>>;
 String _$registerHash() => r'eac7b37f7e240bd2e18085826b31c51bd7a705cf';
 
 /// See also [register].
@@ -85,3 +97,30 @@ final loginProvider =
 );
 typedef LoginRef = AutoDisposeProviderRef<
     CallableAction<Either<BasicError, bool>, LoginDto>>;
+String _$sendPasswordResetEmailHash() =>
+    r'3d674f7e9b9b4ac4ccc5d8dac7bf2df12be118bd';
+
+/// See also [sendPasswordResetEmail].
+final sendPasswordResetEmailProvider = AutoDisposeProvider<
+    CallableAction<Either<BasicError, bool>, SendPasswordResetEmailDto>>(
+  sendPasswordResetEmail,
+  name: r'sendPasswordResetEmailProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$sendPasswordResetEmailHash,
+);
+typedef SendPasswordResetEmailRef = AutoDisposeProviderRef<
+    CallableAction<Either<BasicError, bool>, SendPasswordResetEmailDto>>;
+String _$resetPasswordHash() => r'55ba504cb17bbc4329226b482a8531b56695ea69';
+
+/// See also [resetPassword].
+final resetPasswordProvider = AutoDisposeProvider<
+    CallableAction<Either<BasicError, bool>, ResetPasswordDto>>(
+  resetPassword,
+  name: r'resetPasswordProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$resetPasswordHash,
+);
+typedef ResetPasswordRef = AutoDisposeProviderRef<
+    CallableAction<Either<BasicError, bool>, ResetPasswordDto>>;

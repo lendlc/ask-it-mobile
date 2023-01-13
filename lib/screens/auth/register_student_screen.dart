@@ -139,9 +139,10 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                                   if (val == null || val.isEmpty) {
                                     return 'Email is required';
                                   }
-                                  if (!val.contains('@students.national-u.edu.ph')) {
-                                    return 'Please provide a valid NU email';
-                                  }
+                                  // TODO(acgonzales): Uncomment
+                                  // if (!val.contains('@students.national-u.edu.ph')) {
+                                  //   return 'Please provide a valid NU email';
+                                  // }
                                   return null;
                                 },
                                 onChanged: (String? val) {

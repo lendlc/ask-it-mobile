@@ -430,3 +430,361 @@ abstract class _LoginDto extends LoginDto {
   _$$_LoginDtoCopyWith<_$_LoginDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+SendPasswordResetEmailDto _$SendPasswordResetEmailDtoFromJson(
+    Map<String, dynamic> json) {
+  return _SendPasswordResetEmailDto.fromJson(json);
+}
+
+/// @nodoc
+mixin _$SendPasswordResetEmailDto {
+  String get email => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $SendPasswordResetEmailDtoCopyWith<SendPasswordResetEmailDto> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $SendPasswordResetEmailDtoCopyWith<$Res> {
+  factory $SendPasswordResetEmailDtoCopyWith(SendPasswordResetEmailDto value,
+          $Res Function(SendPasswordResetEmailDto) then) =
+      _$SendPasswordResetEmailDtoCopyWithImpl<$Res, SendPasswordResetEmailDto>;
+  @useResult
+  $Res call({String email});
+}
+
+/// @nodoc
+class _$SendPasswordResetEmailDtoCopyWithImpl<$Res,
+        $Val extends SendPasswordResetEmailDto>
+    implements $SendPasswordResetEmailDtoCopyWith<$Res> {
+  _$SendPasswordResetEmailDtoCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? email = null,
+  }) {
+    return _then(_value.copyWith(
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_SendPasswordResetEmailDtoCopyWith<$Res>
+    implements $SendPasswordResetEmailDtoCopyWith<$Res> {
+  factory _$$_SendPasswordResetEmailDtoCopyWith(
+          _$_SendPasswordResetEmailDto value,
+          $Res Function(_$_SendPasswordResetEmailDto) then) =
+      __$$_SendPasswordResetEmailDtoCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String email});
+}
+
+/// @nodoc
+class __$$_SendPasswordResetEmailDtoCopyWithImpl<$Res>
+    extends _$SendPasswordResetEmailDtoCopyWithImpl<$Res,
+        _$_SendPasswordResetEmailDto>
+    implements _$$_SendPasswordResetEmailDtoCopyWith<$Res> {
+  __$$_SendPasswordResetEmailDtoCopyWithImpl(
+      _$_SendPasswordResetEmailDto _value,
+      $Res Function(_$_SendPasswordResetEmailDto) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? email = null,
+  }) {
+    return _then(_$_SendPasswordResetEmailDto(
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_SendPasswordResetEmailDto extends _SendPasswordResetEmailDto {
+  const _$_SendPasswordResetEmailDto({required this.email}) : super._();
+
+  factory _$_SendPasswordResetEmailDto.fromJson(Map<String, dynamic> json) =>
+      _$$_SendPasswordResetEmailDtoFromJson(json);
+
+  @override
+  final String email;
+
+  @override
+  String toString() {
+    return 'SendPasswordResetEmailDto(email: $email)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_SendPasswordResetEmailDto &&
+            (identical(other.email, email) || other.email == email));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, email);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_SendPasswordResetEmailDtoCopyWith<_$_SendPasswordResetEmailDto>
+      get copyWith => __$$_SendPasswordResetEmailDtoCopyWithImpl<
+          _$_SendPasswordResetEmailDto>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_SendPasswordResetEmailDtoToJson(
+      this,
+    );
+  }
+}
+
+abstract class _SendPasswordResetEmailDto extends SendPasswordResetEmailDto {
+  const factory _SendPasswordResetEmailDto({required final String email}) =
+      _$_SendPasswordResetEmailDto;
+  const _SendPasswordResetEmailDto._() : super._();
+
+  factory _SendPasswordResetEmailDto.fromJson(Map<String, dynamic> json) =
+      _$_SendPasswordResetEmailDto.fromJson;
+
+  @override
+  String get email;
+  @override
+  @JsonKey(ignore: true)
+  _$$_SendPasswordResetEmailDtoCopyWith<_$_SendPasswordResetEmailDto>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+ResetPasswordDto _$ResetPasswordDtoFromJson(Map<String, dynamic> json) {
+  return _ResetPasswordDto.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ResetPasswordDto {
+  String get email => throw _privateConstructorUsedError;
+  String get code => throw _privateConstructorUsedError;
+  @JsonKey(name: 'new_password')
+  String get newPassword => throw _privateConstructorUsedError;
+  @JsonKey(name: 'new_password_2')
+  String get newPasswordConfirmation => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ResetPasswordDtoCopyWith<ResetPasswordDto> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ResetPasswordDtoCopyWith<$Res> {
+  factory $ResetPasswordDtoCopyWith(
+          ResetPasswordDto value, $Res Function(ResetPasswordDto) then) =
+      _$ResetPasswordDtoCopyWithImpl<$Res, ResetPasswordDto>;
+  @useResult
+  $Res call(
+      {String email,
+      String code,
+      @JsonKey(name: 'new_password') String newPassword,
+      @JsonKey(name: 'new_password_2') String newPasswordConfirmation});
+}
+
+/// @nodoc
+class _$ResetPasswordDtoCopyWithImpl<$Res, $Val extends ResetPasswordDto>
+    implements $ResetPasswordDtoCopyWith<$Res> {
+  _$ResetPasswordDtoCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? email = null,
+    Object? code = null,
+    Object? newPassword = null,
+    Object? newPasswordConfirmation = null,
+  }) {
+    return _then(_value.copyWith(
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      code: null == code
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String,
+      newPassword: null == newPassword
+          ? _value.newPassword
+          : newPassword // ignore: cast_nullable_to_non_nullable
+              as String,
+      newPasswordConfirmation: null == newPasswordConfirmation
+          ? _value.newPasswordConfirmation
+          : newPasswordConfirmation // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_ResetPasswordDtoCopyWith<$Res>
+    implements $ResetPasswordDtoCopyWith<$Res> {
+  factory _$$_ResetPasswordDtoCopyWith(
+          _$_ResetPasswordDto value, $Res Function(_$_ResetPasswordDto) then) =
+      __$$_ResetPasswordDtoCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String email,
+      String code,
+      @JsonKey(name: 'new_password') String newPassword,
+      @JsonKey(name: 'new_password_2') String newPasswordConfirmation});
+}
+
+/// @nodoc
+class __$$_ResetPasswordDtoCopyWithImpl<$Res>
+    extends _$ResetPasswordDtoCopyWithImpl<$Res, _$_ResetPasswordDto>
+    implements _$$_ResetPasswordDtoCopyWith<$Res> {
+  __$$_ResetPasswordDtoCopyWithImpl(
+      _$_ResetPasswordDto _value, $Res Function(_$_ResetPasswordDto) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? email = null,
+    Object? code = null,
+    Object? newPassword = null,
+    Object? newPasswordConfirmation = null,
+  }) {
+    return _then(_$_ResetPasswordDto(
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      code: null == code
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String,
+      newPassword: null == newPassword
+          ? _value.newPassword
+          : newPassword // ignore: cast_nullable_to_non_nullable
+              as String,
+      newPasswordConfirmation: null == newPasswordConfirmation
+          ? _value.newPasswordConfirmation
+          : newPasswordConfirmation // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_ResetPasswordDto extends _ResetPasswordDto {
+  const _$_ResetPasswordDto(
+      {required this.email,
+      required this.code,
+      @JsonKey(name: 'new_password') required this.newPassword,
+      @JsonKey(name: 'new_password_2') required this.newPasswordConfirmation})
+      : super._();
+
+  factory _$_ResetPasswordDto.fromJson(Map<String, dynamic> json) =>
+      _$$_ResetPasswordDtoFromJson(json);
+
+  @override
+  final String email;
+  @override
+  final String code;
+  @override
+  @JsonKey(name: 'new_password')
+  final String newPassword;
+  @override
+  @JsonKey(name: 'new_password_2')
+  final String newPasswordConfirmation;
+
+  @override
+  String toString() {
+    return 'ResetPasswordDto(email: $email, code: $code, newPassword: $newPassword, newPasswordConfirmation: $newPasswordConfirmation)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_ResetPasswordDto &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.code, code) || other.code == code) &&
+            (identical(other.newPassword, newPassword) ||
+                other.newPassword == newPassword) &&
+            (identical(
+                    other.newPasswordConfirmation, newPasswordConfirmation) ||
+                other.newPasswordConfirmation == newPasswordConfirmation));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, email, code, newPassword, newPasswordConfirmation);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ResetPasswordDtoCopyWith<_$_ResetPasswordDto> get copyWith =>
+      __$$_ResetPasswordDtoCopyWithImpl<_$_ResetPasswordDto>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_ResetPasswordDtoToJson(
+      this,
+    );
+  }
+}
+
+abstract class _ResetPasswordDto extends ResetPasswordDto {
+  const factory _ResetPasswordDto(
+      {required final String email,
+      required final String code,
+      @JsonKey(name: 'new_password')
+          required final String newPassword,
+      @JsonKey(name: 'new_password_2')
+          required final String newPasswordConfirmation}) = _$_ResetPasswordDto;
+  const _ResetPasswordDto._() : super._();
+
+  factory _ResetPasswordDto.fromJson(Map<String, dynamic> json) =
+      _$_ResetPasswordDto.fromJson;
+
+  @override
+  String get email;
+  @override
+  String get code;
+  @override
+  @JsonKey(name: 'new_password')
+  String get newPassword;
+  @override
+  @JsonKey(name: 'new_password_2')
+  String get newPasswordConfirmation;
+  @override
+  @JsonKey(ignore: true)
+  _$$_ResetPasswordDtoCopyWith<_$_ResetPasswordDto> get copyWith =>
+      throw _privateConstructorUsedError;
+}
