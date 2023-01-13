@@ -58,3 +58,17 @@ class ResetPasswordDto with _$ResetPasswordDto {
 
   factory ResetPasswordDto.fromJson(Map<String, dynamic> json) => _$ResetPasswordDtoFromJson(json);
 }
+
+@freezed
+class ChangePasswordDto with _$ChangePasswordDto {
+  const factory ChangePasswordDto({
+    required String oldPassword,
+    @JsonKey(name: 'new_password') required String newPassword,
+    @JsonKey(name: 'new_password_2') required String newPasswordConfirmation,
+  }) = _ChangePasswordDto;
+
+  const ChangePasswordDto._();
+
+  factory ChangePasswordDto.fromJson(Map<String, dynamic> json) =>
+      _$ChangePasswordDtoFromJson(json);
+}

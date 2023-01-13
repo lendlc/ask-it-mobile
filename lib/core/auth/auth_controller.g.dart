@@ -124,3 +124,16 @@ final resetPasswordProvider = AutoDisposeProvider<
 );
 typedef ResetPasswordRef = AutoDisposeProviderRef<
     CallableAction<Either<BasicError, bool>, ResetPasswordDto>>;
+String _$changePasswordHash() => r'eeceebc48777641dbfb7901cd62b228bede2a8c1';
+
+/// See also [changePassword].
+final changePasswordProvider = AutoDisposeProvider<
+    CallableAction<Either<BasicError, bool>, ChangePasswordDto>>(
+  changePassword,
+  name: r'changePasswordProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$changePasswordHash,
+);
+typedef ChangePasswordRef = AutoDisposeProviderRef<
+    CallableAction<Either<BasicError, bool>, ChangePasswordDto>>;

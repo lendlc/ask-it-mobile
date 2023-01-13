@@ -1,8 +1,10 @@
 import 'package:ask_it/components/rounded_button.dart';
 import 'package:ask_it/core/auth/auth_controller.dart';
 import 'package:ask_it/core/auth/auth_dto.dart';
+import 'package:ask_it/core/basic_error.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fpdart/fpdart.dart' show Either;
 import 'package:ndialog/ndialog.dart';
 
 import '../../constants.dart';
@@ -14,6 +16,8 @@ class ForgotPasswordScreen extends StatefulWidget {
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   String? _email;
+
+  final _formKey = GlobalKey<FormState>();
 
   bool get _isEmailValid => _email != null && _email!.isNotEmpty;
 
@@ -44,32 +48,39 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 ),
                 Container(
                   margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'School Email',
-                        style: TextStyle(fontWeight: FontWeight.w600),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      TextFormField(
-                        decoration: inputDecorationStyle,
-                        validator: (String? val) {
-                          if (val == null || val.isEmpty) {
-                            return 'Email is required';
-                          }
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'School Email',
+                          style: TextStyle(fontWeight: FontWeight.w600),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        TextFormField(
+                          decoration: inputDecorationStyle,
+                          validator: (String? val) {
+                            if (val == null || val.isEmpty) {
+                              return 'Email is required';
+                            }
 
-                          return null;
-                        },
-                        onChanged: (String? val) {
-                          setState(() {
-                            _email = val;
-                          });
-                        },
-                      ),
-                    ],
+                            if (!val.contains('@') || !val.contains('.')) {
+                              return 'Email is invalid';
+                            }
+
+                            return null;
+                          },
+                          onChanged: (String? val) {
+                            setState(() {
+                              _email = val;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -82,13 +93,17 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     textColor: Colors.white,
                     press: _isEmailValid
                         ? () {
-                            ProgressDialog.future(
+                            if (!(_formKey.currentState?.validate() ?? false)) {
+                              return;
+                            }
+
+                            ProgressDialog.future<Either<BasicError, bool>>(
                               context,
                               future: ref
                                   .read(sendPasswordResetEmailProvider)
                                   .call(SendPasswordResetEmailDto(email: _email!)),
-                              title: Text('Sending password reset email...'),
-                              message: Text('Please wait...'),
+                              title: Text('Password reset'),
+                              message: Text('Sending password reset email...'),
                               dismissable: false,
                             ).then(
                               (value) {

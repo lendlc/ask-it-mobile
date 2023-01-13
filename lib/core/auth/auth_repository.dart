@@ -13,7 +13,10 @@ class AuthRepository with ApiCallMixin {
 
   final RestClient _client;
 
-  Future<void> register(RegisterDto dto) => apiCallArgs<void, RegisterDto>(_client.register, dto);
+  Future<void> register(RegisterDto dto) => apiCallArgs<void, RegisterDto>(
+        _client.register,
+        dto,
+      );
 
   Future<LoginResponse> login(LoginDto dto) =>
       apiCallArgs<LoginResponse, LoginDto>(_client.login, dto);
@@ -23,10 +26,20 @@ class AuthRepository with ApiCallMixin {
   Future<void> logout() => apiCall(_client.logout);
 
   Future<void> sendPasswordResetEmail(SendPasswordResetEmailDto dto) =>
-      apiCallArgs<void, SendPasswordResetEmailDto>(_client.sendPasswordResetEmail, dto);
+      apiCallArgs<void, SendPasswordResetEmailDto>(
+        _client.sendPasswordResetEmail,
+        dto,
+      );
 
-  Future<void> resetPassword(ResetPasswordDto dto) =>
-      apiCallArgs<void, ResetPasswordDto>(_client.resetPassword, dto);
+  Future<void> resetPassword(ResetPasswordDto dto) => apiCallArgs<void, ResetPasswordDto>(
+        _client.resetPassword,
+        dto,
+      );
+
+  Future<void> changePassword(ChangePasswordDto dto) => apiCallArgs<void, ChangePasswordDto>(
+        _client.changePassword,
+        dto,
+      );
 }
 
 @riverpod

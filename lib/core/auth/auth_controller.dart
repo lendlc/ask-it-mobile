@@ -121,3 +121,19 @@ CallableAction<EitherResponse<bool>, ResetPasswordDto> resetPassword(ResetPasswo
     }
   });
 }
+
+@riverpod
+CallableAction<EitherResponse<bool>, ChangePasswordDto> changePassword(ChangePasswordRef ref) {
+  final authRepository = ref.watch(authRepositoryProvider);
+  return CallableAction((ChangePasswordDto dto) async {
+    try {
+      await authRepository.changePassword(dto);
+      return right(true);
+    } catch (e) {
+      if (e is BasicError) {
+        return left(e);
+      }
+      return left(BasicError(e.toString()));
+    }
+  });
+}

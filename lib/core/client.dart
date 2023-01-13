@@ -9,7 +9,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'client.g.dart';
 
-const String serverUrl = 'https://51b0-180-191-204-104.ap.ngrok.io';
+const String serverUrl = 'https://60bd-180-191-204-104.ap.ngrok.io';
 
 @RestApi(baseUrl: '$serverUrl/api/v1/')
 abstract class RestClient {
@@ -52,6 +52,9 @@ abstract class RestClient {
 
   @PUT('auth/password_reset/')
   Future<void> resetPassword(@Body() ResetPasswordDto dto);
+
+  @POST('auth/password_change/')
+  Future<void> changePassword(@Body() ChangePasswordDto dto);
 }
 
 class _ApiTokenInterceptor extends Interceptor {

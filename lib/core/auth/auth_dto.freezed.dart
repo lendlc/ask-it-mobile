@@ -788,3 +788,200 @@ abstract class _ResetPasswordDto extends ResetPasswordDto {
   _$$_ResetPasswordDtoCopyWith<_$_ResetPasswordDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+ChangePasswordDto _$ChangePasswordDtoFromJson(Map<String, dynamic> json) {
+  return _ChangePasswordDto.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ChangePasswordDto {
+  String get oldPassword => throw _privateConstructorUsedError;
+  @JsonKey(name: 'new_password')
+  String get newPassword => throw _privateConstructorUsedError;
+  @JsonKey(name: 'new_password_2')
+  String get newPasswordConfirmation => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ChangePasswordDtoCopyWith<ChangePasswordDto> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ChangePasswordDtoCopyWith<$Res> {
+  factory $ChangePasswordDtoCopyWith(
+          ChangePasswordDto value, $Res Function(ChangePasswordDto) then) =
+      _$ChangePasswordDtoCopyWithImpl<$Res, ChangePasswordDto>;
+  @useResult
+  $Res call(
+      {String oldPassword,
+      @JsonKey(name: 'new_password') String newPassword,
+      @JsonKey(name: 'new_password_2') String newPasswordConfirmation});
+}
+
+/// @nodoc
+class _$ChangePasswordDtoCopyWithImpl<$Res, $Val extends ChangePasswordDto>
+    implements $ChangePasswordDtoCopyWith<$Res> {
+  _$ChangePasswordDtoCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? oldPassword = null,
+    Object? newPassword = null,
+    Object? newPasswordConfirmation = null,
+  }) {
+    return _then(_value.copyWith(
+      oldPassword: null == oldPassword
+          ? _value.oldPassword
+          : oldPassword // ignore: cast_nullable_to_non_nullable
+              as String,
+      newPassword: null == newPassword
+          ? _value.newPassword
+          : newPassword // ignore: cast_nullable_to_non_nullable
+              as String,
+      newPasswordConfirmation: null == newPasswordConfirmation
+          ? _value.newPasswordConfirmation
+          : newPasswordConfirmation // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_ChangePasswordDtoCopyWith<$Res>
+    implements $ChangePasswordDtoCopyWith<$Res> {
+  factory _$$_ChangePasswordDtoCopyWith(_$_ChangePasswordDto value,
+          $Res Function(_$_ChangePasswordDto) then) =
+      __$$_ChangePasswordDtoCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String oldPassword,
+      @JsonKey(name: 'new_password') String newPassword,
+      @JsonKey(name: 'new_password_2') String newPasswordConfirmation});
+}
+
+/// @nodoc
+class __$$_ChangePasswordDtoCopyWithImpl<$Res>
+    extends _$ChangePasswordDtoCopyWithImpl<$Res, _$_ChangePasswordDto>
+    implements _$$_ChangePasswordDtoCopyWith<$Res> {
+  __$$_ChangePasswordDtoCopyWithImpl(
+      _$_ChangePasswordDto _value, $Res Function(_$_ChangePasswordDto) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? oldPassword = null,
+    Object? newPassword = null,
+    Object? newPasswordConfirmation = null,
+  }) {
+    return _then(_$_ChangePasswordDto(
+      oldPassword: null == oldPassword
+          ? _value.oldPassword
+          : oldPassword // ignore: cast_nullable_to_non_nullable
+              as String,
+      newPassword: null == newPassword
+          ? _value.newPassword
+          : newPassword // ignore: cast_nullable_to_non_nullable
+              as String,
+      newPasswordConfirmation: null == newPasswordConfirmation
+          ? _value.newPasswordConfirmation
+          : newPasswordConfirmation // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_ChangePasswordDto extends _ChangePasswordDto {
+  const _$_ChangePasswordDto(
+      {required this.oldPassword,
+      @JsonKey(name: 'new_password') required this.newPassword,
+      @JsonKey(name: 'new_password_2') required this.newPasswordConfirmation})
+      : super._();
+
+  factory _$_ChangePasswordDto.fromJson(Map<String, dynamic> json) =>
+      _$$_ChangePasswordDtoFromJson(json);
+
+  @override
+  final String oldPassword;
+  @override
+  @JsonKey(name: 'new_password')
+  final String newPassword;
+  @override
+  @JsonKey(name: 'new_password_2')
+  final String newPasswordConfirmation;
+
+  @override
+  String toString() {
+    return 'ChangePasswordDto(oldPassword: $oldPassword, newPassword: $newPassword, newPasswordConfirmation: $newPasswordConfirmation)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_ChangePasswordDto &&
+            (identical(other.oldPassword, oldPassword) ||
+                other.oldPassword == oldPassword) &&
+            (identical(other.newPassword, newPassword) ||
+                other.newPassword == newPassword) &&
+            (identical(
+                    other.newPasswordConfirmation, newPasswordConfirmation) ||
+                other.newPasswordConfirmation == newPasswordConfirmation));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, oldPassword, newPassword, newPasswordConfirmation);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ChangePasswordDtoCopyWith<_$_ChangePasswordDto> get copyWith =>
+      __$$_ChangePasswordDtoCopyWithImpl<_$_ChangePasswordDto>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_ChangePasswordDtoToJson(
+      this,
+    );
+  }
+}
+
+abstract class _ChangePasswordDto extends ChangePasswordDto {
+  const factory _ChangePasswordDto(
+          {required final String oldPassword,
+          @JsonKey(name: 'new_password')
+              required final String newPassword,
+          @JsonKey(name: 'new_password_2')
+              required final String newPasswordConfirmation}) =
+      _$_ChangePasswordDto;
+  const _ChangePasswordDto._() : super._();
+
+  factory _ChangePasswordDto.fromJson(Map<String, dynamic> json) =
+      _$_ChangePasswordDto.fromJson;
+
+  @override
+  String get oldPassword;
+  @override
+  @JsonKey(name: 'new_password')
+  String get newPassword;
+  @override
+  @JsonKey(name: 'new_password_2')
+  String get newPasswordConfirmation;
+  @override
+  @JsonKey(ignore: true)
+  _$$_ChangePasswordDtoCopyWith<_$_ChangePasswordDto> get copyWith =>
+      throw _privateConstructorUsedError;
+}
