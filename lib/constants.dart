@@ -92,3 +92,36 @@ SkeletonParagraph oneLineTextSkeleton = SkeletonParagraph(
     lines: 1,
   ),
 );
+
+final subjects = [
+  {
+    'title': 'Intro to Java Programming',
+    'imagePath': 'assets/images/subjects/sub-1.png',
+  },
+  {
+    'title': 'Advanced Java Programming',
+    'imagePath': 'assets/images/subjects/sub-2.png',
+  },
+  {
+    'title': 'Object Oriented Programming',
+    'imagePath': 'assets/images/subjects/sub-3.png',
+  },
+  {
+    'title': 'Data Structures and Algorithms',
+    'imagePath': 'assets/images/subjects/sub-4.png',
+  },
+];
+
+class UserType {
+  static const String tutee = 'tutee';
+  static const String tutor = 'tutor';
+}
+
+class JDoodleSettings {
+  static const String clientId = 'db13acc080053eba9a3352bc41cfbcbc';
+  static const String clientSecret =
+      '6afda707a21285ce0bc173a266b2200327e56ca6d17abba24ed5ff96f3f82508';
+  static const String stdin = 'askit';
+  static const String language = 'java';
+  static const String versionIndex = '0';
+}

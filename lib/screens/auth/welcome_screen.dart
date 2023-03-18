@@ -54,7 +54,7 @@ class WelcomeScreen extends ConsumerWidget {
               textColor: Colors.black,
               press: () {
                 //Routes to Signup student screen
-                Navigator.pushNamed(context, '/register-student');
+                Navigator.pushNamed(context, '/register/tutee');
               },
             ),
             RoundedButton(
@@ -62,7 +62,7 @@ class WelcomeScreen extends ConsumerWidget {
               text: "Sign up as Tutor",
               textColor: Colors.white,
               press: () {
-                Navigator.pushNamed(context, '/register-tutor');
+                Navigator.pushNamed(context, '/register/tutor');
               },
             ),
             AlreadyHaveAnAccount(

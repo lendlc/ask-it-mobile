@@ -9,14 +9,17 @@ import 'package:ndialog/ndialog.dart';
 
 import '../../core/basic_error.dart';
 
-class RegisterStudentScreen extends StatefulWidget {
+class RegisterScreen extends StatefulWidget {
+  final String role;
+
+  const RegisterScreen({Key? key, required this.role}) : super(key: key);
+
   @override
-  _RegisterStudentScreenState createState() => _RegisterStudentScreenState();
+  _RegisterScreenState createState() => _RegisterScreenState();
 }
 
-class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   String? _firstName, _lastName, _email, _password;
-  final String role = 'tutee';
 
   //Reference to the Form
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -192,7 +195,7 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                             text: 'Create my Account',
                             textColor: Colors.black,
                             color: primaryColor,
-                            press: () async {
+                            press: () {
                               //close keyboard upon clicking button
                               FocusScope.of(context).unfocus();
 
@@ -212,11 +215,11 @@ class _RegisterStudentScreenState extends State<RegisterStudentScreen> {
                                         middleName: null,
                                         lastName: _lastName!,
                                         email: _email!,
-                                        role: role,
+                                        role: widget.role,
                                         password: _password!,
                                       ),
                                     ),
-                                title: Text('Logging in...'),
+                                title: Text('Creating account...'),
                                 message: Text('Please wait...'),
                                 dismissable: false,
                               ).then((value) {

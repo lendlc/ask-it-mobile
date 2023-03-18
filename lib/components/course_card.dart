@@ -4,11 +4,13 @@ import '../constants.dart';
 class CourseTile extends StatelessWidget {
   final String title, imagePath;
   final void Function()? onTap;
+  final bool isSelected;
 
   CourseTile({
     Key? key,
     required this.title,
     required this.imagePath,
+    this.isSelected = false,
     this.onTap,
   }) : super(key: key);
 
@@ -18,7 +20,7 @@ class CourseTile extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: primaryColor,
+          color: isSelected ? primaryColor : Colors.white,
           borderRadius: BorderRadius.all(
             Radius.circular(10),
           ),
@@ -33,15 +35,17 @@ class CourseTile extends StatelessWidget {
         ),
         padding: EdgeInsets.all(16),
         child: Column(
-          //mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
-              height: 90,
+              height: 80,
               child: Image.asset(imagePath),
             ),
-            Text(
-              title,
-              style: mediumTextBold,
+            SizedBox(height: 8),
+            Expanded(
+              child: Text(
+                title,
+                style: smallTextW600.copyWith(fontWeight: FontWeight.bold),
+              ),
             )
           ],
         ),

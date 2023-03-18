@@ -26,3 +26,17 @@ class ApiError implements BasicError {
     return message;
   }
 }
+
+class JDoodleError implements BasicError {
+  JDoodleError(this.response);
+
+  final Map<String, dynamic> response;
+
+  @override
+  String get message => response['error'] ?? 'Unknown error';
+
+  @override
+  String toString() {
+    return message;
+  }
+}

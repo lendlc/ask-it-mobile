@@ -1,6 +1,12 @@
 import 'package:ask_it/components/rounded_button.dart';
 import 'package:ask_it/constants.dart';
+import 'package:ask_it/core/auth/auth_controller.dart';
+import 'package:ask_it/core/auth/auth_dto.dart';
+import 'package:ask_it/core/basic_error.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fpdart/fpdart.dart' show Either;
+import 'package:ndialog/ndialog.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
   static String routeName = '/profile/update/password';
@@ -108,7 +114,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               return null;
             },
             onChanged: (String? val) {
-              _oldPassword = val?.trim();
+              _newPasswordCheck = val?.trim();
             },
           ),
         ],
@@ -138,33 +144,61 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 SizedBox(
                   height: 32,
                 ),
-                RoundedButton(
-                  text: 'Change Password',
-                  textColor: Colors.white,
-                  color: secondaryColor,
-                  press: () {
-                    //close keyboard upon clicking button
-                    FocusScope.of(context).unfocus();
+                Consumer(builder: (context, ref, _) {
+                  return RoundedButton(
+                    text: 'Change Password',
+                    textColor: Colors.white,
+                    color: secondaryColor,
+                    press: () {
+                      //close keyboard upon clicking button
+                      FocusScope.of(context).unfocus();
 
-                    if (_formKey.currentState == null) {
-                      return;
-                    }
+                      if (_formKey.currentState == null) {
+                        return;
+                      }
 
-                    //check if all validation passes
-                    if (!_formKey.currentState!.validate()) {
-                      return;
-                    }
+                      //check if all validation passes
+                      if (!_formKey.currentState!.validate()) {
+                        return;
+                      }
 
-                    _formKey.currentState!.save();
+                      _formKey.currentState!.save();
 
-                    // TODO(acgonzales): Implement change password
+                      ProgressDialog.future<Either<BasicError, bool>>(
+                        context,
+                        future: ref.read(changePasswordProvider).call(ChangePasswordDto(
+                              oldPassword: _oldPassword!,
+                              newPassword: _newPassword!,
+                              newPasswordConfirmation: _newPasswordCheck!,
+                            )),
+                        title: const Text('Change Password'),
+                        message: const Text('Please wait...'),
+                      ).then((value) {
+                        if (value == null) return;
 
-                    //Post Data to API
-
-                    //Back to Edit Profile Screen
-                    Navigator.pop(context);
-                  },
-                )
+                        value.fold(
+                          (l) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(l.message),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                          },
+                          (r) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Password changed successfully'),
+                                backgroundColor: secondaryColor,
+                              ),
+                            );
+                            Navigator.pop(context);
+                          },
+                        );
+                      });
+                    },
+                  );
+                })
               ],
             ),
           ),

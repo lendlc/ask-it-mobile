@@ -7,8 +7,7 @@ class LessonScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final routeArgs =
-        ModalRoute.of(context)?.settings.arguments as Map<String, String>;
+    final routeArgs = ModalRoute.of(context)?.settings.arguments as Map<String, String>;
 
     final title = routeArgs['title'];
 
@@ -50,6 +49,14 @@ class LessonScreen extends StatelessWidget {
               textColor: Colors.white,
               press: () {
                 Navigator.pushNamed(context, '/mini-game1');
+              },
+            ),
+            RoundedButton(
+              text: 'Practice Programming',
+              color: primaryColor,
+              textColor: Colors.white,
+              press: () {
+                Navigator.pushNamed(context, '/practice-programming');
               },
             )
           ],

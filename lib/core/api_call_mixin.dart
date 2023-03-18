@@ -23,6 +23,25 @@ mixin ApiCallMixin {
       return response;
     } on DioError catch (e) {
       if (e.response != null) {
+        if (e.requestOptions.path.contains('jdoodle')) {
+          throw JDoodleError(Map<String, dynamic>.from(e.response!.data));
+        } else {
+          throw ApiError(Map<String, List>.from(e.response!.data));
+        }
+      }
+      throw BasicError(e.message);
+    } catch (e) {
+      throw BasicError(e.toString());
+    }
+  }
+
+  Future<T> apiCallArgs2<T, E, F>(
+      Future<T> Function(E, F) callable, E arguments1, F arguments2) async {
+    try {
+      final response = await callable(arguments1, arguments2);
+      return response;
+    } on DioError catch (e) {
+      if (e.response != null) {
         throw ApiError(Map<String, List>.from(e.response!.data));
       }
       throw BasicError(e.message);

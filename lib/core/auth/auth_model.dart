@@ -17,4 +17,6 @@ class UserProfile with _$UserProfile {
   const UserProfile._();
 
   factory UserProfile.fromJson(Map<String, dynamic> json) => _$UserProfileFromJson(json);
+
+  num get avatarIndex => id % 6;
 }

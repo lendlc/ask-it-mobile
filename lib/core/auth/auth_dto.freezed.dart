@@ -795,6 +795,7 @@ ChangePasswordDto _$ChangePasswordDtoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ChangePasswordDto {
+  @JsonKey(name: 'old_password')
   String get oldPassword => throw _privateConstructorUsedError;
   @JsonKey(name: 'new_password')
   String get newPassword => throw _privateConstructorUsedError;
@@ -814,7 +815,7 @@ abstract class $ChangePasswordDtoCopyWith<$Res> {
       _$ChangePasswordDtoCopyWithImpl<$Res, ChangePasswordDto>;
   @useResult
   $Res call(
-      {String oldPassword,
+      {@JsonKey(name: 'old_password') String oldPassword,
       @JsonKey(name: 'new_password') String newPassword,
       @JsonKey(name: 'new_password_2') String newPasswordConfirmation});
 }
@@ -862,7 +863,7 @@ abstract class _$$_ChangePasswordDtoCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String oldPassword,
+      {@JsonKey(name: 'old_password') String oldPassword,
       @JsonKey(name: 'new_password') String newPassword,
       @JsonKey(name: 'new_password_2') String newPasswordConfirmation});
 }
@@ -903,7 +904,7 @@ class __$$_ChangePasswordDtoCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_ChangePasswordDto extends _ChangePasswordDto {
   const _$_ChangePasswordDto(
-      {required this.oldPassword,
+      {@JsonKey(name: 'old_password') required this.oldPassword,
       @JsonKey(name: 'new_password') required this.newPassword,
       @JsonKey(name: 'new_password_2') required this.newPasswordConfirmation})
       : super._();
@@ -912,6 +913,7 @@ class _$_ChangePasswordDto extends _ChangePasswordDto {
       _$$_ChangePasswordDtoFromJson(json);
 
   @override
+  @JsonKey(name: 'old_password')
   final String oldPassword;
   @override
   @JsonKey(name: 'new_password')
@@ -961,7 +963,8 @@ class _$_ChangePasswordDto extends _ChangePasswordDto {
 
 abstract class _ChangePasswordDto extends ChangePasswordDto {
   const factory _ChangePasswordDto(
-          {required final String oldPassword,
+          {@JsonKey(name: 'old_password')
+              required final String oldPassword,
           @JsonKey(name: 'new_password')
               required final String newPassword,
           @JsonKey(name: 'new_password_2')
@@ -973,6 +976,7 @@ abstract class _ChangePasswordDto extends ChangePasswordDto {
       _$_ChangePasswordDto.fromJson;
 
   @override
+  @JsonKey(name: 'old_password')
   String get oldPassword;
   @override
   @JsonKey(name: 'new_password')

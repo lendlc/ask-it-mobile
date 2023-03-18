@@ -62,7 +62,7 @@ class ResetPasswordDto with _$ResetPasswordDto {
 @freezed
 class ChangePasswordDto with _$ChangePasswordDto {
   const factory ChangePasswordDto({
-    required String oldPassword,
+    @JsonKey(name: 'old_password') required String oldPassword,
     @JsonKey(name: 'new_password') required String newPassword,
     @JsonKey(name: 'new_password_2') required String newPasswordConfirmation,
   }) = _ChangePasswordDto;

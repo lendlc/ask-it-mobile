@@ -76,7 +76,7 @@ Map<String, dynamic> _$$_ResetPasswordDtoToJson(_$_ResetPasswordDto instance) =>
 
 _$_ChangePasswordDto _$$_ChangePasswordDtoFromJson(Map<String, dynamic> json) =>
     _$_ChangePasswordDto(
-      oldPassword: json['oldPassword'] as String,
+      oldPassword: json['old_password'] as String,
       newPassword: json['new_password'] as String,
       newPasswordConfirmation: json['new_password_2'] as String,
     );
@@ -84,7 +84,7 @@ _$_ChangePasswordDto _$$_ChangePasswordDtoFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$_ChangePasswordDtoToJson(
         _$_ChangePasswordDto instance) =>
     <String, dynamic>{
-      'oldPassword': instance.oldPassword,
+      'old_password': instance.oldPassword,
       'new_password': instance.newPassword,
       'new_password_2': instance.newPasswordConfirmation,
     };

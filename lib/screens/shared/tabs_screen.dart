@@ -4,6 +4,7 @@ import 'package:ask_it/screens/tutor/tutor_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../constants.dart';
 import '../tutee/chat_list_screen.dart';
 import '../tutee/home_screen.dart';
 import '../tutee/profile_screen.dart';
@@ -36,7 +37,7 @@ class TabsScreen extends ConsumerWidget {
           data: (userProfile) {
             return IndexedStack(
               index: currentPage,
-              children: userProfile.role == 'tutor' ? _tutorPages : _studentPages,
+              children: userProfile.role == UserType.tutor ? _tutorPages : _studentPages,
             );
           },
           loading: () => Center(child: CircularProgressIndicator()),

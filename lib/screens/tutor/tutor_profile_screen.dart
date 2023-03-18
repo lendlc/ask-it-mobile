@@ -1,8 +1,16 @@
 import 'package:ask_it/constants.dart';
+import 'package:ask_it/core/schedule/schedule_model.dart';
 import 'package:ask_it/providers/auth.dart';
 import 'package:ask_it/screens/shared/logout_button.dart';
 import 'package:ask_it/screens/shared/profile_info_card.dart';
+import 'package:ask_it/screens/tutor/tutor_edit_schedule_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
+import 'package:ndialog/ndialog.dart';
+import 'package:skeletons/skeletons.dart';
+
+import '../../core/schedule/schedule_controller.dart';
 
 class TutorProfileScreen extends StatelessWidget {
   @override
@@ -17,156 +25,79 @@ class TutorProfileScreen extends StatelessWidget {
           LogoutButton(),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.all(16),
-          child: Column(
-            children: [
-              ProfileInfoCard(
-                actions: Container(
-                  child: Container(
-                    child: Row(
-                      children: [
-                        HeaderButton(
-                          title: 'My Videos',
-                          path: '/tutor/profile/videos',
-                        ),
-                        Spacer(),
-                        HeaderButton(
-                          title: 'Edit Profile',
-                          path: '/profile/edit',
-                        )
-                      ],
-                    ),
+      body: Padding(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          children: [
+            ProfileInfoCard(
+              actions: Container(
+                child: Container(
+                  child: Row(
+                    children: [
+                      HeaderButton(
+                        title: 'My Videos',
+                        path: '/tutor/profile/videos',
+                      ),
+                      Spacer(),
+                      HeaderButton(
+                        title: 'Edit Profile',
+                        path: '/profile/edit',
+                      )
+                    ],
                   ),
                 ),
               ),
-              SizedBox(
-                height: 16,
-              ),
-              Row(
-                children: [
-                  Text(
-                    'My Schedule',
-                    style: TextStyle(fontWeight: FontWeight.w600),
-                  ),
-                  Spacer(),
-                  IconButton(
-                    icon: Icon(Icons.add),
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/tutor/schedule');
-                    },
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Column(
-                children: [
-                  buildScheduleCard(context),
-                  buildScheduleCard(context),
-                  buildScheduleCard(context),
-                  buildScheduleCard(context),
-                  buildScheduleCard(context),
-                ],
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Container buildScheduleCard(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(16),
-      margin: EdgeInsets.only(bottom: 8),
-      decoration: boxDecorationStyle,
-      child: Row(
-        children: [
-          Icon(
-            Icons.access_time,
-            size: 32,
-          ),
-          SizedBox(
-            width: 16,
-          ),
-          Expanded(
-            child: Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Mon, March 5, 2021',
-                    style: mediumTextW600,
-                  ),
-                  Text(
-                    '7:00AM to 9:00AM',
-                  )
-                ],
-              ),
             ),
-          ),
-          PopupMenuButton(
-            itemBuilder: (BuildContext bc) => [
-              PopupMenuItem(
-                child: Text("Edit"),
-                value: "/tutor/schedule/edit",
-              ),
-              PopupMenuItem(
-                child: Text("Delete"),
-                value: "/delete",
-              ),
-            ],
-            onSelected: (route) {
-              route != '/delete'
-                  ? Navigator.pushNamed(context, route)
-                  : showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (BuildContext context) {
-                        return buildDeleteAlertDialog(context);
-                      },
+            SizedBox(
+              height: 16,
+            ),
+            Row(
+              children: [
+                Text(
+                  'My Schedule',
+                  style: TextStyle(fontWeight: FontWeight.w600),
+                ),
+                Spacer(),
+                IconButton(
+                  icon: Icon(Icons.add),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/tutor/schedule');
+                  },
+                )
+              ],
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Consumer(builder: (context, ref, _) {
+              final schedulesAsyncValue = ref.watch(schedulesProvider);
+              return schedulesAsyncValue.when(
+                error: (error, stackTrace) => Center(
+                  child: Text(error.toString()),
+                ),
+                loading: () => Expanded(child: SkeletonListView()),
+                data: (schedules) {
+                  if (schedules.isEmpty) {
+                    return Center(
+                      child: Text('No schedule yet.'),
                     );
-            },
-          ),
-        ],
-      ),
-    );
-  }
+                  }
 
-  AlertDialog buildDeleteAlertDialog(BuildContext context) {
-    return AlertDialog(
-      title: Text('Delete Schedule'),
-      content: SingleChildScrollView(
-        child: ListBody(
-          children: <Widget>[
-            Text(
-              'Are you sure you want to do this action?',
-            ),
+                  return Expanded(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: List.generate(
+                        schedules.length,
+                        (index) => ScheduleListItem(schedule: schedules[index]),
+                      ),
+                    ),
+                  );
+                },
+              );
+            })
           ],
         ),
       ),
-      actions: <Widget>[
-        TextButton(
-          child: Text(
-            'Cancel',
-            style: TextStyle(color: Colors.black54),
-          ),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        TextButton(
-          child: Text('Yes'),
-          onPressed: () {
-            //Send Request to API
-
-            Navigator.of(context).pop();
-          },
-        ),
-      ],
     );
   }
 
@@ -218,6 +149,106 @@ class TutorProfileScreen extends StatelessWidget {
               ),
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class ScheduleListItem extends StatelessWidget {
+  const ScheduleListItem({
+    Key? key,
+    required this.schedule,
+  }) : super(key: key);
+
+  final Schedule schedule;
+
+  @override
+  Widget build(BuildContext context) {
+    final dateFormat = DateFormat('EEE, MMM d, yyyy');
+    final timeFormat = DateFormat('h:mm a');
+    return Container(
+      padding: EdgeInsets.all(16),
+      margin: EdgeInsets.only(bottom: 8),
+      decoration: boxDecorationStyle,
+      child: Row(
+        children: [
+          Icon(
+            Icons.access_time,
+            size: 32,
+          ),
+          SizedBox(
+            width: 16,
+          ),
+          Expanded(
+            child: Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    dateFormat.format(schedule.start),
+                    style: mediumTextW600,
+                  ),
+                  Builder(builder: (context) {
+                    final start = timeFormat.format(schedule.start);
+                    final end = timeFormat.format(schedule.end);
+
+                    return Text(
+                      '$start to $end',
+                    );
+                  })
+                ],
+              ),
+            ),
+          ),
+          Consumer(builder: (context, ref, _) {
+            final deleteController = ref.watch(deleteScheduleProvider(schedule.id));
+
+            return PopupMenuButton(
+              itemBuilder: (BuildContext bc) => [
+                PopupMenuItem(
+                  child: Text("Edit"),
+                  value: "edit",
+                ),
+                PopupMenuItem(
+                  child: Text("Delete"),
+                  value: "delete",
+                ),
+              ],
+              onSelected: (action) {
+                if (deleteController.isBusy) return;
+
+                if (action == 'edit') {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => TutorEditScheduleScreen(
+                        schedule: schedule,
+                      ),
+                    ),
+                  );
+                  return;
+                }
+
+                if (action == 'delete') {
+                  NAlertDialog(
+                    dismissable: false,
+                    dialogStyle: DialogStyle(titleDivider: true),
+                    title: Text('Delete Schedule'),
+                    content: Text('Are you sure you want to do this action?'),
+                    actions: <Widget>[
+                      TextButton(
+                          child: Text('Yes'),
+                          onPressed: () async {
+                            await deleteController.call(null);
+                            Navigator.pop(context);
+                          }),
+                      TextButton(child: Text('Cancel'), onPressed: () => Navigator.pop(context)),
+                    ],
+                  ).show(context);
+                }
+              },
+            );
+          }),
         ],
       ),
     );

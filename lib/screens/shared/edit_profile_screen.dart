@@ -1,8 +1,61 @@
 import 'package:ask_it/constants.dart';
+import 'package:ask_it/core/auth/auth_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class EditProfileScreen extends StatelessWidget {
   static String routeName = '/profile/edit';
+
+  Widget _buildPassword() {
+    return Builder(
+      builder: (context) => Container(
+        margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Password',
+              style: TextStyle(fontWeight: FontWeight.w600),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            TextFormField(
+              initialValue: "passwordplaceholder",
+              readOnly: true,
+              obscureText: true,
+              decoration: InputDecoration(
+                hintText: 'Password',
+                filled: true,
+                fillColor: lightColor,
+                isDense: true,
+                suffixIcon: IconButton(
+                  color: Colors.black45,
+                  icon: Icon(Icons.edit),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/profile/update/password');
+                  },
+                ),
+                //Border when user Uses the Text Field
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(color: lightColor),
+                ),
+                //Default Border Color
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(
+                    color: lightColor,
+                    //width: 2.0,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,48 +71,71 @@ class EditProfileScreen extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              Stack(alignment: Alignment.center, children: <Widget>[
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(300.0),
-                  child: Container(
-                    color: primaryColor,
-                    child: Image.asset(
-                      'assets/images/avatar.png',
+              Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(300.0),
+                    child: Container(
+                      color: primaryColor,
+                      child: Image.asset(
+                        'assets/images/avatar.png',
+                        height: 150,
+                      ),
+                    ),
+                  ),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(300.0),
+                    child: Container(
                       height: 150,
+                      width: 150,
+                      color: Colors.black26,
+                      child: IconButton(
+                        icon: Icon(Icons.edit),
+                        color: lightColor,
+                        iconSize: 42,
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/profile/update/avatar');
+                        },
+                      ),
                     ),
                   ),
-                ),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(300.0),
-                  child: Container(
-                    height: 150,
-                    width: 150,
-                    color: Colors.black26,
-                    child: IconButton(
-                      icon: Icon(Icons.edit),
-                      color: lightColor,
-                      iconSize: 42,
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/profile/update/avatar');
-                      },
-                    ),
-                  ),
-                ),
-              ]),
+                ],
+              ),
               SizedBox(
                 height: 15,
               ),
-              _buildEmailTF(
-                title: 'First Name',
-                value: 'John Lendl',
+              Consumer(
+                builder: (context, ref, _) {
+                  final userProfileAV = ref.watch(userProfileProvider);
+
+                  return userProfileAV.maybeWhen(
+                    data: (userProfile) => _EditProfileTF(
+                      title: 'Full Name',
+                      value: userProfile.fullName,
+                    ),
+                    orElse: () => _EditProfileTF(
+                      title: 'Full Name',
+                      value: '',
+                    ),
+                  );
+                },
               ),
-              _buildEmailTF(
-                title: 'Last Name',
-                value: 'Cuyugan',
-              ),
-              _buildEmailTF(
-                title: 'Email',
-                value: 'cuyuganjt@students.national-u.edu.ph',
+              Consumer(
+                builder: (context, ref, _) {
+                  final userProfileAV = ref.watch(userProfileProvider);
+
+                  return userProfileAV.maybeWhen(
+                    data: (userProfile) => _EditProfileTF(
+                      title: 'Email',
+                      value: userProfile.email,
+                    ),
+                    orElse: () => _EditProfileTF(
+                      title: 'Email',
+                      value: '',
+                    ),
+                  );
+                },
               ),
               _buildPassword()
             ],
@@ -70,10 +146,10 @@ class EditProfileScreen extends StatelessWidget {
   }
 }
 
-class _buildEmailTF extends StatelessWidget {
+class _EditProfileTF extends StatelessWidget {
   final String title, value;
 
-  const _buildEmailTF({
+  const _EditProfileTF({
     Key? key,
     required this.title,
     required this.value,
@@ -112,55 +188,4 @@ class _buildEmailTF extends StatelessWidget {
       ),
     );
   }
-}
-
-Widget _buildPassword() {
-  return Builder(
-    builder: (context) => Container(
-      margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Password',
-            style: TextStyle(fontWeight: FontWeight.w600),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          TextFormField(
-            initialValue: "passwordplaceholder",
-            readOnly: true,
-            obscureText: true,
-            decoration: InputDecoration(
-              hintText: 'Password',
-              filled: true,
-              fillColor: lightColor,
-              isDense: true,
-              suffixIcon: IconButton(
-                color: Colors.black45,
-                icon: Icon(Icons.edit),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/profile/update/password');
-                },
-              ),
-              //Border when user Uses the Text Field
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide(color: lightColor),
-              ),
-              //Default Border Color
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide(
-                  color: lightColor,
-                  //width: 2.0,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
 }
