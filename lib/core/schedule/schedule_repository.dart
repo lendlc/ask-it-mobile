@@ -12,12 +12,25 @@ class ScheduleRepository with ApiCallMixin {
 
   final RestClient _client;
 
-  Future<List<Schedule>> getSchedules() async {
+  Future<List<Schedule>> getMySchedules() async {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
-    final schedules = await apiCall(_client.getSchedules);
+    final schedules = await apiCall(_client.getMySchedules);
     return schedules
         .where((schedule) => schedule.start.isAfter(today.subtract(Duration(days: 1))))
+        .toList(growable: false);
+  }
+
+  Future<List<Schedule>> getSubjectSchedules(String subject) async {
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final schedules = await apiCallArgs<List<Schedule>, String>(
+      _client.getSubjectSchedules,
+      subject,
+    );
+    return schedules
+        .where((schedule) =>
+            schedule.isAvailable && schedule.start.isAfter(today.subtract(Duration(days: 1))))
         .toList(growable: false);
   }
 

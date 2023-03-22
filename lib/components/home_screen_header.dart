@@ -1,4 +1,6 @@
+import 'package:ask_it/core/auth/auth_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../constants.dart';
 
@@ -45,7 +47,14 @@ class HomeScreenHeader extends StatelessWidget {
               height: double.infinity,
               width: 70,
               color: primaryColor,
-              child: Image.asset('assets/images/avatar.png'),
+              child: Consumer(
+                builder: (context, ref, _) {
+                  final userProfileAV = ref.watch(userProfileProvider);
+                  return userProfileAV.maybeWhen(
+                      orElse: () => Image.asset('assets/images/avatar.png'),
+                      data: (profile) => Image.asset(profile.avatar));
+                },
+              ),
             ),
           )
         ],

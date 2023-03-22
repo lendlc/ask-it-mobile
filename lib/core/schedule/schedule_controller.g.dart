@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String _$schedulesHash() => r'41a844d4dc6a649d64131dd5c27fe503940872b8';
+String _$schedulesHash() => r'6ed2b747d9b1b8bc36204a94f628a4015b247ec8';
 
 /// See also [schedules].
 final schedulesProvider = AutoDisposeFutureProvider<List<Schedule>>(
@@ -39,6 +39,77 @@ final schedulesProvider = AutoDisposeFutureProvider<List<Schedule>>(
       const bool.fromEnvironment('dart.vm.product') ? null : _$schedulesHash,
 );
 typedef SchedulesRef = AutoDisposeFutureProviderRef<List<Schedule>>;
+String _$subjectSchedulesHash() => r'142a406a7295774c95fb5bec5225315b01fb770b';
+
+/// See also [subjectSchedules].
+class SubjectSchedulesProvider
+    extends AutoDisposeFutureProvider<List<Schedule>> {
+  SubjectSchedulesProvider(
+    this.subject,
+  ) : super(
+          (ref) => subjectSchedules(
+            ref,
+            subject,
+          ),
+          from: subjectSchedulesProvider,
+          name: r'subjectSchedulesProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$subjectSchedulesHash,
+        );
+
+  final String subject;
+
+  @override
+  bool operator ==(Object other) {
+    return other is SubjectSchedulesProvider && other.subject == subject;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, subject.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+typedef SubjectSchedulesRef = AutoDisposeFutureProviderRef<List<Schedule>>;
+
+/// See also [subjectSchedules].
+final subjectSchedulesProvider = SubjectSchedulesFamily();
+
+class SubjectSchedulesFamily extends Family<AsyncValue<List<Schedule>>> {
+  SubjectSchedulesFamily();
+
+  SubjectSchedulesProvider call(
+    String subject,
+  ) {
+    return SubjectSchedulesProvider(
+      subject,
+    );
+  }
+
+  @override
+  AutoDisposeFutureProvider<List<Schedule>> getProviderOverride(
+    covariant SubjectSchedulesProvider provider,
+  ) {
+    return call(
+      provider.subject,
+    );
+  }
+
+  @override
+  List<ProviderOrFamily>? get allTransitiveDependencies => null;
+
+  @override
+  List<ProviderOrFamily>? get dependencies => null;
+
+  @override
+  String? get name => r'subjectSchedulesProvider';
+}
+
 String _$createScheduleHash() => r'7326b219969016ae78ae6111c03cd0d76eb78382';
 
 /// See also [createSchedule].

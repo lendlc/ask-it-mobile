@@ -13,7 +13,14 @@ part 'schedule_controller.g.dart';
 @riverpod
 Future<List<Schedule>> schedules(SchedulesRef ref) async {
   final scheduleRepository = ref.watch(scheduleRepositoryProvider);
-  final schedules = await scheduleRepository.getSchedules();
+  final schedules = await scheduleRepository.getMySchedules();
+  return schedules;
+}
+
+@riverpod
+Future<List<Schedule>> subjectSchedules(SchedulesRef ref, String subject) async {
+  final scheduleRepository = ref.watch(scheduleRepositoryProvider);
+  final schedules = await scheduleRepository.getSubjectSchedules(subject);
   return schedules;
 }
 

@@ -1,10 +1,14 @@
+import 'package:ask_it/core/appointment/appointment_model.dart';
 import 'package:ask_it/core/auth/auth_controller.dart';
 import 'package:ask_it/screens/shared/logout_button.dart';
 import 'package:ask_it/screens/shared/profile_info_card.dart';
 import 'package:flutter/material.dart';
 import 'package:ask_it/constants.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:skeletons/skeletons.dart';
+
+import '../../core/appointment/appointment_controller.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override
@@ -63,24 +67,86 @@ class ProfileScreen extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              Container(
-                alignment: Alignment.centerLeft,
-                child: Text('Today', style: mediumTextW600),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    child: Text('Today', style: mediumTextW600),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Consumer(
+                    builder: (context, ref, _) {
+                      final appointmentsAV = ref.watch(myAppointmentsTodayProvider);
+                      return appointmentsAV.when(
+                        error: (error, stackTrace) => Center(
+                          child: Text(error.toString()),
+                        ),
+                        loading: () => SizedBox(height: 150, child: SkeletonListView()),
+                        data: (appointments) {
+                          if (appointments.isEmpty) {
+                            return SizedBox(
+                              height: 100,
+                              child: Center(
+                                child: Text('No appointments scheduled for today'),
+                              ),
+                            );
+                          }
+                          return Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: List.generate(appointments.length, (index) {
+                              final appointment = appointments[index];
+                              return _AppointmentListItem(appointment: appointment);
+                            }),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ],
               ),
-              SizedBox(
-                height: 5,
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    child: Text('Tomorrow', style: mediumTextW600),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Consumer(
+                    builder: (context, ref, _) {
+                      final appointmentsAV = ref.watch(myAppointmentsTomorrowProvider);
+                      return appointmentsAV.when(
+                        error: (error, stackTrace) => Center(
+                          child: Text(error.toString()),
+                        ),
+                        loading: () => SizedBox(height: 150, child: SkeletonListView()),
+                        data: (appointments) {
+                          if (appointments.isEmpty) {
+                            return SizedBox(
+                              height: 100,
+                              child: Center(
+                                child: Text('No appointments scheduled for tomorrow'),
+                              ),
+                            );
+                          }
+                          return Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: List.generate(appointments.length, (index) {
+                              final appointment = appointments[index];
+                              return _AppointmentListItem(appointment: appointment);
+                            }),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ],
               ),
-              _buildScheduleListItem(),
-              _buildScheduleListItem(),
-              Container(
-                alignment: Alignment.centerLeft,
-                child: Text('Tomorrow', style: mediumTextW600),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              _buildScheduleListItem(),
-              _buildScheduleListItem(),
             ],
           ),
         ),
@@ -89,43 +155,34 @@ class ProfileScreen extends StatelessWidget {
   }
 }
 
-class _buildScheduleListItem extends StatelessWidget {
-  const _buildScheduleListItem({
+class _AppointmentListItem extends StatelessWidget {
+  final Appointment appointment;
+
+  const _AppointmentListItem({
     Key? key,
+    required this.appointment,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final timeFormat = DateFormat('hh:mm a');
+    final startTime = timeFormat.format(appointment.start);
+    final endTime = timeFormat.format(appointment.end);
+
     return Container(
       height: 90,
-      //width: double.infinity,
       padding: EdgeInsets.all(8),
       margin: EdgeInsets.only(bottom: 10),
       decoration: boxDecorationStyle,
       child: Row(
         children: <Widget>[
-          Container(
-            //occupy parent height (80)
-            height: double.infinity,
-            width: 70,
-            decoration: BoxDecoration(
-              color: lightColor,
-              borderRadius: BorderRadius.all(
-                Radius.circular(
-                  10.0,
-                ),
-              ),
-            ),
-
-            child: Center(
-              child: Text(
-                '4',
-                style: TextStyle(
-                  fontSize: largeText,
-                  color: Colors.red[900],
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Container(
+              height: 75,
+              width: 75,
+              color: primaryColor,
+              child: Image.asset('assets/images/avatars/1.png'),
             ),
           ),
           SizedBox(
@@ -139,14 +196,14 @@ class _buildScheduleListItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    'Rhon Emmanuel Casem',
+                    appointment.tutorEmail,
                     style: TextStyle(
                       fontSize: mediumText,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
-                    '7:00AM - 9:00AM',
+                    '$startTime - $endTime',
                     style: TextStyle(
                       fontSize: defaultText,
                       color: Colors.black87,

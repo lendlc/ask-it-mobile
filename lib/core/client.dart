@@ -1,8 +1,14 @@
+import 'dart:io';
+
+import 'package:ask_it/core/appointment/appointment_dto.dart';
+import 'package:ask_it/core/appointment/appointment_model.dart';
 import 'package:ask_it/core/auth/auth_dto.dart';
 import 'package:ask_it/core/auth/auth_model.dart';
 import 'package:ask_it/core/auth/auth_response.dart';
 import 'package:ask_it/core/local_storage.dart';
 import 'package:ask_it/core/schedule/schedule_model.dart';
+import 'package:ask_it/core/video/video_dto.dart';
+import 'package:ask_it/core/video/video_model.dart';
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:retrofit/http.dart';
@@ -14,7 +20,7 @@ import 'schedule/schedule_dto.dart';
 
 part 'client.g.dart';
 
-const String serverUrl = 'https://12ae-180-191-196-95.ap.ngrok.io';
+const String serverUrl = 'https://5336-180-191-195-41.ap.ngrok.io';
 
 @RestApi(baseUrl: '$serverUrl/api/v1/')
 abstract class RestClient {
@@ -62,7 +68,10 @@ abstract class RestClient {
   Future<void> changePassword(@Body() ChangePasswordDto dto);
 
   @GET('schedules/')
-  Future<List<Schedule>> getSchedules();
+  Future<List<Schedule>> getMySchedules();
+
+  @GET('schedule_list/')
+  Future<List<Schedule>> getSubjectSchedules(@Query('sub') String subject);
 
   @POST('schedules/')
   Future<void> createSchedule(@Body() CreateScheduleDto dto);
@@ -75,6 +84,29 @@ abstract class RestClient {
 
   @POST('https://api.jdoodle.com/v1/execute')
   Future<ExecuteCodeResponse> executeCode(@Body() ExecuteCodeDto dto);
+
+  @GET('video/my_uploads/')
+  Future<List<Video>> getMyUploads();
+
+  @POST('video/upload/')
+  @MultiPart()
+  Future<void> uploadVideo(
+    @Part() String title,
+    @Part() String description,
+    @Part() File file,
+  );
+
+  @PATCH('video/{id}/')
+  Future<void> updateVideo(@Path() num id, @Body() UpdateVideoDto dto);
+
+  @DELETE('video/{id}/')
+  Future<void> deleteVideo(@Path() num id);
+
+  @POST('tutee/appointments/')
+  Future<void> createAppointment(@Body() CreateAppointmentDto dto);
+
+  @GET('tutee/appointments/')
+  Future<List<Appointment>> getMyAppointments();
 }
 
 class _ApiTokenInterceptor extends Interceptor {

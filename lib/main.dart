@@ -64,7 +64,7 @@ class MyApp extends StatelessWidget {
         LessonScreen.routeName: (context) => LessonScreen(),
         ChatScreen.routeName: (context) => ChatScreen(),
         TutorCategoryScreen.routeName: (context) => TutorCategoryScreen(),
-        TutorListScreen.routeName: (context) => TutorListScreen(),
+        // TutorListScreen.routeName: (context) => TutorListScreen(),
         VideoTutorListScreen.routeName: (context) => VideoTutorListScreen(),
         VideoListScreen.routeName: (context) => VideoListScreen(),
         PlayVideoScreen.routeName: (context) => PlayVideoScreen(),
@@ -80,7 +80,7 @@ class MyApp extends StatelessWidget {
         //tutor routes
         TutorVideoListScreen.routeName: (context) => TutorVideoListScreen(),
         TutorUploadVideoScreen.routeName: (context) => TutorUploadVideoScreen(),
-        TutorEditVideoScreen.routeName: (context) => TutorEditVideoScreen(),
+        // TutorEditVideoScreen.routeName: (context) => TutorEditVideoScreen(),
 
         // TutorEditScheduleScreen.routeName: (context) => TutorEditScheduleScreen(),
         TutorAddScheduleScreen.routeName: (context) => TutorAddScheduleScreen()

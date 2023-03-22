@@ -1,3 +1,4 @@
+import 'package:ask_it/core/appointment/appointment_controller.dart';
 import 'package:ask_it/core/auth/auth_controller.dart';
 import 'package:ask_it/screens/tutor/tutor_home_screen.dart';
 import 'package:ask_it/screens/tutor/tutor_profile_screen.dart';
@@ -33,6 +34,7 @@ class TabsScreen extends ConsumerWidget {
     return Scaffold(
       body: Consumer(builder: (context, ref, _) {
         final userProfileAV = ref.watch(userProfileProvider);
+        ref.watch(myAppointmentsProvider);
         return userProfileAV.when(
           data: (userProfile) {
             return IndexedStack(

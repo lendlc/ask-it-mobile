@@ -1,4 +1,5 @@
 import 'package:ask_it/constants.dart';
+import 'package:ask_it/screens/tutee/tutor_list_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../components/course_card.dart';
@@ -32,48 +33,23 @@ class TutorCategoryScreen extends StatelessWidget {
               crossAxisCount: 2,
               shrinkWrap: true,
               physics: ScrollPhysics(),
-              children: [
-                CourseTile(
-                  title: 'Intro to Java Programming',
-                  imagePath: 'assets/images/subjects/sub-1.png',
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      '/tutor-list',
-                    );
-                  },
-                ),
-                CourseTile(
-                  title: 'Advanced Java Programming',
-                  imagePath: 'assets/images/subjects/sub-2.png',
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      '/tutor-list',
-                    );
-                  },
-                ),
-                CourseTile(
-                  title: 'Object Oriented Programming',
-                  imagePath: 'assets/images/subjects/sub-3.png',
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      '/tutor-list',
-                    );
-                  },
-                ),
-                CourseTile(
-                  title: 'Data Structures and Algorithms',
-                  imagePath: 'assets/images/subjects/sub-4.png',
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      '/tutor-list',
-                    );
-                  },
-                ),
-              ],
+              children: List.generate(
+                subjects.length,
+                (index) {
+                  final subject = subjects[index];
+                  return CourseTile(
+                    title: subject['title']!,
+                    imagePath: subject['imagePath']!,
+                    onTap: () {
+                      Navigator.of(context).push(
+                        TutorListScreen.route(
+                          subject: subject['title']!,
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
             ),
           ],
         ),

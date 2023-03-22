@@ -69,9 +69,9 @@ class _TutorEditScheduleScreenState extends ConsumerState<TutorEditScheduleScree
   void _showDatePicker() async {
     final picked = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime.now().subtract(Duration(days: 0)),
-      lastDate: DateTime(2022),
+      initialDate: originalDate,
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2023, 12, 31),
     );
     if (picked != null) {
       setState(() {

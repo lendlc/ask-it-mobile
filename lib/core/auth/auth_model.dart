@@ -18,5 +18,10 @@ class UserProfile with _$UserProfile {
 
   factory UserProfile.fromJson(Map<String, dynamic> json) => _$UserProfileFromJson(json);
 
-  num get avatarIndex => id % 6;
+  num get avatarIndex {
+    num index = id % 7;
+    return index == 0 ? 1 : index;
+  }
+
+  String get avatar => 'assets/images/avatars/$avatarIndex.png';
 }

@@ -25,9 +25,17 @@ class ProfileInfoCard extends StatelessWidget {
               border: Border.all(color: primaryColor),
               borderRadius: BorderRadius.circular(150),
             ),
-            child: ClipOval(
-              child: Image.asset('assets/images/avatar.png'),
-            ),
+            child: Consumer(builder: (context, ref, _) {
+              final userProfileAV = ref.watch(userProfileProvider);
+              return userProfileAV.maybeWhen(
+                orElse: () => ClipOval(
+                  child: Image.asset('assets/images/avatar.png'),
+                ),
+                data: (profile) => ClipOval(
+                  child: Image.asset(profile.avatar),
+                ),
+              );
+            }),
           ),
           SizedBox(
             height: 10,

@@ -14,6 +14,7 @@ _$_Schedule _$$_ScheduleFromJson(Map<String, dynamic> json) => _$_Schedule(
       start: DateTime.parse(json['datetime_start'] as String),
       end: DateTime.parse(json['datetime_end'] as String),
       userId: json['user'] as num,
+      isAvailable: json['is_available'] as bool,
     );
 
 Map<String, dynamic> _$$_ScheduleToJson(_$_Schedule instance) =>
@@ -25,4 +26,5 @@ Map<String, dynamic> _$$_ScheduleToJson(_$_Schedule instance) =>
       'datetime_start': instance.start.toIso8601String(),
       'datetime_end': instance.end.toIso8601String(),
       'user': instance.userId,
+      'is_available': instance.isAvailable,
     };

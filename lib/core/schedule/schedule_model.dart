@@ -15,9 +15,22 @@ class Schedule with _$Schedule {
     @JsonKey(name: 'datetime_start') required DateTime start,
     @JsonKey(name: 'datetime_end') required DateTime end,
     @JsonKey(name: 'user') required num userId,
+    @JsonKey(name: 'is_available') required bool isAvailable,
   }) = _Schedule;
 
   const Schedule._();
 
   factory Schedule.fromJson(Map<String, dynamic> json) => _$ScheduleFromJson(json);
+
+  Tutor get tutor => Tutor(id: userId, name: userFullName);
+}
+
+@freezed
+class Tutor with _$Tutor {
+  factory Tutor({
+    required num id,
+    required String name,
+  }) = _Tutor;
+
+  const Tutor._();
 }

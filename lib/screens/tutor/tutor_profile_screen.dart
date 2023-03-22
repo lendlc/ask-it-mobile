@@ -1,6 +1,5 @@
 import 'package:ask_it/constants.dart';
 import 'package:ask_it/core/schedule/schedule_model.dart';
-import 'package:ask_it/providers/auth.dart';
 import 'package:ask_it/screens/shared/logout_button.dart';
 import 'package:ask_it/screens/shared/profile_info_card.dart';
 import 'package:ask_it/screens/tutor/tutor_edit_schedule_screen.dart';
@@ -78,8 +77,11 @@ class TutorProfileScreen extends StatelessWidget {
                 loading: () => Expanded(child: SkeletonListView()),
                 data: (schedules) {
                   if (schedules.isEmpty) {
-                    return Center(
-                      child: Text('No schedule yet.'),
+                    return SizedBox(
+                      height: 100,
+                      child: Center(
+                        child: Text('No schedule yet.'),
+                      ),
                     );
                   }
 
@@ -97,59 +99,6 @@ class TutorProfileScreen extends StatelessWidget {
             })
           ],
         ),
-      ),
-    );
-  }
-
-  Container _buildProfileHeader() {
-    return Container(
-      padding: EdgeInsets.all(16),
-      decoration: boxDecorationStyle,
-      child: Column(
-        children: <Widget>[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(150),
-            child: Container(
-              color: Colors.red[100],
-              height: 150,
-              width: 150,
-              child: Image.asset('assets/images/avatars/man_3.png'),
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            "Paolo Miguel Sta. Ana",
-            style: mediumTextBold,
-          ),
-          Text(
-            "staanapq@students.national-u.edu.ph",
-            style: TextStyle(
-              fontSize: 16,
-            ),
-          ),
-          SizedBox(
-            height: 18,
-          ),
-          Container(
-            child: Container(
-              child: Row(
-                children: [
-                  HeaderButton(
-                    title: 'My Videos',
-                    path: '/tutor/profile/videos',
-                  ),
-                  Spacer(),
-                  HeaderButton(
-                    title: 'Edit Profile',
-                    path: '/profile/edit',
-                  )
-                ],
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }

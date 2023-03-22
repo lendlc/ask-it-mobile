@@ -40,7 +40,8 @@ const smallTextW600BlueAccent = TextStyle(
 
 //App Bar Styles
 const AppBarStyle = AppBarTheme(
-  color: Colors.white,
+  // color: Colors.white,
+  color: primaryColor,
   centerTitle: true,
   elevation: 0.9,
 );
@@ -125,3 +126,5 @@ class JDoodleSettings {
   static const String language = 'java';
   static const String versionIndex = '0';
 }
+
+const videoAspectRatio = 16 / 9;

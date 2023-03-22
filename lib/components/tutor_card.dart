@@ -1,15 +1,26 @@
+import 'package:ask_it/core/schedule/schedule_model.dart';
 import 'package:flutter/material.dart';
 import '../constants.dart';
 
-class BuildTutorCard extends StatelessWidget {
-  final String name, email;
+class TutorCard extends StatelessWidget {
+  final Tutor tutor;
+  final String? subtitle;
   final void Function()? onTap;
 
-  BuildTutorCard({
-    required this.name,
-    required this.email,
+  num get avatarIndex {
+    num index = tutor.id % 7;
+    return index == 0 ? 1 : index;
+  }
+
+  String get avatar => 'assets/images/avatars/$avatarIndex.png';
+
+  TutorCard({
+    Key? key,
+    required this.tutor,
+    this.subtitle,
     this.onTap,
-  });
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -28,19 +39,21 @@ class BuildTutorCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      name,
+                      tutor.name,
                       style: mediumTextBold,
                     ),
-                    SizedBox(
-                      height: 3,
-                    ),
-                    Text(
-                      email,
-                      style: TextStyle(
-                        fontSize: smallText,
-                        color: Colors.black45,
+                    if (subtitle != null) ...[
+                      SizedBox(
+                        height: 3,
                       ),
-                    )
+                      Text(
+                        subtitle!,
+                        style: TextStyle(
+                          fontSize: smallText,
+                          color: Colors.black45,
+                        ),
+                      ),
+                    ]
                   ],
                 ),
               ),
@@ -51,17 +64,14 @@ class BuildTutorCard extends StatelessWidget {
             Container(
               //height: 80,
               decoration: BoxDecoration(
-                color: secondaryColor,
                 borderRadius: BorderRadius.all(
                   Radius.circular(
                     10.0,
                   ),
                 ),
               ),
-              child: Icon(
-                Icons.star_rounded,
-                size: 70,
-                color: primaryColor,
+              child: ClipOval(
+                child: Image.asset(avatar),
               ),
             ),
           ],
