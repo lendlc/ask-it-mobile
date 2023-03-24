@@ -39,6 +39,86 @@ final myVideosProvider = AutoDisposeFutureProvider<List<Video>>(
       const bool.fromEnvironment('dart.vm.product') ? null : _$myVideosHash,
 );
 typedef MyVideosRef = AutoDisposeFutureProviderRef<List<Video>>;
+String _$uploadersHash() => r'886335a35a7ead75781ffafd4789ef7a3034a53a';
+
+/// See also [uploaders].
+final uploadersProvider = AutoDisposeFutureProvider<List<VideoUploaderUser>>(
+  uploaders,
+  name: r'uploadersProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$uploadersHash,
+);
+typedef UploadersRef = AutoDisposeFutureProviderRef<List<VideoUploaderUser>>;
+String _$tutorVideosHash() => r'a0ba52ef60cb304259488088d2482d3a4c65b8a8';
+
+/// See also [tutorVideos].
+class TutorVideosProvider extends AutoDisposeFutureProvider<List<Video>> {
+  TutorVideosProvider(
+    this.tutorId,
+  ) : super(
+          (ref) => tutorVideos(
+            ref,
+            tutorId,
+          ),
+          from: tutorVideosProvider,
+          name: r'tutorVideosProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$tutorVideosHash,
+        );
+
+  final num tutorId;
+
+  @override
+  bool operator ==(Object other) {
+    return other is TutorVideosProvider && other.tutorId == tutorId;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, tutorId.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+typedef TutorVideosRef = AutoDisposeFutureProviderRef<List<Video>>;
+
+/// See also [tutorVideos].
+final tutorVideosProvider = TutorVideosFamily();
+
+class TutorVideosFamily extends Family<AsyncValue<List<Video>>> {
+  TutorVideosFamily();
+
+  TutorVideosProvider call(
+    num tutorId,
+  ) {
+    return TutorVideosProvider(
+      tutorId,
+    );
+  }
+
+  @override
+  AutoDisposeFutureProvider<List<Video>> getProviderOverride(
+    covariant TutorVideosProvider provider,
+  ) {
+    return call(
+      provider.tutorId,
+    );
+  }
+
+  @override
+  List<ProviderOrFamily>? get allTransitiveDependencies => null;
+
+  @override
+  List<ProviderOrFamily>? get dependencies => null;
+
+  @override
+  String? get name => r'tutorVideosProvider';
+}
+
 String _$uploadVideoHash() => r'1973b2c81abfc9ce768b99205251c8ba9ced1903';
 
 /// See also [uploadVideo].

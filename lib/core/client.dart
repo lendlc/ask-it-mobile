@@ -5,6 +5,7 @@ import 'package:ask_it/core/appointment/appointment_model.dart';
 import 'package:ask_it/core/auth/auth_dto.dart';
 import 'package:ask_it/core/auth/auth_model.dart';
 import 'package:ask_it/core/auth/auth_response.dart';
+import 'package:ask_it/core/chat/chat_model.dart';
 import 'package:ask_it/core/local_storage.dart';
 import 'package:ask_it/core/schedule/schedule_model.dart';
 import 'package:ask_it/core/video/video_dto.dart';
@@ -14,13 +15,14 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:retrofit/http.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import 'chat/chat_dto.dart';
 import 'jdoodle/jdoodle_dto.dart';
 import 'jdoodle/jdoodle_response.dart';
 import 'schedule/schedule_dto.dart';
 
 part 'client.g.dart';
 
-const String serverUrl = 'https://5336-180-191-195-41.ap.ngrok.io';
+const String serverUrl = 'https://5fb2-180-191-195-41.ap.ngrok.io';
 
 @RestApi(baseUrl: '$serverUrl/api/v1/')
 abstract class RestClient {
@@ -96,6 +98,12 @@ abstract class RestClient {
     @Part() File file,
   );
 
+  @GET('tutors/')
+  Future<List<VideoUploaderUser>> getUploaders();
+
+  @GET('video/list/')
+  Future<List<Video>> getTutorUploads(@Query('tutor') num tutorId);
+
   @PATCH('video/{id}/')
   Future<void> updateVideo(@Path() num id, @Body() UpdateVideoDto dto);
 
@@ -107,6 +115,18 @@ abstract class RestClient {
 
   @GET('tutee/appointments/')
   Future<List<Appointment>> getMyAppointments();
+
+  @GET('chat/conversations/')
+  Future<List<Conversation>> getMyConversations();
+
+  @POST('chat/conversations/create/')
+  Future<void> createConversation(@Body() CreateConversationDto dto);
+
+  @GET('chat/conversations/{id}/')
+  Future<ConversationMessages> getConversation(@Path() num id);
+
+  @POST('chat/message/')
+  Future<void> sendMessage(@Body() SendMessageDto dto);
 }
 
 class _ApiTokenInterceptor extends Interceptor {

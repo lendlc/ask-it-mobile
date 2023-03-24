@@ -50,7 +50,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Change Avatar',
+          widget.video.title,
           style: mediumTextBold,
         ),
       ),

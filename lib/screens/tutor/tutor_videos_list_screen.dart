@@ -52,7 +52,7 @@ class TutorVideoListScreen extends StatelessWidget {
                 itemCount: videos.length,
                 itemBuilder: (context, index) {
                   final video = videos[index];
-                  return VideoCard(video);
+                  return VideoCard(video, editable: true);
                 },
               );
             },

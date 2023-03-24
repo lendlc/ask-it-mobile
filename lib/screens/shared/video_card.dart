@@ -10,8 +10,9 @@ import '../../constants.dart';
 
 class VideoCard extends StatefulWidget {
   final Video video;
+  final bool editable;
 
-  VideoCard(this.video);
+  VideoCard(this.video, {this.editable = false});
 
   @override
   State<VideoCard> createState() => _VideoCardState();
@@ -59,12 +60,15 @@ class _VideoCardState extends State<VideoCard> {
                       style: mediumTextW600,
                     ),
                   ),
-                  IconButton(
-                    icon: Icon(Icons.edit),
-                    onPressed: () {
-                      Navigator.of(context).push(TutorEditVideoScreen.route(video: widget.video));
-                    },
-                  )
+                  if (widget.editable)
+                    IconButton(
+                      icon: Icon(Icons.edit),
+                      onPressed: () {
+                        Navigator.of(context).push(TutorEditVideoScreen.route(video: widget.video));
+                      },
+                    )
+                  else
+                    SizedBox(height: 48)
                 ],
               ),
             )

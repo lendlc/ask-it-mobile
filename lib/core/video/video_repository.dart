@@ -13,6 +13,9 @@ class VideoRepository with ApiCallMixin {
 
   Future<List<Video>> getUserVideos() async => apiCall(() => _client.getMyUploads());
 
+  Future<List<Video>> getTutorVideos(num tutorId) async =>
+      apiCallArgs<List<Video>, num>(_client.getTutorUploads, tutorId);
+
   Future<void> uploadVideo(UploadVideoDto dto) => apiCall(
         () => _client.uploadVideo(
           dto.title,
@@ -32,6 +35,8 @@ class VideoRepository with ApiCallMixin {
         _client.deleteVideo,
         videoId,
       );
+
+  Future<List<VideoUploaderUser>> getUploaders() => apiCall(_client.getUploaders);
 }
 
 @riverpod

@@ -9,11 +9,15 @@ part 'appointment_model.g.dart';
 class Appointment with _$Appointment {
   const factory Appointment({
     required num id,
+    @JsonKey(name: 'tutor_id') required num tutorId,
     @JsonKey(name: 'tutor_email') required String tutorEmail,
+    @JsonKey(name: 'tutor_full_name') required String tutorName,
+    @JsonKey(name: 'tutee_id') required num tuteeId,
+    @JsonKey(name: 'tutee_full_name') required String tuteeName,
+    required String subject,
     required DateTime start,
     required DateTime end,
     required String status,
-    @JsonKey(name: 'tutee') required num tuteeId,
     @JsonKey(name: 'tutor_schedule') required num scheduleId,
   }) = _Appointment;
 

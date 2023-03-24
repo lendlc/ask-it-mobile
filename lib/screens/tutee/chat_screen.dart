@@ -1,72 +1,183 @@
 import 'package:ask_it/constants.dart';
+import 'package:ask_it/core/chat/chat_controller.dart';
+import 'package:ask_it/core/chat/chat_dto.dart';
+import 'package:ask_it/core/chat/chat_model.dart' as model;
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
+import 'package:flutter_chat_ui/flutter_chat_ui.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fpdart/fpdart.dart' as fp;
+import 'package:ndialog/ndialog.dart';
 
-class ChatScreen extends StatelessWidget {
+import '../../core/basic_error.dart';
+
+class ChatScreen extends StatefulWidget {
+  final model.Conversation conversation;
+
+  const ChatScreen({
+    super.key,
+    required this.conversation,
+  });
+
   static String routeName = '/chat';
+  static Route<void> route({required model.Conversation conversation}) {
+    return MaterialPageRoute(
+      builder: (context) => ChatScreen(conversation: conversation),
+    );
+  }
+
+  @override
+  State<ChatScreen> createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends State<ChatScreen> {
+  late final types.User _user;
+  late final types.User _chatWith;
+
+  @override
+  void initState() {
+    super.initState();
+
+    final tuteeId = widget.conversation.tuteeId;
+    final tutorId = widget.conversation.tutorId;
+    final chatWithId = widget.conversation.chatWithId;
+
+    final isTutor = chatWithId == tuteeId;
+
+    _user = types.User(
+      id: isTutor ? tutorId.toString() : tuteeId.toString(),
+    );
+    _chatWith = types.User(
+      id: isTutor ? tuteeId.toString() : tutorId.toString(),
+    );
+  }
+
+  types.User whoIsSender(num id) => id.toString() == _user.id ? _user : _chatWith;
 
   @override
   Widget build(BuildContext context) {
+    final messagesProvider = conversationMessagesProvider(widget.conversation.id);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Rhon Emmanuel Casem',
+          widget.conversation.chatWith,
           style: mediumTextBold,
         ),
       ),
-      body: GestureDetector(
-        //closes kb
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: Container(
-          padding: EdgeInsets.fromLTRB(8, 8, 8, 0),
-          child: Column(
-            children: [
-              _buildSentMessage(),
-              _buildRecievedMessage(),
-              _buildSentMessage(),
-              _buildSentMessage(),
-              Expanded(child: SizedBox()),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 8),
-                height: 70,
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Send a Message',
-                          isDense: true,
-                          filled: true,
-                          fillColor: lightColor,
-                          //Border when user Uses the Text Field
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            borderSide: BorderSide(
-                              color: lightColor,
-                            ),
-                          ),
-                          //Default Border Color
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            borderSide: BorderSide(
-                              color: lightColor,
-                              //width: 2.0,
-                            ),
+      body: Consumer(builder: (context, ref, _) {
+        final messagesStream = ref.watch(messagesProvider);
+
+        return StreamBuilder<model.ConversationMessages>(
+            stream: messagesStream,
+            builder: (context, snapshot) {
+              var chatMessages = <types.Message>[];
+
+              if (snapshot.hasData) {
+                final messages = snapshot.data!;
+                final sortedMessages = List<model.Message>.from(messages.messages);
+                sortedMessages.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+                chatMessages = sortedMessages.map((m) {
+                  return types.TextMessage(
+                    id: m.id.toString(),
+                    author: whoIsSender(m.senderId),
+                    text: m.message,
+                    createdAt: m.createdAt.millisecondsSinceEpoch,
+                  );
+                }).toList();
+              }
+
+              return Chat(
+                theme: const DefaultChatTheme(
+                  primaryColor: primaryColor,
+                ),
+                messages: chatMessages,
+                onSendPressed: (message) {
+                  ProgressDialog.future<fp.Either<BasicError, bool>>(
+                    context,
+                    future: ref.read(sendMessageProvider).call(
+                          SendMessageDto(
+                            conversationId: widget.conversation.id,
+                            message: message.text,
                           ),
                         ),
-                      ),
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.arrow_forward_rounded),
-                      iconSize: 25,
-                      onPressed: () {},
-                    )
-                  ],
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
+                    message: Text('Sending message...'),
+                    title: Text('Please wait...'),
+                    dismissable: false,
+                  ).then((value) {
+                    if (value == null) return;
+
+                    value.fold(
+                      (l) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(l.message),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                      },
+                      (r) {},
+                    );
+                  });
+                },
+                user: _user,
+              );
+            });
+      }),
+      // body: GestureDetector(
+      //   //closes kb
+      //   onTap: () => FocusScope.of(context).unfocus(),
+      //   child: Container(
+      //     padding: EdgeInsets.fromLTRB(8, 8, 8, 0),
+      //     child: Column(
+      //       children: [
+      //         _buildSentMessage(),
+      //         _buildRecievedMessage(),
+      //         _buildSentMessage(),
+      //         _buildSentMessage(),
+      //         Expanded(child: SizedBox()),
+      //         Container(
+      //           padding: EdgeInsets.symmetric(horizontal: 8),
+      //           height: 70,
+      //           child: Row(
+      //             children: <Widget>[
+      //               Expanded(
+      //                 child: TextField(
+      //                   decoration: InputDecoration(
+      //                     hintText: 'Send a Message',
+      //                     isDense: true,
+      //                     filled: true,
+      //                     fillColor: lightColor,
+      //                     //Border when user Uses the Text Field
+      //                     focusedBorder: OutlineInputBorder(
+      //                       borderRadius: BorderRadius.circular(10.0),
+      //                       borderSide: BorderSide(
+      //                         color: lightColor,
+      //                       ),
+      //                     ),
+      //                     //Default Border Color
+      //                     enabledBorder: OutlineInputBorder(
+      //                       borderRadius: BorderRadius.circular(10.0),
+      //                       borderSide: BorderSide(
+      //                         color: lightColor,
+      //                         //width: 2.0,
+      //                       ),
+      //                     ),
+      //                   ),
+      //                 ),
+      //               ),
+      //               IconButton(
+      //                 icon: Icon(Icons.arrow_forward_rounded),
+      //                 iconSize: 25,
+      //                 onPressed: () {},
+      //               )
+      //             ],
+      //           ),
+      //         )
+      //       ],
+      //     ),
+      //   ),
+      // ),
     );
   }
 }

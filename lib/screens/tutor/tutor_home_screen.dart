@@ -1,13 +1,17 @@
 import 'package:ask_it/components/home_screen_header.dart';
 import 'package:ask_it/core/appointment/appointment_controller.dart';
 import 'package:ask_it/core/appointment/appointment_model.dart';
+import 'package:ask_it/core/chat/chat_controller.dart';
+import 'package:ask_it/core/chat/chat_dto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:intl/intl.dart';
 import 'package:ndialog/ndialog.dart';
 import 'package:skeletons/skeletons.dart';
 
 import '../../constants.dart';
+import '../../core/basic_error.dart';
 
 class TutorHomeScreen extends StatelessWidget {
   @override
@@ -75,41 +79,37 @@ class TutorHomeScreen extends StatelessWidget {
                                 ).show<bool>(context).then((perform) {
                                   if (perform == null || !perform) return;
 
-                                  // ProgressDialog.future<Either<BasicError, bool>>(
-                                  //   context,
-                                  //   future: ref.read(logoutProvider).call(null),
-                                  //   message: Text('Logging out...'),
-                                  //   title: Text('Please wait...'),
-                                  //   dismissable: false,
-                                  // ).then((value) {
-                                  //   if (value == null) return;
+                                  ProgressDialog.future<Either<BasicError, bool>>(
+                                    context,
+                                    future: ref.read(createConversationProvider).call(
+                                          CreateConversationDto(
+                                            tutorId: appointment.tutorId,
+                                            tuteeId: appointment.tuteeId,
+                                            appointmentId: appointment.id,
+                                          ),
+                                        ),
+                                    message: Text('Creating conversation...'),
+                                    title: Text('Please wait...'),
+                                    dismissable: false,
+                                  ).then((value) {
+                                    if (value == null) return;
 
-                                  //   value.fold(
-                                  //     (l) {
-                                  //       ScaffoldMessenger.of(context).showSnackBar(
-                                  //         const SnackBar(
-                                  //           content: Text('Error occurred while trying to logout.'),
-                                  //           backgroundColor: Colors.red,
-                                  //         ),
-                                  //       );
-                                  //     },
-                                  //     (r) {
-                                  //       if (r) {
-                                  //         ScaffoldMessenger.of(context).showSnackBar(
-                                  //           const SnackBar(
-                                  //             content: Text('Successfully logged out.'),
-                                  //             backgroundColor: secondaryColor,
-                                  //           ),
-                                  //         );
-                                  //         Navigator.pushNamedAndRemoveUntil(
-                                  //           context,
-                                  //           '/login',
-                                  //           (_) => false,
-                                  //         );
-                                  //       }
-                                  //     },
-                                  //   );
-                                  // });
+                                    value.fold(
+                                      (l) {
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          SnackBar(
+                                            content: Text(l.message),
+                                            backgroundColor: Colors.red,
+                                          ),
+                                        );
+                                      },
+                                      (r) {
+                                        if (r) {
+                                          Navigator.of(context).pushNamed('/chat');
+                                        }
+                                      },
+                                    );
+                                  });
                                 });
                               },
                             );
@@ -220,14 +220,14 @@ class _AppointmentListItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      appointment.tuteeId.toString(),
+                      appointment.tuteeName,
                       style: mediumTextBold,
                     ),
                     Text(
                       '$startTime - $endTime',
                     ),
                     Text(
-                      'Introduction to Java Programming',
+                      appointment.subject,
                       style: TextStyle(fontSize: smallText),
                     ),
                   ],

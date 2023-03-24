@@ -18,6 +18,20 @@ Future<List<Video>> myVideos(MyVideosRef ref) async {
 }
 
 @riverpod
+Future<List<VideoUploaderUser>> uploaders(UploadersRef ref) async {
+  final videoRepository = ref.watch(videoRepositoryProvider);
+  final uploaders = await videoRepository.getUploaders();
+  return uploaders;
+}
+
+@riverpod
+Future<List<Video>> tutorVideos(TutorVideosRef ref, num tutorId) async {
+  final videoRepository = ref.watch(videoRepositoryProvider);
+  final videos = await videoRepository.getTutorVideos(tutorId);
+  return videos;
+}
+
+@riverpod
 CallableAction<EitherResponse<bool>, UploadVideoDto> uploadVideo(UploadVideoRef ref) {
   final videoRepository = ref.watch(videoRepositoryProvider);
 

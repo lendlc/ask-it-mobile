@@ -1,5 +1,9 @@
 import 'package:ask_it/constants.dart';
+import 'package:ask_it/core/chat/chat_controller.dart';
+import 'package:ask_it/core/chat/chat_model.dart';
+import 'package:ask_it/screens/tutee/chat_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ChatListScreen extends StatelessWidget {
   @override
@@ -11,29 +15,60 @@ class ChatListScreen extends StatelessWidget {
           style: mediumTextBold,
         ),
       ),
-      body: ListView.builder(
-        itemCount: 5,
-        itemBuilder: (context, index) {
-          return Container(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: _buildMessageItem(),
-          );
-        },
-      ),
+      body: Consumer(builder: (context, ref, _) {
+        final myConversationsAV = ref.watch(myConversationsProvider);
+
+        return myConversationsAV.when(
+          loading: () => Center(
+            child: CircularProgressIndicator(),
+          ),
+          error: (error, stack) => Center(
+            child: Text(error.toString()),
+          ),
+          data: (conversations) {
+            if (conversations.isEmpty) {
+              return Center(
+                child: Text('No conversations yet'),
+              );
+            }
+
+            return ListView.builder(
+              itemCount: conversations.length,
+              itemBuilder: (context, index) {
+                final conversation = conversations[index];
+                return Container(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: _ConversationListItem(conversation: conversation),
+                );
+              },
+            );
+          },
+        );
+      }),
     );
   }
 }
 
-class _buildMessageItem extends StatelessWidget {
-  const _buildMessageItem({
+class _ConversationListItem extends StatelessWidget {
+  final Conversation conversation;
+
+  const _ConversationListItem({
     Key? key,
+    required this.conversation,
   }) : super(key: key);
+
+  num get avatarIndex {
+    num index = conversation.chatWithId % 7;
+    return index == 0 ? 1 : index;
+  }
+
+  String get avatar => 'assets/images/avatars/$avatarIndex.png';
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/chat');
+        Navigator.of(context).push(ChatScreen.route(conversation: conversation));
       },
       child: Container(
         height: 90,
@@ -43,28 +78,13 @@ class _buildMessageItem extends StatelessWidget {
         decoration: boxDecorationStyle,
         child: Row(
           children: <Widget>[
-            Container(
-              //occupy parent height (80)
-              height: double.infinity,
-              width: 70,
-              decoration: BoxDecoration(
-                color: lightColor,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(
-                    10.0,
-                  ),
-                ),
-              ),
-
-              child: Center(
-                child: Text(
-                  '4',
-                  style: TextStyle(
-                    fontSize: largeText,
-                    color: Colors.red[900],
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Container(
+                height: 75,
+                width: 75,
+                color: primaryColor,
+                child: Image.asset(avatar),
               ),
             ),
             SizedBox(
@@ -78,7 +98,7 @@ class _buildMessageItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      'Rhon Emmanuel Casem',
+                      conversation.chatWith,
                       style: TextStyle(
                         fontSize: mediumText,
                         fontWeight: FontWeight.bold,
@@ -88,10 +108,11 @@ class _buildMessageItem extends StatelessWidget {
                       height: 3,
                     ),
                     Text(
-                      'Introduction to Java Programming',
+                      conversation.lastMessage?.message ?? 'No messages yet.',
                       style: TextStyle(
                         fontSize: defaultText,
                         color: Colors.black38,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     )
                   ],
