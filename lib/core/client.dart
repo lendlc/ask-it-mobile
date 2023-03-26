@@ -22,7 +22,7 @@ import 'schedule/schedule_dto.dart';
 
 part 'client.g.dart';
 
-const String serverUrl = 'https://5fb2-180-191-195-41.ap.ngrok.io';
+const String serverUrl = 'https://askitcapstone.live';
 
 @RestApi(baseUrl: '$serverUrl/api/v1/')
 abstract class RestClient {

@@ -13,7 +13,7 @@ class _RestClient implements RestClient {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://5fb2-180-191-195-41.ap.ngrok.io/api/v1/';
+    baseUrl ??= 'https://askitcapstone.live/api/v1/';
   }
 
   final Dio _dio;
