@@ -23,6 +23,7 @@ import 'schedule/schedule_dto.dart';
 part 'client.g.dart';
 
 const String serverUrl = 'https://askitcapstone.live';
+// const String serverUrl = 'https://e507-180-191-195-240.ap.ngrok.io';
 
 @RestApi(baseUrl: '$serverUrl/api/v1/')
 abstract class RestClient {
@@ -120,7 +121,7 @@ abstract class RestClient {
   Future<List<Conversation>> getMyConversations();
 
   @POST('chat/conversations/create/')
-  Future<void> createConversation(@Body() CreateConversationDto dto);
+  Future<Conversation> createConversation(@Body() CreateConversationDto dto);
 
   @GET('chat/conversations/{id}/')
   Future<ConversationMessages> getConversation(@Path() num id);

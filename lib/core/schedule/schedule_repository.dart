@@ -16,9 +16,13 @@ class ScheduleRepository with ApiCallMixin {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
     final schedules = await apiCall(_client.getMySchedules);
-    return schedules
+    var validSchedules = schedules
         .where((schedule) => schedule.start.isAfter(today.subtract(Duration(days: 1))))
         .toList(growable: false);
+
+    validSchedules.sort((a, b) => a.start.compareTo(b.start));
+
+    return validSchedules;
   }
 
   Future<List<Schedule>> getSubjectSchedules(String subject) async {

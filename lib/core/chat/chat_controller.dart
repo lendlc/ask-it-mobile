@@ -22,19 +22,29 @@ Future<List<Conversation>> myConversations(MyConversationsRef ref) async {
 @riverpod
 Stream<ConversationMessages> conversationMessages(ConversationMessagesRef ref, num id) async* {
   final chatRepository = ref.watch(chatRepositoryProvider);
-  yield* Stream.periodic(const Duration(seconds: 3), (_) => id)
-      .asyncMap((id) => chatRepository.getConversationMessages(id));
+
+  Future<ConversationMessages> getConversationMessages(num id) async {
+    final messages = await chatRepository.getConversationMessages(id);
+    ref.invalidate(myConversationsProvider);
+    return messages;
+  }
+
+  // Instantly load messages upon listening to provider
+  yield await getConversationMessages(id);
+
+  // Initiate polling
+  yield* Stream.periodic(const Duration(seconds: 2), (_) => id).asyncMap(getConversationMessages);
 }
 
 @riverpod
-CallableAction<EitherResponse<bool>, CreateConversationDto> createConversation(
+CallableAction<EitherResponse<Conversation>, CreateConversationDto> createConversation(
     CreateConversationRef ref) {
   final chatRepository = ref.watch(chatRepositoryProvider);
 
   return CallableAction((dto) async {
     try {
-      await chatRepository.createConversation(dto);
-      return right(true);
+      final conversation = await chatRepository.createConversation(dto);
+      return right(conversation);
     } catch (e) {
       if (e is BasicError) {
         return left(e);
@@ -59,6 +69,8 @@ CallableAction<EitherResponse<bool>, SendMessageDto> sendMessage(SendMessageRef 
         return left(e);
       }
       return left(BasicError(e.toString()));
+    } finally {
+      ref.invalidate(myConversationsProvider);
     }
   });
 }

@@ -86,11 +86,16 @@ class TutorProfileScreen extends StatelessWidget {
                   }
 
                   return Expanded(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: List.generate(
-                        schedules.length,
-                        (index) => ScheduleListItem(schedule: schedules[index]),
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: List.generate(
+                            schedules.length,
+                            (index) => ScheduleListItem(schedule: schedules[index]),
+                          ),
+                        ),
                       ),
                     ),
                   );
@@ -186,12 +191,35 @@ class ScheduleListItem extends StatelessWidget {
                     content: Text('Are you sure you want to do this action?'),
                     actions: <Widget>[
                       TextButton(
-                          child: Text('Yes'),
-                          onPressed: () async {
-                            await deleteController.call(null);
-                            Navigator.pop(context);
-                          }),
-                      TextButton(child: Text('Cancel'), onPressed: () => Navigator.pop(context)),
+                        child: Text('Yes'),
+                        onPressed: () async {
+                          final either = await deleteController.call(null);
+                          either?.fold(
+                            (l) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                      'Cannot delete schedule. Maybe it already has a linked appointment'),
+                                  backgroundColor: Colors.red,
+                                ),
+                              );
+                            },
+                            (r) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Successfully deleted schedule.'),
+                                  backgroundColor: secondaryColor,
+                                ),
+                              );
+                            },
+                          );
+                          Navigator.pop(context);
+                        },
+                      ),
+                      TextButton(
+                        child: Text('Cancel'),
+                        onPressed: () => Navigator.pop(context),
+                      ),
                     ],
                   ).show(context);
                 }

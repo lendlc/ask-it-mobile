@@ -61,7 +61,7 @@ class MyApp extends StatelessWidget {
         //auth routes end
         TabsScreen.routeName: (context) => TabsScreen(),
         TopicListScreen.routeName: (context) => TopicListScreen(),
-        LessonScreen.routeName: (context) => LessonScreen(),
+        // LessonScreen.routeName: (context) => LessonScreen(),
         // ChatScreen.routeName: (context) => ChatScreen(),
         TutorCategoryScreen.routeName: (context) => TutorCategoryScreen(),
         // TutorListScreen.routeName: (context) => TutorListScreen(),

@@ -82,7 +82,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     id: m.id.toString(),
                     author: whoIsSender(m.senderId),
                     text: m.message,
-                    createdAt: m.createdAt.millisecondsSinceEpoch,
+                    createdAt: m.createdAt.add(const Duration(hours: 8)).millisecondsSinceEpoch,
                   );
                 }).toList();
               }
@@ -116,7 +116,9 @@ class _ChatScreenState extends State<ChatScreen> {
                           ),
                         );
                       },
-                      (r) {},
+                      (r) {
+                        ref.invalidate(messagesProvider);
+                      },
                     );
                   });
                 },

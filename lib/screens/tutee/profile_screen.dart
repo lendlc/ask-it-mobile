@@ -170,7 +170,6 @@ class _AppointmentListItem extends StatelessWidget {
     final endTime = timeFormat.format(appointment.end);
 
     return Container(
-      height: 90,
       padding: EdgeInsets.all(8),
       margin: EdgeInsets.only(bottom: 10),
       decoration: boxDecorationStyle,
@@ -196,7 +195,7 @@ class _AppointmentListItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    appointment.tutorEmail,
+                    appointment.tutorName,
                     style: TextStyle(
                       fontSize: mediumText,
                       fontWeight: FontWeight.bold,
@@ -210,7 +209,7 @@ class _AppointmentListItem extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'Introduction to Java Programming',
+                    appointment.subject,
                     style: TextStyle(
                       fontSize: defaultText,
                       color: Colors.black38,

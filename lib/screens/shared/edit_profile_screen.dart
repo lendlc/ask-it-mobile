@@ -71,36 +71,27 @@ class EditProfileScreen extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              Stack(
-                alignment: Alignment.center,
-                children: <Widget>[
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(300.0),
-                    child: Container(
-                      color: primaryColor,
-                      child: Image.asset(
-                        'assets/images/avatar.png',
-                        height: 150,
-                      ),
-                    ),
-                  ),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(300.0),
-                    child: Container(
+              ClipRRect(
+                borderRadius: BorderRadius.circular(300.0),
+                child: Container(
+                  color: primaryColor,
+                  child: Consumer(
+                    child: Image.asset(
+                      'assets/images/avatar.png',
                       height: 150,
-                      width: 150,
-                      color: Colors.black26,
-                      child: IconButton(
-                        icon: Icon(Icons.edit),
-                        color: lightColor,
-                        iconSize: 42,
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/profile/update/avatar');
-                        },
-                      ),
                     ),
+                    builder: (context, ref, child) {
+                      final userProfileAV = ref.watch(userProfileProvider);
+                      return userProfileAV.maybeWhen(
+                        orElse: () => child!,
+                        data: (userProfile) => Image.asset(
+                          userProfile.avatar,
+                          height: 150,
+                        ),
+                      );
+                    },
                   ),
-                ],
+                ),
               ),
               SizedBox(
                 height: 15,

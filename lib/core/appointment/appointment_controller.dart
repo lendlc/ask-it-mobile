@@ -1,6 +1,7 @@
 import 'package:ask_it/core/appointment/appointment_dto.dart';
 import 'package:ask_it/core/appointment/appointment_model.dart';
 import 'package:ask_it/core/appointment/appointment_repository.dart';
+import 'package:ask_it/core/auth/auth_controller.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -12,9 +13,18 @@ part 'appointment_controller.g.dart';
 
 @riverpod
 Future<List<Appointment>> myAppointments(MyAppointmentsRef ref) async {
+  final loggedInUserId = await ref.watch(loggedInUserIdProvider.future);
+
+  if (loggedInUserId == null) {
+    return [];
+  }
+
   final appointmentRepository = ref.watch(appointmentRepositoryProvider);
   final appointments = await appointmentRepository.getMyAppointments();
-  return appointments;
+  return appointments
+      .where((appointment) =>
+          appointment.tuteeId == loggedInUserId || appointment.tutorId == loggedInUserId)
+      .toList();
 }
 
 @riverpod

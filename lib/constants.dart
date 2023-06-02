@@ -1,3 +1,4 @@
+import 'package:ask_it/screens/tutee/lesson_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:skeletons/skeletons.dart';
 
@@ -128,3 +129,66 @@ class JDoodleSettings {
 }
 
 const videoAspectRatio = 16 / 9;
+
+final List<Lesson> lessons = [
+  Lesson(
+    1,
+    'Java Fundamentals',
+    'introprog',
+  ),
+  Lesson(
+    2,
+    'Primitive Types',
+    'primitive',
+  ),
+  Lesson(
+    3,
+    'Class Methods',
+    'variablescoping',
+  ),
+  Lesson(
+    4,
+    'Sequential Structure',
+    'sequential',
+  ),
+  Lesson(
+    5,
+    'Conditional Structure 1',
+    'condition',
+  ),
+  Lesson(
+    6,
+    'Conditional Structure 2',
+    'condition1',
+  ),
+  Lesson(
+    7,
+    'Iteration Structure 1',
+    'iteration1',
+  ),
+  Lesson(
+    8,
+    'Iteration Structure 2',
+    'iteration2',
+  ),
+  Lesson(
+    9,
+    'Iteration Structure 3',
+    'iteration3',
+  ),
+  Lesson(
+    10,
+    'String and Char Operations',
+    'stringchar',
+  ),
+  Lesson(
+    11,
+    'Array and Arraylists',
+    'array',
+  ),
+  Lesson(
+    12,
+    'Exception Handling',
+    'exception',
+  ),
+];

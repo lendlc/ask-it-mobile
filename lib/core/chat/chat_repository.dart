@@ -12,8 +12,8 @@ class ChatRepository with ApiCallMixin {
 
   final RestClient _client;
 
-  Future<void> createConversation(CreateConversationDto dto) =>
-      apiCallArgs<void, CreateConversationDto>(
+  Future<Conversation> createConversation(CreateConversationDto dto) =>
+      apiCallArgs<Conversation, CreateConversationDto>(
         _client.createConversation,
         dto,
       );

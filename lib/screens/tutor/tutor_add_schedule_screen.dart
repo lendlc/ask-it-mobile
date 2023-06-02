@@ -51,6 +51,7 @@ class _TutorAddScheduleScreen extends State<TutorAddScheduleScreen> {
     if (picked != null) {
       setState(() {
         selectedDate = picked;
+        _dateController.text = _dateFormat.format(selectedDate);
       });
     }
   }

@@ -1,59 +1,19 @@
 import 'package:ask_it/constants.dart';
+import 'package:ask_it/screens/tutee/lesson_screen.dart';
 import 'package:flutter/material.dart';
+
+class Lesson {
+  final int index;
+  final String title;
+  final String image;
+
+  const Lesson(this.index, this.title, this.image);
+
+  String get contentIndex => index.toString().padLeft(2, '0');
+}
 
 class TopicListScreen extends StatelessWidget {
   static String routeName = '/learn-java';
-
-  final List<Map> topics = [
-    {
-      "title": 'Java Fundamentals',
-      "image": 'introprog',
-    },
-    {
-      "title": 'Primitive Types',
-      "image": 'primitive',
-    },
-    {
-      "title": 'Class Methods',
-      "image": 'variablescoping',
-    },
-    {
-      "title": 'Sequential Structure',
-      "image": 'sequential',
-    },
-    {
-      "title": 'Conditional Structure 1',
-      "image": 'condition',
-    },
-    {
-      "title": 'Conditional Structure 2',
-      "image": 'condition1',
-    },
-    {
-      "title": 'Iteration Structure 1',
-      "image": 'iteration1',
-    },
-    {
-      "title": 'Iteration Structure 2',
-      "image": 'iteration2',
-    },
-    {
-      "title": 'Iteration Structure 3',
-      "image": 'iteration3',
-    },
-    {
-      "title": 'String and Char Operations',
-      "image": 'stringchar',
-    },
-    {
-      "title": 'Array and Arraylists',
-      "image": 'array',
-    },
-    {
-      "title": 'Exception Handling',
-      "image": 'exception',
-    },
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -66,12 +26,11 @@ class TopicListScreen extends StatelessWidget {
       ),
       body: ListView.builder(
         padding: EdgeInsets.all(16),
-        itemCount: topics.length,
+        itemCount: lessons.length,
         itemBuilder: (context, index) {
-          return TopicCard(
-            title: topics[index]['title'],
-            image: topics[index]['image'],
-            chapter: index + 1,
+          final lesson = lessons[index];
+          return LessonCard(
+            lesson: lesson,
           );
         },
       ),
@@ -79,23 +38,19 @@ class TopicListScreen extends StatelessWidget {
   }
 }
 
-class TopicCard extends StatelessWidget {
-  final String title, image;
-  final int chapter;
+class LessonCard extends StatelessWidget {
+  final Lesson lesson;
 
-  const TopicCard({
+  const LessonCard({
     Key? key,
-    required this.title,
-    required this.chapter,
-    required this.image,
+    required this.lesson,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/learn-java/lesson',
-            arguments: {'title': title});
+        Navigator.of(context).push(LessonScreen.route(lesson: lesson));
       },
       child: Container(
         margin: EdgeInsets.only(bottom: 16),
@@ -109,7 +64,7 @@ class TopicCard extends StatelessWidget {
                 color: Colors.teal[100],
                 height: 80,
                 child: Image.asset(
-                  'assets/images/topics/$image.png',
+                  'assets/images/topics/${lesson.image}.png',
                 ),
               ),
             ),
@@ -122,14 +77,14 @@ class TopicCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Chapter $chapter",
+                    "Chapter ${lesson.index}",
                     style: TextStyle(color: Colors.black45),
                   ),
                   SizedBox(
                     height: 3,
                   ),
                   Text(
-                    title,
+                    lesson.title,
                     style: mediumTextBold,
                   ),
                 ],

@@ -76,6 +76,7 @@ class _TutorEditScheduleScreenState extends ConsumerState<TutorEditScheduleScree
     if (picked != null) {
       setState(() {
         selectedDate = picked;
+        _dateController.text = _dateFormat.format(selectedDate);
       });
     }
   }

@@ -3,6 +3,8 @@ import 'package:ask_it/core/appointment/appointment_controller.dart';
 import 'package:ask_it/core/appointment/appointment_model.dart';
 import 'package:ask_it/core/chat/chat_controller.dart';
 import 'package:ask_it/core/chat/chat_dto.dart';
+import 'package:ask_it/core/chat/chat_model.dart';
+import 'package:ask_it/screens/tutee/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
@@ -79,7 +81,7 @@ class TutorHomeScreen extends StatelessWidget {
                                 ).show<bool>(context).then((perform) {
                                   if (perform == null || !perform) return;
 
-                                  ProgressDialog.future<Either<BasicError, bool>>(
+                                  ProgressDialog.future<Either<BasicError, Conversation>>(
                                     context,
                                     future: ref.read(createConversationProvider).call(
                                           CreateConversationDto(
@@ -104,9 +106,9 @@ class TutorHomeScreen extends StatelessWidget {
                                         );
                                       },
                                       (r) {
-                                        if (r) {
-                                          Navigator.of(context).pushNamed('/chat');
-                                        }
+                                        Navigator.of(context).push(
+                                          ChatScreen.route(conversation: r),
+                                        );
                                       },
                                     );
                                   });

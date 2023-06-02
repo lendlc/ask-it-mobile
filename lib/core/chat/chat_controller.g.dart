@@ -114,11 +114,11 @@ class ConversationMessagesFamily extends Family<Stream<ConversationMessages>> {
 }
 
 String _$createConversationHash() =>
-    r'fbc02ee1d01bbd03b53a9f191d7c26ae71c5930a';
+    r'7fac0e60b8217338cd5a317353b5487102ee153c';
 
 /// See also [createConversation].
 final createConversationProvider = AutoDisposeProvider<
-    CallableAction<Either<BasicError, bool>, CreateConversationDto>>(
+    CallableAction<Either<BasicError, Conversation>, CreateConversationDto>>(
   createConversation,
   name: r'createConversationProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -126,7 +126,7 @@ final createConversationProvider = AutoDisposeProvider<
       : _$createConversationHash,
 );
 typedef CreateConversationRef = AutoDisposeProviderRef<
-    CallableAction<Either<BasicError, bool>, CreateConversationDto>>;
+    CallableAction<Either<BasicError, Conversation>, CreateConversationDto>>;
 String _$sendMessageHash() => r'3c7b44ae7b5ffa397abec18556041e046ededa71';
 
 /// See also [sendMessage].
